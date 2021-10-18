@@ -1,0 +1,126 @@
+[
+  {
+    "code": "P001",
+    "name": "Pizza Americana",
+    "description": "Pizza americana con queso",
+    "imageUrl": "https://thumbs.dreamstime.com/b/pizza-americana-mozzarella-salchichones-jam%C3%B3n-setas-86541139.jpg",
+    "measureCode": "MEA01",
+    "measureValue": "UNIDAD",
+    "currencyCode": "PEN",
+    "currencyValue": "S/ ",
+    "stock": 10,
+    "price": 10.90,
+    "saleStrategy": {
+      "strategyCode": "SASD",
+      "parameters": {
+        "percentage": 0.25
+      }
+    }
+  },
+  {
+    "code": "P002",
+    "name": "Pizza hawaiana",
+    "description": "Pizza hawaiana con queso y piña",
+    "imageUrl": "https://previews.123rf.com/images/foodandmore/foodandmore1611/foodandmore161100108/66013279-la-pizza-hawaiana-deliciosa-con-jam%C3%B3n-y-pi%C3%B1a.jpg",
+    "measureCode": "MEA01",
+    "measureValue": "UNIDAD",
+    "currencyCode": "PEN",
+    "currencyValue": "S/ ",
+    "stock": 5,
+    "price": 25.90,
+    "saleStrategy": {
+      "strategyCode": "SASD",
+      "parameters": {
+        "percentage": 0.20
+      }
+    }
+  },
+  {
+    "code": "P003",
+    "name": "Alitas picantes",
+    "description": "Porcion de alistas picantes con papas fritsd",
+    "imageUrl": "https://www.comida-peruana.com/base/stock/Recipe/232-image/232-image_web.jpg",
+    "measureCode": "MEA01",
+    "measureValue": "UNIDAD",
+    "currencyCode": "PEN",
+    "currencyValue": "S/ ",
+    "stock": 16,
+    "price": 30.90,
+    "saleStrategy": {
+      "strategyCode": "SASD",
+      "parameters": {
+        "percentage": 0.19
+      }
+    }
+  },
+  {
+    "code": "P004",
+    "name": "Pollo a la braza",
+    "description": "Pollo a la brasa",
+    "imageUrl": "https://ponpollos.com/wp-content/uploads/2021/02/pollo-a-la-brasa.jpg",
+    "measureCode": "MEA01",
+    "measureValue": "UNIDAD",
+    "currencyCode": "PEN",
+    "currencyValue": "S/ ",
+    "price": 30.90,
+    "saleStrategy": {
+      "strategyCode": "SASD",
+      "parameters": {
+        "percentage": 0.18
+      }
+    }
+  },
+  {
+    "code": "P005",
+    "name": "Ceviche",
+    "description": "Ceviche peruano",
+    "imageUrl": "https://img.freepik.com/foto-gratis/ceviche-mariscos-closeup-plato-tipico-peru_136960-376.jpg",
+    "measureCode": "MEA01",
+    "measureValue": "UNIDAD",
+    "currencyCode": "PEN",
+    "currencyValue": "S/ ",
+    "stock": 17,
+    "price": 23.49,
+    "saleStrategy": {
+      "strategyCode": "SASD",
+      "parameters": {
+        "percentage": 0.30
+      }
+    }
+  },
+  {
+    "code": "P006",
+    "name": "Pollo a la braza",
+    "description": "Pollo a la brasa",
+    "imageUrl": "https://ponpollos.com/wp-content/uploads/2021/02/pollo-a-la-brasa.jpg",
+    "measureCode": "MEA01",
+    "measureValue": "UNIDAD",
+    "currencyCode": "PEN",
+    "currencyValue": "S/ ",
+    "price": 30.90,
+    "saleStrategy": {
+      "strategyCode": "SASD",
+      "parameters": {
+        "percentage": 0.18
+      }
+    }
+  },
+  {
+    "code": "P007",
+    "name": "Ceviche",
+    "description": "Ceviche peruano",
+    "imageUrl": "https://img.freepik.com/foto-gratis/ceviche-mariscos-closeup-plato-tipico-peru_136960-376.jpg",
+    "measureCode": "MEA01",
+    "measureValue": "UNIDAD",
+    "currencyCode": "PEN",
+    "currencyValue": "S/ ",
+    "stock": 17,
+    "price": 23.49,
+    "saleStrategy": {
+      "strategyCode": "SASD",
+      "parameters": {
+        "percentage": 0.30
+      }
+    }
+  }
+]

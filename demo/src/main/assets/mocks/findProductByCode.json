@@ -1,0 +1,18 @@
+{
+  "code": "P002",
+  "name": "Pizza hawaiana",
+  "description": "Pizza hawaiana con queso y piña",
+  "imageUrl": "https://previews.123rf.com/images/foodandmore/foodandmore1611/foodandmore161100108/66013279-la-pizza-hawaiana-deliciosa-con-jam%C3%B3n-y-pi%C3%B1a.jpg",
+  "measureCode": "MEA01",
+  "measureValue": "UNIDAD",
+  "currencyCode": "PEN",
+  "currencyValue": "S/ ",
+  "stock": 5,
+  "price": 25.90,
+  "saleStrategy": {
+    "strategyCode": "SASD",
+    "parameters": {
+      "percentage": 0.20
+    }
+  }
+}

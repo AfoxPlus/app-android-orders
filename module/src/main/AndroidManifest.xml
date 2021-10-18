@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.afoxplus.orders">
+
+    <application>
+        <activity
+            android:name=".delivery.views.activities.CartProductsActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/UIKit.NoActionBar.Light" />
+        <activity
+            android:name=".delivery.views.activities.AddCartProductActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/UIKit.NoActionBar.Light" />
+        <activity
+            android:name=".delivery.views.activities.MarketOrderActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/UIKit.NoActionBar.Light" />
+    </application>
+</manifest>
