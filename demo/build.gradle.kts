@@ -11,7 +11,7 @@ android {
     buildToolsVersion = Versions.buildToolsVersion
 
     defaultConfig {
-        applicationId = "com.afoxplus.app_android_home.demo"
+        applicationId = "com.afoxplus.app_android_orders.demo"
         minSdk = Versions.minSdkVersion
         targetSdk = Versions.targetSdkVersion
         versionCode = 1
@@ -19,7 +19,6 @@ android {
         testInstrumentationRunner = Versions.testInstrumentationRunner
         vectorDrawables.useSupportLibrary = true
     }
-
 
     buildTypes {
         getByName("release") {
@@ -29,19 +28,21 @@ android {
             )
         }
     }
+
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
 
-    kotlinOptions.jvmTarget = JavaVersion.VERSION_1_8.toString()
+    kotlinOptions.jvmTarget = "${JavaVersion.VERSION_11}"
 
     buildFeatures {
         viewBinding = true
         dataBinding = true
     }
-    packagingOptions {
-        exclude("META-INF/*.kotlin_module")
+
+    lint {
+        isCheckDependencies = true
     }
 }
 
@@ -52,15 +53,28 @@ dependencies {
     implementation(Deps.Jetpack.activity)
     implementation(Deps.Jetpack.fragment)
     implementation(Deps.Jetpack.appcompat)
+
     implementation(Deps.UI.materialDesign)
     implementation(Deps.UI.constraintLayout)
+    implementation(Deps.UI.glide)
+    kapt(Deps.UI.glideCompiler)
+    implementation(Deps.UI.uikit)
+
+    implementation(Deps.Arch.network)
+    implementation(Deps.Arch.retrofit2)
+    implementation(Deps.Arch.gson)
+    implementation(Deps.Arch.loggingInterceptor)
+    implementation(Deps.Arch.coroutinesCore)
     implementation(Deps.Arch.hiltAndroid)
     kapt(Deps.Arch.hiltCompiler)
-    implementation("com.afoxplus.android:uikit:1.0.0")
-    implementation("com.afoxplus.android:products:1.0.0")
-    implementation(project(mapOf("path" to ":module")))
+
+    implementation(Deps.Arch.products)
 
     testImplementation(Deps.Test.jUnit)
+    testImplementation(Deps.Test.testCore)
+    testImplementation(Deps.Test.truth)
+    testImplementation(Deps.Test.mockitoKotlin)
     androidTestImplementation(Deps.Test.androidJUnit)
     androidTestImplementation(Deps.Test.espresso)
+    implementation(project(mapOf("path" to ":module")))
 }

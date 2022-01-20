@@ -2,9 +2,10 @@ package com.afoxplus.orders.di
 
 import android.content.Context
 import android.os.Build
+import com.afoxplus.network.annotations.MockService
+import com.afoxplus.network.interceptors.BaseInterceptor
+import com.afoxplus.products.di.*
 import com.afoxplus.uikit.extensions.convertToString
-import com.afoxplus.uikit.service.BaseInterceptor
-import com.afoxplus.uikit.service.annotations.MockService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,22 +18,18 @@ import retrofit2.Invocation
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
-import javax.inject.Named
 
 @Module
 @InstallIn(SingletonComponent::class)
 internal class OrdersRetrofitModule {
 
-    companion object {
-        const val PROVIDER_ORDERS_RETROFIT: String = "PROVIDER_ORDERS_RETROFIT"
-        const val PROVIDER_ORDERS_INTERCEPTOR: String = "PROVIDER_ORDERS_INTERCEPTOR"
-        const val PROVIDER_ORDERS_HTTP_CLIENT: String = "PROVIDER_ORDERS_HTTP_CLIENT"
-        const val PROVIDER_ORDERS_URL: String = "PROVIDER_ORDERS_URL"
-    }
-
+    @OrderBaseURL
     @Provides
-    @Named(PROVIDER_ORDERS_INTERCEPTOR)
-    fun provideOrdersInterceptor(
+    fun provideBaseUrl(): String = "https://8ly21gpvcj.execute-api.us-east-1.amazonaws.com/dev/"
+
+    @OrderInterceptor
+    @Provides
+    fun provideInterceptor(
         @ApplicationContext appContext: Context
     ): Interceptor = BaseInterceptor(
         context = appContext
@@ -51,12 +48,12 @@ internal class OrdersRetrofitModule {
         } ?: return@BaseInterceptor setUpInterceptor(chain)
     }
 
+    @OrderRetrofit
     @Provides
-    @Named(PROVIDER_ORDERS_RETROFIT)
-    fun providerOrdersRetrofit(
-        @Named(PROVIDER_ORDERS_URL) baseUrl: String,
-        @Named(PROVIDER_ORDERS_HTTP_CLIENT)client: OkHttpClient,
-        gsonConverterFactory: GsonConverterFactory
+    fun providerRetrofit(
+        @OrderBaseURL baseUrl: String,
+        @OrderOkHttpClient client: OkHttpClient,
+        @OrderGsonConverterFactory gsonConverterFactory: GsonConverterFactory
     ): Retrofit {
         return Retrofit.Builder()
             .baseUrl(baseUrl)
@@ -65,11 +62,11 @@ internal class OrdersRetrofitModule {
             .build()
     }
 
+    @OrderOkHttpClient
     @Provides
-    @Named(PROVIDER_ORDERS_HTTP_CLIENT)
-    fun providerOrdersOkHttpClient(
-        httpLoggingInterceptor: HttpLoggingInterceptor,
-        @Named(PROVIDER_ORDERS_INTERCEPTOR)  apiInterceptor: Interceptor
+    fun providerOkHttpClient(
+        @OrderHttpLoggingInterceptor httpLoggingInterceptor: HttpLoggingInterceptor,
+        @OrderInterceptor apiInterceptor: Interceptor
     ): OkHttpClient {
         return OkHttpClient.Builder()
             .connectTimeout(60, TimeUnit.SECONDS)
@@ -78,6 +75,20 @@ internal class OrdersRetrofitModule {
             .addInterceptor(httpLoggingInterceptor)
             .addInterceptor(apiInterceptor)
             .build()
+    }
+
+    @OrderGsonConverterFactory
+    @Provides
+    fun providerGsonConverterFactory(): GsonConverterFactory {
+        return GsonConverterFactory.create()
+    }
+
+    @OrderHttpLoggingInterceptor
+    @Provides
+    fun providerHttpLoggingInterceptor(): HttpLoggingInterceptor {
+        val loggingInterceptor = HttpLoggingInterceptor()
+        loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+        return loggingInterceptor
     }
 
     private fun setUpMockInterceptor(

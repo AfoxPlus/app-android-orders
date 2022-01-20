@@ -62,8 +62,8 @@ class MarketOrderActivity : BaseActivity() {
             supportFragmentManager,
             lifecycle,
             listOf(
-                productFlow.getFragmentRecommendedProducts(),
-                productFlow.getFragmentRecommendedProducts()
+                productFlow.getProductsSaleFragment(),
+                productFlow.getProductMenuFragment()
             )
         )
         binding.viewPagerMarket.adapter = viewPagerAdapter
