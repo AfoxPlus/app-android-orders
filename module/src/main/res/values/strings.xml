@@ -12,6 +12,6 @@
     <string name="orders_market_label_my_order">Mi pedido</string>
     <string-array name="orders_market_order_tabs">
         <item>Carta</item>
-        <item>Bebidas</item>
+        <item>Menu</item>
     </string-array>
 </resources>

@@ -3,7 +3,7 @@ package com.afoxplus.orders.delivery.viewmodels
 import androidx.lifecycle.*
 import com.afoxplus.orders.delivery.views.events.ProductAddedToCartSuccessfullyEvent
 import com.afoxplus.orders.entities.Order
-import com.afoxplus.products.delivery.views.events.OnClickItemRecommendedEvent
+import com.afoxplus.products.delivery.views.events.OnClickProductSaleEvent
 import com.afoxplus.products.entities.Product
 import com.afoxplus.uikit.bus.Event
 import com.afoxplus.uikit.bus.EventBusListener
@@ -28,7 +28,7 @@ internal class MarketOrderViewModel @Inject constructor(
     init {
         viewModelScope.launch(Dispatchers.Main) {
             eventBusListener.subscribe().collectLatest { event ->
-                if (event is OnClickItemRecommendedEvent) {
+                if (event is OnClickProductSaleEvent) {
                     mGoToAddCardProductEvent.postValue(Event(event.product))
                 }
             }
