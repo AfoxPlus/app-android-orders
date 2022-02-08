@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="4dp"
         app:cardCornerRadius="8dp"
-        app:cardElevation="1dp">
+        app:cardElevation="2dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -36,7 +36,7 @@
                 tools:text="Nombre del prodctos" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                style="@style/Title_10"
+                style="@style/Number_14"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
