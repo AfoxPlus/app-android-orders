@@ -1,19 +1,22 @@
 package com.afoxplus.orders.delivery.views.activities
 
+import androidx.activity.viewModels
 import com.afoxplus.orders.databinding.ActivityOrdersShopCartBinding
 import com.afoxplus.orders.delivery.flow.OrderFlow
+import com.afoxplus.orders.delivery.viewmodels.ShopCartViewModel
 import com.afoxplus.orders.delivery.views.fragments.ShopCartFragment
 import com.afoxplus.orders.delivery.views.fragments.OrderSentSuccessfullyFragment
 import com.afoxplus.orders.entities.Order
 import com.afoxplus.uikit.activities.BaseActivity
+import com.afoxplus.uikit.activities.extensions.addFragmentToActivity
+import com.afoxplus.uikit.bus.EventObserver
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ShopCartActivity : BaseActivity() {
 
     private lateinit var binding: ActivityOrdersShopCartBinding
-
-    //private val cartProductsViewModel: CartProductsViewModel by viewModels()
+    private val shopCartViewModel: ShopCartViewModel by viewModels()
     private val shopCartProductFragment: ShopCartFragment by lazy { ShopCartFragment.getInstance() }
 
     override fun setMainView() {
@@ -23,23 +26,23 @@ class ShopCartActivity : BaseActivity() {
     }
 
     override fun setUpView() {
-      /*  getIntentData()
+       getIntentData()
         addFragmentToActivity(
             supportFragmentManager,
-            cartProductFragment,
+            shopCartProductFragment,
             binding.fragmentContainer.id
-        )*/
+        )
     }
 
     override fun observerViewModel() {
-//        cartProductsViewModel.eventOnClickSendOrder.observe(this, EventObserver {
-//            showOrderSentSuccessfullyFragment()
-//        })
+        shopCartViewModel.eventOnClickSendOrder.observe(this, EventObserver {
+            showOrderSentSuccessfullyFragment()
+        })
     }
 
     private fun getIntentData() {
         intent.getParcelableExtra<Order>(Order::class.java.name)?.let { order ->
-            //cartProductsViewModel.setOrder(order)
+            shopCartViewModel.setOrder(order)
         }
     }
     

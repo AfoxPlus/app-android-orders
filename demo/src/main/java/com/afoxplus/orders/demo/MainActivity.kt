@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.button.setOnClickListener {
-            orderFlow.goToCartProducts(this, Order(Calendar.getInstance().time))
+            orderFlow.goToMarketOrderActivity(this)
         }
     }
 }
