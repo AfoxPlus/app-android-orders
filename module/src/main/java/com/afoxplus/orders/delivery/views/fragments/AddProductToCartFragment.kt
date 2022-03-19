@@ -4,21 +4,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import com.afoxplus.orders.databinding.FragmentOrdersAddCartProductBinding
+import com.afoxplus.orders.databinding.FragmentOrdersAddProductToCartBinding
 import com.afoxplus.orders.delivery.viewmodels.AddCartProductViewModel
 import com.afoxplus.uikit.fragments.BaseFragment
 
-class AddCartProductFragment : BaseFragment() {
+class AddProductToCartFragment : BaseFragment() {
 
-    private lateinit var binding: FragmentOrdersAddCartProductBinding
+    private lateinit var binding: FragmentOrdersAddProductToCartBinding
     private val addCartProductViewModel: AddCartProductViewModel by activityViewModels()
 
     companion object {
-        fun getInstance(): AddCartProductFragment = AddCartProductFragment()
+        fun getInstance(): AddProductToCartFragment = AddProductToCartFragment()
     }
 
     override fun getMainView(inflater: LayoutInflater, container: ViewGroup?): View {
-        binding = FragmentOrdersAddCartProductBinding.inflate(inflater)
+        binding = FragmentOrdersAddProductToCartBinding.inflate(inflater)
         binding.addCartProductViewModel = addCartProductViewModel
         binding.lifecycleOwner = viewLifecycleOwner
         return binding.root

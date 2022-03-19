@@ -4,12 +4,12 @@
 
     <application>
         <activity
-            android:name=".delivery.views.activities.CartProductsActivity"
+            android:name=".delivery.views.activities.ShopCartActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/UIKit.NoActionBar.Light" />
         <activity
-            android:name=".delivery.views.activities.AddCartProductActivity"
+            android:name=".delivery.views.activities.AddProductToCartActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/UIKit.NoActionBar.Light" />

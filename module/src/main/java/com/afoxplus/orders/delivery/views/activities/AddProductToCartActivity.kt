@@ -1,9 +1,9 @@
 package com.afoxplus.orders.delivery.views.activities
 
 import androidx.activity.viewModels
-import com.afoxplus.orders.databinding.ActivityAddCartProductBinding
+import com.afoxplus.orders.databinding.ActivityAddProductToCartBinding
 import com.afoxplus.orders.delivery.viewmodels.AddCartProductViewModel
-import com.afoxplus.orders.delivery.views.fragments.AddCartProductFragment
+import com.afoxplus.orders.delivery.views.fragments.AddProductToCartFragment
 import com.afoxplus.products.entities.Product
 import com.afoxplus.uikit.activities.BaseActivity
 import com.afoxplus.uikit.activities.extensions.addFragmentToActivity
@@ -11,13 +11,13 @@ import com.afoxplus.uikit.bus.EventObserver
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class AddCartProductActivity : BaseActivity() {
+class AddProductToCartActivity : BaseActivity() {
 
-    private lateinit var binding: ActivityAddCartProductBinding
+    private lateinit var binding: ActivityAddProductToCartBinding
     private val addCartProductViewModel: AddCartProductViewModel by viewModels()
 
     override fun setMainView() {
-        binding = ActivityAddCartProductBinding.inflate(layoutInflater)
+        binding = ActivityAddProductToCartBinding.inflate(layoutInflater)
         binding.lifecycleOwner = this
         setContentView(binding.root)
     }
@@ -27,7 +27,7 @@ class AddCartProductActivity : BaseActivity() {
         binding.viewModel = addCartProductViewModel
         addFragmentToActivity(
             supportFragmentManager,
-            AddCartProductFragment.getInstance(),
+            AddProductToCartFragment.getInstance(),
             binding.fragmentContainer.id
         )
     }
