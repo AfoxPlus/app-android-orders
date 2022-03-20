@@ -45,11 +45,11 @@ class MarketOrderActivity : BaseActivity() {
 
     override fun observerViewModel() {
         marketOrderViewModel.goToAddCardProductEvent.observe(this, EventObserver { product ->
-            orderFlow.goToAddProductToCardActivity(this, product)
+            orderFlow.goToAddProductToOrderActivity(this, product)
         })
 
         marketOrderViewModel.eventOnClickViewOrder.observe(this, EventObserver { order ->
-            orderFlow.goToCartProducts(this, order)
+            orderFlow.goToOrderPreviewActivity(this, order)
         })
 
         marketOrderViewModel.order.observe(this) { order ->

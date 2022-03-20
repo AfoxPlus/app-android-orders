@@ -1,11 +1,8 @@
 package com.afoxplus.orders.di
 
-import com.afoxplus.orders.usecases.AddProductToOrderUseCase
-import com.afoxplus.orders.usecases.FindProductInOrderUseCase
-import com.afoxplus.orders.usecases.FindSaleOrderItemStrategyUseCase
-import com.afoxplus.orders.usecases.actions.AddProductToOrder
-import com.afoxplus.orders.usecases.actions.FindProductInOrder
-import com.afoxplus.orders.usecases.actions.FindSaleOrderItemStrategy
+import com.afoxplus.orders.usecases.actions.*
+import com.afoxplus.orders.usecases.actions.AddProductToOrderUseCase
+import com.afoxplus.orders.usecases.actions.FindSaleOrderItemStrategyUseCase
 import com.afoxplus.orders.usecases.repositories.OrderRepository
 import com.afoxplus.products.usecases.actions.FindSaleProductStrategy
 import com.afoxplus.products.usecases.actions.HasProductStock

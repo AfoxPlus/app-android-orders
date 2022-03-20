@@ -3,11 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data class="ActivityAddProductToCartBinding">
+    <data class="ActivityAddProductToOrderBinding">
 
         <variable
             name="viewModel"
-            type="com.afoxplus.orders.delivery.viewmodels.AddCartProductViewModel" />
+            type="com.afoxplus.orders.delivery.viewmodels.AddProductToOrderViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -27,7 +27,7 @@
             <com.google.android.material.appbar.AppBarLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/light_04">
+                android:background="@color/light_02">
 
                 <com.google.android.material.appbar.MaterialToolbar
                     android:id="@+id/topAppBar"

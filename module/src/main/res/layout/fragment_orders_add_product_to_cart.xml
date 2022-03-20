@@ -7,7 +7,7 @@
 
         <variable
             name="addCartProductViewModel"
-            type="com.afoxplus.orders.delivery.viewmodels.AddCartProductViewModel" />
+            type="com.afoxplus.orders.delivery.viewmodels.AddProductToOrderViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="12dp"
-            app:cardBackgroundColor="@color/light_04"
+            app:cardBackgroundColor="@color/light_02"
             app:cardCornerRadius="6dp"
             app:cardElevation="4dp"
             app:layout_constraintEnd_toEndOf="parent"

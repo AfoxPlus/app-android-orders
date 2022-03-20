@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-internal class AddCartProductViewModel @Inject constructor(
+internal class AddProductToOrderViewModel @Inject constructor(
     private val addProductToOrderUseCase: AddProductToOrder,
     private val findProductInOrder: FindProductInOrder,
     private val orderEventBus: EventBusListener,

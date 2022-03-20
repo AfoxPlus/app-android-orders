@@ -27,7 +27,7 @@
             <com.google.android.material.appbar.AppBarLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/light_04"
+                android:background="@color/light_02"
                 app:liftOnScroll="true">
 
                 <com.google.android.material.appbar.MaterialToolbar
@@ -35,7 +35,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
                     app:layout_scrollFlags="scroll|snap|enterAlways"
-                    app:menu="@menu/menu_orders_market_panel"
                     app:navigationIcon="@drawable/ic_uikit_navigation_back"
                     app:titleTextAppearance="@style/Title_09"
                     app:titleTextColor="@color/dark_01" />
