@@ -1,6 +1,7 @@
 package com.afoxplus.orders.delivery.views.activities
 
 import androidx.activity.viewModels
+import com.afoxplus.orders.R
 import com.afoxplus.orders.databinding.ActivityAddProductToOrderBinding
 import com.afoxplus.orders.delivery.viewmodels.AddProductToOrderViewModel
 import com.afoxplus.orders.delivery.views.fragments.AddProductToCartFragment
@@ -30,12 +31,24 @@ class AddProductToOrderActivity : BaseActivity() {
             AddProductToCartFragment.getInstance(),
             binding.fragmentContainer.id
         )
+        setInitialButtonText()
     }
 
     override fun observerViewModel() {
         addProductToOrderViewModel.eventProductAddedToCardSuccess.observe(this, EventObserver {
             finish()
         })
+
+        addProductToOrderViewModel.order.observe(this) {
+            it?.let { order ->
+                binding.buttonViewOrder.text =
+                    getString(R.string.orders_market_add_product, order.getTotalWithFormat())
+            } ?: setInitialButtonText()
+        }
+    }
+
+    private fun setInitialButtonText() {
+        binding.buttonViewOrder.text = getString(R.string.orders_market_add_product, "")
     }
 
     private fun getIntentData() {

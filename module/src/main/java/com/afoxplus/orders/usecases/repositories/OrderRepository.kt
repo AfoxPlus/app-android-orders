@@ -5,6 +5,11 @@ import com.afoxplus.orders.entities.OrderDetail
 import com.afoxplus.products.entities.Product
 
 interface OrderRepository {
-    suspend fun addProduct(product: Product, quantity: Int): Order
-    suspend fun findProductInCart(product: Product): OrderDetail?
+    fun plusItemProductToDifferentContextOrder(product: Product): Order
+    fun lessItemProductToDifferentContextOrder(product: Product): Order
+    fun setItemProductInDifferentContextOrder(product: Product, quantity: Int): Order
+    fun updateOrderFromDifferentContext(): Order
+
+    suspend fun sendOrder(order: Order)
+    suspend fun findProductInOrder(product: Product): OrderDetail?
 }

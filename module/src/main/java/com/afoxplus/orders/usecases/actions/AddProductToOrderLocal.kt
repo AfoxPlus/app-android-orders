@@ -10,29 +10,30 @@ import kotlinx.coroutines.flow.flow
 import java.io.IOException
 import javax.inject.Inject
 
-fun interface AddProductToOrder {
-    suspend operator fun invoke(product: Product, quantity: Int): Flow<Result<Order>>
+interface AddProductToOrderLocal {
+    suspend operator fun invoke(product: Product):Flow<Result<Order>>
 }
 
-internal class AddProductToOrderUseCase @Inject constructor(
+internal class AddProductToOrderLocalUseCase @Inject constructor(
     private val orderRepository: OrderRepository,
     private val hasProductStock: HasProductStock,
     private val findSaleProductStrategy: FindSaleProductStrategy,
     private val findSaleOrderItemStrategy: FindSaleOrderItemStrategy
-) : AddProductToOrder {
-    override suspend fun invoke(product: Product, quantity: Int): Flow<Result<Order>> = flow {
+) : AddProductToOrderLocal {
+    override suspend fun invoke(product: Product): Flow<Result<Order>> = flow{
         try {
-            if (hasProductStock(product, quantity)) {
+            if (hasProductStock(product,0)) {
                 //val productStrategy = findSaleProductStrategy(product)
                 //product.addSaleProductStrategy(productStrategy)
                 //val orderDetailStrategy = findSaleOrderItemStrategy(product)
-                val order = orderRepository.addProduct(product, quantity)
+                //val order = orderRepository.addProduct(product, quantity)
                 //order.addProduct(product, quantity, orderDetailStrategy)
-                emit(Result.success(order))
+                //emit(Result.success(order))
             } else
                 emit(Result.failure<Order>(IOException("Has not stock product")))
         } catch (ex: Throwable) {
             emit(Result.failure<Order>(ex))
         }
     }
+
 }

@@ -5,10 +5,13 @@ import com.afoxplus.orders.entities.OrderDetail
 import com.afoxplus.products.entities.Product
 
 internal interface OrderLocalDataSource {
-    suspend fun clearCurrentOrder()
-    suspend fun updateOrder(order: Order)
-    suspend fun findOrder(): Order?
-    suspend fun newOrder(): Order
-    suspend fun addProduct(product: Product, quantity: Int)
-    suspend fun findProductInOrder(product: Product): OrderDetail?
+    fun plusProductDifferentContextOrder(product: Product): Order
+    fun lessProductDifferentContextOrder(product: Product): Order
+    fun setItemProductInDifferentContextOrder(product: Product, quantity: Int): Order
+    fun updateOrderFromDifferentContext(): Order
+
+    fun clearCurrentOrder()
+    fun findOrder(): Order?
+    fun newOrder(): Order
+    fun findProductInOrder(product: Product): OrderDetail?
 }

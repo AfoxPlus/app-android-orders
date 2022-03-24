@@ -19,9 +19,13 @@ class AddProductToCartFragment : BaseFragment() {
 
     override fun getMainView(inflater: LayoutInflater, container: ViewGroup?): View {
         binding = FragmentOrdersAddProductToCartBinding.inflate(inflater)
-        binding.addCartProductViewModel = addProductToOrderViewModel
         binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
+    }
+
+    override fun setUpView() {
+        binding.plusItem.setOnClickListener { addProductToOrderViewModel.plusProductToDifferentContextOrder() }
+        binding.lessItem.setOnClickListener { addProductToOrderViewModel.lessProductToDifferentContextOrder() }
     }
 
     override fun observerViewModel() {

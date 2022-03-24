@@ -12,6 +12,6 @@ interface FindProductInOrder {
 internal class FindProductInOrderUseCase @Inject constructor(private val orderRepository: OrderRepository) :
     FindProductInOrder {
     override suspend fun invoke(product: Product): OrderDetail? {
-        return orderRepository.findProductInCart(product)
+        return orderRepository.findProductInOrder(product)
     }
 }

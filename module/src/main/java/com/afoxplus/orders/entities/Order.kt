@@ -30,6 +30,28 @@ class Order(
         }
     }
 
+    fun plusItemProduct(product: Product) {
+        val itemsCart = orderDetails.filter { item -> item.product.code == product.code }
+        if (itemsCart.isNotEmpty()) {
+            orderDetails.find { item -> item.product.code == product.code }?.plusItem()
+        } else {
+            val orderDetail = OrderDetail(product, 1)
+            orderDetails.add(orderDetail)
+        }
+    }
+
+    fun lessItemProduct(product: Product) {
+        val itemsCart = orderDetails.filter { item -> item.product.code == product.code }
+        if (itemsCart.isNotEmpty()) {
+            orderDetails.find { item -> item.product.code == product.code }
+                ?.lessItems(::removeItemOrderDetail)
+        }
+    }
+
+    private fun removeItemOrderDetail(orderDetail: OrderDetail) {
+        orderDetails.remove(orderDetail)
+    }
+
     fun addSaleOrderStrategy(orderStrategy: SaleOrderStrategy) {
         this.saleOrderStrategy = orderStrategy
     }
