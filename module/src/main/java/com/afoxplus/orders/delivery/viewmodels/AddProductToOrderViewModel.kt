@@ -26,7 +26,7 @@ internal class AddProductToOrderViewModel @Inject constructor(
     private val plusItemProduct: PlusItemProductToDifferentContextOrder,
     private val lessItemProduct: LessItemProductToDifferentContextOrder,
     private val setItemProduct: SetItemProductInDifferentContextOrder,
-    private val updateOrder: UpdateOrderFromDifferentContext,
+    private val updateProductInDifferentContextOrder: UpdateProductInDifferentContextOrder,
     @UIKitIODispatcher private val ioDispatcher: CoroutineDispatcher,
     @UIKitMainDispatcher private val mainDispatcher: CoroutineDispatcher
 ) : ViewModel() {
@@ -89,13 +89,15 @@ internal class AddProductToOrderViewModel @Inject constructor(
 
     fun addOrUpdateOrder() =
         viewModelScope.launch(ioDispatcher) {
-            updateOrder().collectLatest { result ->
-                result.onSuccess {
-                    mEventProductAddedToCardSuccess.postValue(Event(Unit))
-                    orderEventBus.send(ProductAddedToCartSuccessfullyEvent.build(it))
-                }
-                result.onFailure {
-                    Log.d("ORDERS", "Error: $it")
+            mProduct.value?.let { product ->
+                updateProductInDifferentContextOrder(product).collectLatest { result ->
+                    result.onSuccess {
+                        mEventProductAddedToCardSuccess.postValue(Event(Unit))
+                        orderEventBus.send(ProductAddedToCartSuccessfullyEvent.build(it))
+                    }
+                    result.onFailure {
+                        Log.d("ORDERS", "Error: $it")
+                    }
                 }
             }
         }

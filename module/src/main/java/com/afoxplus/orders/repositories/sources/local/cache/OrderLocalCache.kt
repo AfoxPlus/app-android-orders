@@ -42,22 +42,17 @@ internal class OrderLocalCache @Inject constructor() : OrderLocalDataSource {
         order = null
     }
 
-    override fun updateOrderFromDifferentContext(): Order {
-        orderDifferentContext?.let { previewOrder ->
-            this.order = findOrder()
-            if (order == null) this.order = newOrder()
-            previewOrder.getOrderDetails()
-                .map { orderDetail ->
-                    this.order?.plusItemProduct(orderDetail.product)
-                }
-        }
+    override fun updateProductInDifferentContextOrder(product: Product): Order {
+        findOrder() ?: newOrder()
+        orderDifferentContext?.getOrderDetailByProduct(product)?.let { orderDetail ->
+            order?.removeItemOrderDetailByProduct(product)
+            order?.addProduct(product, orderDetail.quantity)
+        } ?: order?.removeItemOrderDetailByProduct(product)
         orderDifferentContext = null
         return this.order ?: throw Exception(ERROR_ORDER_IS_NULL)
     }
 
-    override fun findOrder(): Order? {
-        return this.order
-    }
+    override fun findOrder(): Order? = this.order
 
     private fun findOrderDifferentContext(): Order? {
         return this.orderDifferentContext

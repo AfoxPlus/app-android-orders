@@ -11,7 +11,6 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -37,7 +36,7 @@ object OrdersUseCaseModule {
     @Provides
     fun provideFindProductInOrderUseCase(orderRepository: OrderRepository): FindProductInOrder =
         FindProductInOrderUseCase(orderRepository)
-    
+
 }
 
 @Module
@@ -54,5 +53,8 @@ internal abstract class OrdersUseCaseInternalModule {
     abstract fun bindSetItemProductInDifferentContextOrder(setItemProduct: SetItemProductInDifferentContextOrderUseCase): SetItemProductInDifferentContextOrder
 
     @Binds
-    abstract fun bindUpdateOrderFromDifferentContext(updateOrderFromDifferentContext: UpdateOrderFromDifferentContextUseCase): UpdateOrderFromDifferentContext
+    abstract fun bindUpdateOrderFromDifferentContext(updateOrderFromDifferentContext: UpdateProductInDifferentContextOrderUseCase): UpdateProductInDifferentContextOrder
+
+    @Binds
+    abstract fun bindClearLocalOrder(clearLocalOrder: ClearLocalOrderUseCase): ClearLocalOrder
 }

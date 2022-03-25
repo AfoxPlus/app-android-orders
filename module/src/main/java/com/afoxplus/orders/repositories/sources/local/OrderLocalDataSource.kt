@@ -8,7 +8,7 @@ internal interface OrderLocalDataSource {
     fun plusProductDifferentContextOrder(product: Product): Order
     fun lessProductDifferentContextOrder(product: Product): Order
     fun setItemProductInDifferentContextOrder(product: Product, quantity: Int): Order
-    fun updateOrderFromDifferentContext(): Order
+    fun updateProductInDifferentContextOrder(product: Product): Order
 
     fun clearCurrentOrder()
     fun findOrder(): Order?

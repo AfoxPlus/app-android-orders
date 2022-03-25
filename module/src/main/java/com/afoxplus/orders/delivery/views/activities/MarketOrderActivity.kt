@@ -39,6 +39,7 @@ class MarketOrderActivity : BaseActivity() {
 
     override fun setUpView() {
         binding.viewModel = marketOrderViewModel
+        binding.topAppBar.setNavigationOnClickListener { marketOrderViewModel.onBackPressed() }
         setUpMarkerOrderTab()
         binding.nameMarket.text = "Rest. Doña Esther"
     }
@@ -55,6 +56,8 @@ class MarketOrderActivity : BaseActivity() {
         marketOrderViewModel.order.observe(this) { order ->
             order?.let { binding.buttonViewOrder.visibility = View.VISIBLE }
         }
+
+        marketOrderViewModel.eventOnBackPressed.observe(this, EventObserver { onBackPressed() })
     }
 
     private fun setUpMarkerOrderTab() {

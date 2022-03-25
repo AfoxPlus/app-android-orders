@@ -26,8 +26,12 @@ internal class OrderRepositorySource @Inject constructor(
         return orderLocalDataSource.setItemProductInDifferentContextOrder(product, quantity)
     }
 
-    override fun updateOrderFromDifferentContext(): Order {
-        return orderLocalDataSource.updateOrderFromDifferentContext()
+    override fun updateProductInDifferentContextOrder(product: Product): Order {
+        return orderLocalDataSource.updateProductInDifferentContextOrder(product)
+    }
+
+    override fun clearLocalOrder() {
+        orderLocalDataSource.clearCurrentOrder()
     }
 
     override suspend fun sendOrder(order: Order) {

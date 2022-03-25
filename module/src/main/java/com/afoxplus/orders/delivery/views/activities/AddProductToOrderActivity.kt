@@ -26,6 +26,7 @@ class AddProductToOrderActivity : BaseActivity() {
     override fun setUpView() {
         getIntentData()
         binding.viewModel = addProductToOrderViewModel
+        binding.topAppBar.setNavigationOnClickListener { onBackPressed() }
         addFragmentToActivity(
             supportFragmentManager,
             AddProductToCartFragment.getInstance(),

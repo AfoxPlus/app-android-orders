@@ -52,11 +52,19 @@ class Order(
         orderDetails.remove(orderDetail)
     }
 
+    fun removeItemOrderDetailByProduct(product: Product) {
+        val itemProduct = orderDetails.find { item -> item.product.code == product.code }
+        orderDetails.remove(itemProduct)
+    }
+
     fun addSaleOrderStrategy(orderStrategy: SaleOrderStrategy) {
         this.saleOrderStrategy = orderStrategy
     }
 
     fun getOrderDetails(): List<OrderDetail> = orderDetails
+
+    fun getOrderDetailByProduct(product: Product): OrderDetail? =
+        orderDetails.find { item -> item.product.code == product.code }
 
     private fun calculateTotalWithoutStrategy(): Double {
         return orderDetails.sumOf { item -> item.calculateSubTotal() }

@@ -8,7 +8,8 @@ interface OrderRepository {
     fun plusItemProductToDifferentContextOrder(product: Product): Order
     fun lessItemProductToDifferentContextOrder(product: Product): Order
     fun setItemProductInDifferentContextOrder(product: Product, quantity: Int): Order
-    fun updateOrderFromDifferentContext(): Order
+    fun updateProductInDifferentContextOrder(product: Product): Order
+    fun clearLocalOrder()
 
     suspend fun sendOrder(order: Order)
     suspend fun findProductInOrder(product: Product): OrderDetail?
