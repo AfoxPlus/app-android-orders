@@ -1,14 +1,12 @@
 package com.afoxplus.orders.di
 
-import com.afoxplus.orders.usecases.AddProductToOrderUseCase
-import com.afoxplus.orders.usecases.FindProductInOrderUseCase
-import com.afoxplus.orders.usecases.FindSaleOrderItemStrategyUseCase
-import com.afoxplus.orders.usecases.actions.AddProductToOrder
-import com.afoxplus.orders.usecases.actions.FindProductInOrder
-import com.afoxplus.orders.usecases.actions.FindSaleOrderItemStrategy
+import com.afoxplus.orders.usecases.actions.*
+import com.afoxplus.orders.usecases.actions.AddProductsToOrderUseCase
+import com.afoxplus.orders.usecases.actions.FindSaleOrderItemStrategyUseCase
 import com.afoxplus.orders.usecases.repositories.OrderRepository
 import com.afoxplus.products.usecases.actions.FindSaleProductStrategy
 import com.afoxplus.products.usecases.actions.HasProductStock
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -28,7 +26,7 @@ object OrdersUseCaseModule {
         findSaleProductStrategy: FindSaleProductStrategy,
         findSaleOrderItemStrategy: FindSaleOrderItemStrategy
     ): AddProductToOrder =
-        AddProductToOrderUseCase(
+        AddProductsToOrderUseCase(
             orderRepository,
             hasProductStock,
             findSaleProductStrategy,
@@ -38,4 +36,25 @@ object OrdersUseCaseModule {
     @Provides
     fun provideFindProductInOrderUseCase(orderRepository: OrderRepository): FindProductInOrder =
         FindProductInOrderUseCase(orderRepository)
+
+}
+
+@Module
+@InstallIn(SingletonComponent::class)
+internal abstract class OrdersUseCaseInternalModule {
+
+    @Binds
+    abstract fun bindPlusItemProductToDifferentContextOrder(plusItem: PlusItemProductToDifferentContextOrderUseCase): PlusItemProductToDifferentContextOrder
+
+    @Binds
+    abstract fun bindLessItemProductToDifferentContextOrder(lessItem: LessItemProductToDifferentContextOrderUseCase): LessItemProductToDifferentContextOrder
+
+    @Binds
+    abstract fun bindSetItemProductInDifferentContextOrder(setItemProduct: SetItemProductInDifferentContextOrderUseCase): SetItemProductInDifferentContextOrder
+
+    @Binds
+    abstract fun bindUpdateOrderFromDifferentContext(updateOrderFromDifferentContext: UpdateProductInDifferentContextOrderUseCase): UpdateProductInDifferentContextOrder
+
+    @Binds
+    abstract fun bindClearLocalOrder(clearLocalOrder: ClearLocalOrderUseCase): ClearLocalOrder
 }

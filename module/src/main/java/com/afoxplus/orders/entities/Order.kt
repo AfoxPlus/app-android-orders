@@ -30,11 +30,41 @@ class Order(
         }
     }
 
+    fun plusItemProduct(product: Product) {
+        val itemsCart = orderDetails.filter { item -> item.product.code == product.code }
+        if (itemsCart.isNotEmpty()) {
+            orderDetails.find { item -> item.product.code == product.code }?.plusItem()
+        } else {
+            val orderDetail = OrderDetail(product, 1)
+            orderDetails.add(orderDetail)
+        }
+    }
+
+    fun lessItemProduct(product: Product) {
+        val itemsCart = orderDetails.filter { item -> item.product.code == product.code }
+        if (itemsCart.isNotEmpty()) {
+            orderDetails.find { item -> item.product.code == product.code }
+                ?.lessItems(::removeItemOrderDetail)
+        }
+    }
+
+    private fun removeItemOrderDetail(orderDetail: OrderDetail) {
+        orderDetails.remove(orderDetail)
+    }
+
+    fun removeItemOrderDetailByProduct(product: Product) {
+        val itemProduct = orderDetails.find { item -> item.product.code == product.code }
+        orderDetails.remove(itemProduct)
+    }
+
     fun addSaleOrderStrategy(orderStrategy: SaleOrderStrategy) {
         this.saleOrderStrategy = orderStrategy
     }
 
     fun getOrderDetails(): List<OrderDetail> = orderDetails
+
+    fun getOrderDetailByProduct(product: Product): OrderDetail? =
+        orderDetails.find { item -> item.product.code == product.code }
 
     private fun calculateTotalWithoutStrategy(): Double {
         return orderDetails.sumOf { item -> item.calculateSubTotal() }

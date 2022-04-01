@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import com.afoxplus.orders.databinding.FragmentOrderSentSuccessfullyBinding
 import com.afoxplus.uikit.fragments.BaseFragment
 
-internal class OrderSentSuccessfullyFragment : BaseFragment() {
+class OrderSentSuccessfullyFragment : BaseFragment() {
     private lateinit var binding: FragmentOrderSentSuccessfullyBinding
 
     override fun getMainView(inflater: LayoutInflater, container: ViewGroup?): View {

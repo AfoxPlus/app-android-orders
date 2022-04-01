@@ -3,13 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-
-        <variable
-            name="addCartProductViewModel"
-            type="com.afoxplus.orders.delivery.viewmodels.AddCartProductViewModel" />
-    </data>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -20,7 +13,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="12dp"
-            app:cardBackgroundColor="@color/light_04"
+            app:cardBackgroundColor="@color/light_02"
             app:cardCornerRadius="6dp"
             app:cardElevation="4dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -54,6 +47,7 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/lessItem"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:srcCompat="@drawable/ic_uikit_arrow_down" />
@@ -68,6 +62,7 @@
                         tools:text="1" />
 
                     <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/plusItem"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:srcCompat="@drawable/ic_uikit_arrow_up" />

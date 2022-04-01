@@ -4,18 +4,15 @@
 
     <application>
         <activity
-            android:name=".delivery.views.activities.CartProductsActivity"
-            android:exported="true"
+            android:name=".delivery.views.activities.OrderPreviewActivity"
             android:screenOrientation="portrait"
             android:theme="@style/UIKit.NoActionBar.Light" />
         <activity
-            android:name=".delivery.views.activities.AddCartProductActivity"
-            android:exported="true"
+            android:name=".delivery.views.activities.AddProductToOrderActivity"
             android:screenOrientation="portrait"
             android:theme="@style/UIKit.NoActionBar.Light" />
         <activity
             android:name=".delivery.views.activities.MarketOrderActivity"
-            android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/UIKit.NoActionBar.Light" />
     </application>

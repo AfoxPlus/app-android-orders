@@ -4,29 +4,28 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import com.afoxplus.orders.databinding.FragmentCartProductsBinding
-import com.afoxplus.orders.delivery.viewmodels.CartProductsViewModel
+import com.afoxplus.orders.databinding.FragmentShopCartBinding
+import com.afoxplus.orders.delivery.viewmodels.ShopCartViewModel
 import com.afoxplus.orders.delivery.views.adapters.ItemCartProductAdapter
 import com.afoxplus.uikit.fragments.BaseFragment
 
-
-internal class CartProductsFragment : BaseFragment() {
-    private lateinit var binding: FragmentCartProductsBinding
-    private val cartProductsViewModel: CartProductsViewModel by activityViewModels()
+class ShopCartFragment : BaseFragment() {
+    private lateinit var binding: FragmentShopCartBinding
+    private val cartProductsViewModel: ShopCartViewModel by activityViewModels()
     private val adapter: ItemCartProductAdapter by lazy { ItemCartProductAdapter() }
 
     override fun getMainView(inflater: LayoutInflater, container: ViewGroup?): View {
-        binding = FragmentCartProductsBinding.inflate(inflater)
+        binding = FragmentShopCartBinding.inflate(inflater)
         binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
     }
 
     companion object {
-        fun getInstance(): CartProductsFragment = CartProductsFragment()
+        fun getInstance(): ShopCartFragment = ShopCartFragment()
     }
 
     override fun setUpView() {
-        binding.cartProductsViewModel = cartProductsViewModel
+        binding.shopCartViewModel = cartProductsViewModel
         binding.adapter = adapter
         binding.marketName.text = "Restaurante Doña Esther"
     }

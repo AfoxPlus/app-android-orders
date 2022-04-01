@@ -3,11 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data class="FragmentCartProductsBinding">
+    <data class="FragmentShopCartBinding">
 
         <variable
-            name="cartProductsViewModel"
-            type="com.afoxplus.orders.delivery.viewmodels.CartProductsViewModel" />
+            name="shopCartViewModel"
+            type="com.afoxplus.orders.delivery.viewmodels.ShopCartViewModel" />
 
         <variable
             name="adapter"
@@ -103,8 +103,8 @@
             android:layout_marginEnd="12dp"
             android:layout_marginBottom="6dp"
             android:backgroundTint="@color/red_01"
-            android:onClick="@{()-> cartProductsViewModel.onClickSendOrder()}"
-            android:text="@{cartProductsViewModel.order.getLabelSendMyOrder}"
+            android:onClick="@{()-> shopCartViewModel.onClickSendOrder()}"
+            android:text="@{shopCartViewModel.order.getLabelSendMyOrder}"
             android:textAllCaps="false"
             android:textAppearance="@style/UIKit.TextAppearance.Button"
             app:cornerRadius="4dp"
