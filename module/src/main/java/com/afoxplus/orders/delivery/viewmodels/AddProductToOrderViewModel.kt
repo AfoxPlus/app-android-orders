@@ -18,7 +18,7 @@ internal class AddProductToOrderViewModel @Inject constructor(
     private val eventBusListener: EventBusListener,
     private val findProductInOrder: FindProductInOrder,
     private val calculateSubTotalByProduct: CalculateSubTotalByProduct,
-    private val addOrUpdateProductToOrderLocal: AddOrUpdateProductToOrderLocal,
+    private val addOrUpdateProductToCurrentOrder: AddOrUpdateProductToCurrentOrder,
     @UIKitMainDispatcher private val mainDispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
@@ -56,7 +56,7 @@ internal class AddProductToOrderViewModel @Inject constructor(
     fun addOrUpdateToCurrentOrder() =
         viewModelScope.launch(mainDispatcher) {
             mProduct.value?.let { product ->
-                addOrUpdateProductToOrderLocal(quantityChanged, product)
+                addOrUpdateProductToCurrentOrder(quantityChanged, product)
                 mEventProductAddedToCardSuccess.postValue(Event(Unit))
                 eventBusListener.send(AddedProductToCurrentOrderSuccessfullyEvent.build())
             }

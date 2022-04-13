@@ -44,7 +44,7 @@ object OrdersUseCaseModule {
 internal abstract class OrdersUseCaseInternalModule {
 
     @Binds
-    abstract fun bindUpdateOrderFromDifferentContext(updateOrderFromDifferentContext: AddOrUpdateProductToOrderLocalUseCase): AddOrUpdateProductToOrderLocal
+    abstract fun bindUpdateOrderFromDifferentContext(updateOrderFromDifferentContext: AddOrUpdateProductToCurrentOrderUseCase): AddOrUpdateProductToCurrentOrder
 
     @Binds
     abstract fun bindClearLocalOrder(clearLocalOrder: ClearCurrentOrderUseCase): ClearCurrentOrder
