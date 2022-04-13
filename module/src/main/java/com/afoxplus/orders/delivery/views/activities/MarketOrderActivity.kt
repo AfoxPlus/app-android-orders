@@ -2,6 +2,7 @@ package com.afoxplus.orders.delivery.views.activities
 
 import android.view.View
 import androidx.activity.viewModels
+import androidx.core.content.ContextCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.afoxplus.orders.R
 import com.afoxplus.orders.databinding.ActivityOrdersMarketPanelBinding
@@ -30,6 +31,12 @@ class MarketOrderActivity : BaseActivity() {
 
     private lateinit var viewPagerAdapter: ViewPagerAdapter
     private val marketOrderTabs: List<String> by lazy { listOf(*resources.getStringArray(R.array.orders_market_order_tabs)) }
+    private val marketOrderTabIcons: List<Int> by lazy {
+        listOf(
+            R.drawable.orders_ic_carta,
+            R.drawable.orders_ic_menu
+        )
+    }
 
     override fun setMainView() {
         binding = ActivityOrdersMarketPanelBinding.inflate(layoutInflater)
@@ -39,9 +46,9 @@ class MarketOrderActivity : BaseActivity() {
 
     override fun setUpView() {
         binding.viewModel = marketOrderViewModel
-        binding.topAppBar.setNavigationOnClickListener { marketOrderViewModel.onBackPressed() }
+        binding.marketOrderToolBar.setNavigationOnClickListener { marketOrderViewModel.onBackPressed() }
         setUpMarkerOrderTab()
-        binding.nameMarket.text = "Rest. Doña Esther"
+        binding.marketOrderRestaurantName.text = "Rest. Doña Esther"
     }
 
     override fun observerViewModel() {
@@ -72,9 +79,12 @@ class MarketOrderActivity : BaseActivity() {
         binding.viewPagerMarket.adapter = viewPagerAdapter
         binding.viewPagerMarket.orientation = ViewPager2.ORIENTATION_HORIZONTAL
         TabLayoutMediator(
-            binding.tabMarket,
+            binding.marketOrderProductsTab,
             binding.viewPagerMarket
-        ) { tab, position -> tab.text = marketOrderTabs[position] }.attach()
+        ) { tab, position ->
+            tab.text = marketOrderTabs[position]
+            tab.icon = ContextCompat.getDrawable(this, marketOrderTabIcons[position])
+        }.attach()
     }
 
 }

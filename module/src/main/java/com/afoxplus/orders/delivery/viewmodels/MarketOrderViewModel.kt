@@ -1,9 +1,10 @@
 package com.afoxplus.orders.delivery.viewmodels
 
 import androidx.lifecycle.*
-import com.afoxplus.orders.delivery.views.events.ProductAddedToCartSuccessfullyEvent
+import com.afoxplus.orders.delivery.views.events.AddedProductToCurrentOrderSuccessfullyEvent
 import com.afoxplus.orders.entities.Order
-import com.afoxplus.orders.usecases.actions.ClearLocalOrder
+import com.afoxplus.orders.usecases.actions.ClearCurrentOrder
+import com.afoxplus.orders.usecases.actions.GetCurrentOrder
 import com.afoxplus.products.delivery.views.events.OnClickProductSaleEvent
 import com.afoxplus.products.entities.Product
 import com.afoxplus.uikit.bus.Event
@@ -18,7 +19,8 @@ import javax.inject.Inject
 @HiltViewModel
 internal class MarketOrderViewModel @Inject constructor(
     private val eventBusListener: EventBusListener,
-    private val clearLocalOrder: ClearLocalOrder,
+    private val clearCurrentOrder: ClearCurrentOrder,
+    private val getCurrentOrder: GetCurrentOrder,
     @UIKitMainDispatcher private val mainDispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
@@ -44,8 +46,8 @@ internal class MarketOrderViewModel @Inject constructor(
 
         viewModelScope.launch(mainDispatcher) {
             eventBusListener.subscribe().collectLatest { event ->
-                if (event is ProductAddedToCartSuccessfullyEvent) {
-                    mOrder.postValue(event.order)
+                if (event is AddedProductToCurrentOrderSuccessfullyEvent) {
+                    mOrder.postValue(getCurrentOrder())
                 }
             }
         }
@@ -58,7 +60,7 @@ internal class MarketOrderViewModel @Inject constructor(
     }
 
     fun onBackPressed() = viewModelScope.launch(mainDispatcher) {
-        clearLocalOrder()
+        clearCurrentOrder()
         mEventOnBackPressed.value = Event(Unit)
     }
 }

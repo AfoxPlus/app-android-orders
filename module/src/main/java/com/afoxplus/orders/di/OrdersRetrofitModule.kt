@@ -4,7 +4,6 @@ import android.content.Context
 import android.os.Build
 import com.afoxplus.network.annotations.MockService
 import com.afoxplus.network.interceptors.BaseInterceptor
-import com.afoxplus.products.di.*
 import com.afoxplus.uikit.extensions.convertToString
 import dagger.Module
 import dagger.Provides

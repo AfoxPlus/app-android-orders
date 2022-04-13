@@ -16,22 +16,6 @@ class OrderDetail(
         this.saleOrderItemStrategy = saleOrderDetailStrategy
     }
 
-    fun addQuantity(quantity: Int) {
-        this.quantity += quantity
-    }
-
-    fun plusItem() {
-        this.quantity += 1
-    }
-
-    fun lessItems(removeOrderDetail: (orderDetail: OrderDetail) -> Unit) {
-        if (this.quantity > 0) {
-            this.quantity -= 1
-            if (this.quantity == 0)
-                removeOrderDetail(this)
-        } else removeOrderDetail(this)
-    }
-
     private fun calculateSubTotalWithoutStrategy(): Double {
         return (product.getPriceForSale() * quantity)
     }

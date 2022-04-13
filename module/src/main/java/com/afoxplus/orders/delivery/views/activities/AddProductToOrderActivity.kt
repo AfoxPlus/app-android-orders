@@ -4,6 +4,7 @@ import androidx.activity.viewModels
 import com.afoxplus.orders.R
 import com.afoxplus.orders.databinding.ActivityAddProductToOrderBinding
 import com.afoxplus.orders.delivery.viewmodels.AddProductToOrderViewModel
+import com.afoxplus.orders.delivery.views.extensions.getAmountFormat
 import com.afoxplus.orders.delivery.views.fragments.AddProductToCartFragment
 import com.afoxplus.products.entities.Product
 import com.afoxplus.uikit.activities.BaseActivity
@@ -26,13 +27,14 @@ class AddProductToOrderActivity : BaseActivity() {
     override fun setUpView() {
         getIntentData()
         binding.viewModel = addProductToOrderViewModel
-        binding.topAppBar.setNavigationOnClickListener { onBackPressed() }
+        binding.marketOrderToolBar.setNavigationOnClickListener { onBackPressed() }
         addFragmentToActivity(
             supportFragmentManager,
             AddProductToCartFragment.getInstance(),
             binding.fragmentContainer.id
         )
         setInitialButtonText()
+        binding.buttonViewOrder.setOnClickListener { addProductToOrderViewModel.addOrUpdateToCurrentOrder() }
     }
 
     override fun observerViewModel() {
@@ -40,10 +42,10 @@ class AddProductToOrderActivity : BaseActivity() {
             finish()
         })
 
-        addProductToOrderViewModel.order.observe(this) {
-            it?.let { order ->
+        addProductToOrderViewModel.subTotal.observe(this) {
+            it?.let { subTotal ->
                 binding.buttonViewOrder.text =
-                    getString(R.string.orders_market_add_product, order.getTotalWithFormat())
+                    getString(R.string.orders_market_add_product, subTotal.getAmountFormat())
             } ?: setInitialButtonText()
         }
     }
