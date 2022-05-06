@@ -30,7 +30,7 @@
                 android:background="@color/light_02">
 
                 <com.google.android.material.appbar.MaterialToolbar
-                    android:id="@+id/topAppBar"
+                    android:id="@+id/marketOrderToolBar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
                     app:navigationIcon="@drawable/ic_uikit_navigation_back"
@@ -84,8 +84,7 @@
             android:layout_marginTop="6dp"
             android:layout_marginEnd="12dp"
             android:layout_marginBottom="6dp"
-            android:backgroundTint="@color/red_01"
-            android:onClick="@{() -> viewModel.addOrUpdateOrder}"
+            android:backgroundTint="@color/orders_selector_button_background_color"
             android:text="@string/orders_market_add_product"
             android:textAllCaps="false"
             android:textAppearance="@style/UIKit.TextAppearance.Button"

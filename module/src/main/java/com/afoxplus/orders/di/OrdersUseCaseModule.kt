@@ -44,17 +44,14 @@ object OrdersUseCaseModule {
 internal abstract class OrdersUseCaseInternalModule {
 
     @Binds
-    abstract fun bindPlusItemProductToDifferentContextOrder(plusItem: PlusItemProductToDifferentContextOrderUseCase): PlusItemProductToDifferentContextOrder
+    abstract fun bindUpdateOrderFromDifferentContext(updateOrderFromDifferentContext: AddOrUpdateProductToCurrentOrderUseCase): AddOrUpdateProductToCurrentOrder
 
     @Binds
-    abstract fun bindLessItemProductToDifferentContextOrder(lessItem: LessItemProductToDifferentContextOrderUseCase): LessItemProductToDifferentContextOrder
+    abstract fun bindClearLocalOrder(clearLocalOrder: ClearCurrentOrderUseCase): ClearCurrentOrder
 
     @Binds
-    abstract fun bindSetItemProductInDifferentContextOrder(setItemProduct: SetItemProductInDifferentContextOrderUseCase): SetItemProductInDifferentContextOrder
+    abstract fun bindCalculateSubTotalByProduct(calculateSubTotalByProduct: CalculateSubTotalByProductUseCase): CalculateSubTotalByProduct
 
     @Binds
-    abstract fun bindUpdateOrderFromDifferentContext(updateOrderFromDifferentContext: UpdateProductInDifferentContextOrderUseCase): UpdateProductInDifferentContextOrder
-
-    @Binds
-    abstract fun bindClearLocalOrder(clearLocalOrder: ClearLocalOrderUseCase): ClearLocalOrder
+    abstract fun bindGetCurrentOrder(GetCurrentOrder: GetCurrentOrderUseCase): GetCurrentOrder
 }

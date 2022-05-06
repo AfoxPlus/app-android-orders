@@ -10,6 +10,9 @@ import kotlinx.coroutines.flow.flow
 import java.io.IOException
 import javax.inject.Inject
 
+/**
+ * Caso de uso para sumar o restar un producto desde el detalle del pedido
+ */
 fun interface AddProductToOrder {
     suspend operator fun invoke(product: Product, quantity: Int): Flow<Result<Order>>
 }

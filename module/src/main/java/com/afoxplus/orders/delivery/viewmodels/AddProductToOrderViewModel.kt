@@ -1,42 +1,44 @@
 package com.afoxplus.orders.delivery.viewmodels
 
-import androidx.lifecycle.*
-import com.afoxplus.orders.delivery.views.events.ProductAddedToCartSuccessfullyEvent
-import com.afoxplus.orders.entities.Order
-import com.afoxplus.orders.usecases.actions.*
-import com.afoxplus.orders.usecases.actions.LessItemProductToDifferentContextOrder
-import com.afoxplus.orders.usecases.actions.PlusItemProductToDifferentContextOrder
-import com.afoxplus.orders.usecases.actions.SetItemProductInDifferentContextOrder
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.afoxplus.orders.delivery.views.events.AddedProductToCurrentOrderSuccessfullyEvent
+import com.afoxplus.orders.delivery.views.extensions.getAmountFormat
+import com.afoxplus.orders.entities.OrderDetail
+import com.afoxplus.orders.usecases.actions.AddOrUpdateProductToCurrentOrder
+import com.afoxplus.orders.usecases.actions.CalculateSubTotalByProduct
+import com.afoxplus.orders.usecases.actions.FindProductInOrder
 import com.afoxplus.products.entities.Product
 import com.afoxplus.uikit.bus.Event
 import com.afoxplus.uikit.bus.EventBusListener
-import com.afoxplus.uikit.di.UIKitIODispatcher
 import com.afoxplus.uikit.di.UIKitMainDispatcher
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 internal class AddProductToOrderViewModel @Inject constructor(
+    private val eventBusListener: EventBusListener,
     private val findProductInOrder: FindProductInOrder,
-    private val orderEventBus: EventBusListener,
-    private val plusItemProduct: PlusItemProductToDifferentContextOrder,
-    private val lessItemProduct: LessItemProductToDifferentContextOrder,
-    private val setItemProduct: SetItemProductInDifferentContextOrder,
-    private val updateProductInDifferentContextOrder: UpdateProductInDifferentContextOrder,
-    @UIKitIODispatcher private val ioDispatcher: CoroutineDispatcher,
+    private val calculateSubTotalByProduct: CalculateSubTotalByProduct,
+    private val addOrUpdateProductToCurrentOrder: AddOrUpdateProductToCurrentOrder,
     @UIKitMainDispatcher private val mainDispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
     private val mProduct: MutableLiveData<Product> by lazy { MutableLiveData<Product>() }
     private val mQuantity: MutableLiveData<Int> by lazy { MutableLiveData<Int>() }
-    private val mOrder: MutableLiveData<Order> by lazy { MutableLiveData<Order>() }
+    private val mSubTotal: MutableLiveData<String> by lazy { MutableLiveData<String>() }
+    private val mEnableSubTotalButton: MutableLiveData<Boolean> by lazy { MutableLiveData<Boolean>(false) }
 
     val product: LiveData<Product> get() = mProduct
     val quantity: LiveData<Int> get() = mQuantity
-    val order: LiveData<Order> get() = mOrder
+    val subTotal: LiveData<String> get() = mSubTotal
+    val enableSubTotalButton: LiveData<Boolean> get() = mEnableSubTotalButton
+
+    private var quantityChanged: Int = 0
 
     private val mEventProductAddedToCardSuccess: MutableLiveData<Event<Unit>> by lazy { MutableLiveData<Event<Unit>>() }
     val eventProductAddedToCardSuccess: LiveData<Event<Unit>> get() = mEventProductAddedToCardSuccess
@@ -44,44 +46,39 @@ internal class AddProductToOrderViewModel @Inject constructor(
     fun setProduct(product: Product) = viewModelScope.launch(mainDispatcher) {
         mProduct.postValue(product)
         findProductInOrder(product)?.let { orderDetail ->
-            setItemProduct(product, orderDetail.quantity).collectLatest { result ->
-                result.onSuccess { order -> setOrderAndVerifyQuantity(order, product) }
-            }
+            setOrderAndVerifyQuantity(orderDetail)
         } ?: mQuantity.postValue(null)
     }
 
-    fun plusProductToDifferentContextOrder() = viewModelScope.launch(ioDispatcher) {
+    fun calculateSubTotalByProduct(quantity: Int) = viewModelScope.launch(mainDispatcher) {
         product.value?.let { product ->
-            plusItemProduct(product).collectLatest { result ->
-                result.onSuccess { order -> setOrderAndVerifyQuantity(order, product) }
-            }
+            quantityChanged = quantity
+            displaySubTotal(calculateSubTotalByProduct(quantity, product))
+
         }
     }
 
-    fun lessProductToDifferentContextOrder() = viewModelScope.launch(ioDispatcher) {
-        product.value?.let { product ->
-            lessItemProduct(product).collectLatest { result ->
-                result.onSuccess { order -> setOrderAndVerifyQuantity(order, product) }
-            }
-        }
+    private fun setOrderAndVerifyQuantity(orderDetail: OrderDetail) {
+        mSubTotal.value = orderDetail.calculateSubTotal().getAmountFormat()
+        mQuantity.postValue(orderDetail.quantity)
     }
 
-    private fun setOrderAndVerifyQuantity(order: Order, product: Product) {
-        mOrder.postValue(order)
-        val quantity =
-            order.getOrderDetails().find { item -> item.product.code == product.code }?.quantity
-        mQuantity.postValue(quantity)
-    }
-
-    fun addOrUpdateOrder() =
-        viewModelScope.launch(ioDispatcher) {
+    fun addOrUpdateToCurrentOrder() =
+        viewModelScope.launch(mainDispatcher) {
             mProduct.value?.let { product ->
-                updateProductInDifferentContextOrder(product).collectLatest { result ->
-                    result.onSuccess {
-                        mEventProductAddedToCardSuccess.postValue(Event(Unit))
-                        orderEventBus.send(ProductAddedToCartSuccessfullyEvent.build(it))
-                    }
-                }
+                addOrUpdateProductToCurrentOrder(quantityChanged, product)
+                mEventProductAddedToCardSuccess.postValue(Event(Unit))
+                eventBusListener.send(AddedProductToCurrentOrderSuccessfullyEvent.build())
             }
         }
+
+    private fun displaySubTotal(subTotal: Double) {
+        if (subTotal > 0.0) {
+            mSubTotal.value = subTotal.getAmountFormat()
+            mEnableSubTotalButton.value = true
+        } else {
+            mSubTotal.value = ""
+            mEnableSubTotalButton.value = false
+        }
+    }
 }

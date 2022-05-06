@@ -26,13 +26,14 @@ class AddProductToOrderActivity : BaseActivity() {
     override fun setUpView() {
         getIntentData()
         binding.viewModel = addProductToOrderViewModel
-        binding.topAppBar.setNavigationOnClickListener { onBackPressed() }
+        binding.marketOrderToolBar.setNavigationOnClickListener { onBackPressed() }
         addFragmentToActivity(
             supportFragmentManager,
             AddProductToCartFragment.getInstance(),
             binding.fragmentContainer.id
         )
         setInitialButtonText()
+        binding.buttonViewOrder.setOnClickListener { addProductToOrderViewModel.addOrUpdateToCurrentOrder() }
     }
 
     override fun observerViewModel() {
@@ -40,11 +41,14 @@ class AddProductToOrderActivity : BaseActivity() {
             finish()
         })
 
-        addProductToOrderViewModel.order.observe(this) {
-            it?.let { order ->
+        addProductToOrderViewModel.subTotal.observe(this) {
+            it?.let { subTotal ->
                 binding.buttonViewOrder.text =
-                    getString(R.string.orders_market_add_product, order.getTotalWithFormat())
-            } ?: setInitialButtonText()
+                    getString(R.string.orders_market_add_product, subTotal)
+            }
+        }
+        addProductToOrderViewModel.enableSubTotalButton.observe(this) {
+            binding.buttonViewOrder.isEnabled = it
         }
     }
 

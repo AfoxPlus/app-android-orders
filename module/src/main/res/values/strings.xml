@@ -4,8 +4,8 @@
     <string name="orders_hint_search">Buscar</string>
     <string name="orders_market_button_view">%1$d Ver mi pedido %2$d</string>
     <string name="orders_market_add_product">Agregar a mi pedido %1$s</string>
-    <string name="orders_market_tab_menu">Carta</string>
-    <string name="orders_market_tab_drink">Bebidas</string>
+    <string name="orders_market_tab_menu">Menu</string>
+    <string name="orders_market_tab_food">Cart</string>
     <string name="orders_market_add_quantity">Unidades</string>
     <string name="orders_market_button_send_order">Enviar pedido</string>
     <string name="orders_market_button_new_order">Hacer otro pedido</string>

@@ -14,24 +14,12 @@ internal class OrderRepositorySource @Inject constructor(
 ) :
     OrderRepository {
 
-    override fun plusItemProductToDifferentContextOrder(product: Product): Order {
-        return orderLocalDataSource.plusProductDifferentContextOrder(product)
-    }
-
-    override fun lessItemProductToDifferentContextOrder(product: Product): Order {
-        return orderLocalDataSource.lessProductDifferentContextOrder(product)
-    }
-
-    override fun setItemProductInDifferentContextOrder(product: Product, quantity: Int): Order {
-        return orderLocalDataSource.setItemProductInDifferentContextOrder(product, quantity)
-    }
-
-    override fun updateProductInDifferentContextOrder(product: Product): Order {
-        return orderLocalDataSource.updateProductInDifferentContextOrder(product)
-    }
-
-    override fun clearLocalOrder() {
+    override fun clearCurrentOrder() {
         orderLocalDataSource.clearCurrentOrder()
+    }
+
+    override fun getCurrentOrder(): Order {
+        return orderLocalDataSource.getCurrentOrder()
     }
 
     override suspend fun sendOrder(order: Order) {
@@ -39,11 +27,11 @@ internal class OrderRepositorySource @Inject constructor(
         orderLocalDataSource.clearCurrentOrder()
     }
 
-    override suspend fun findProductInOrder(product: Product): OrderDetail? {
-        return orderLocalDataSource.findProductInOrder(product)
+    override fun addOrUpdateProductToCurrentOrder(quantity: Int, product: Product) {
+        orderLocalDataSource.addOrUpdateProductToCurrentOrder(quantity, product)
     }
 
-    companion object {
-        private const val ERROR_ORDER_NOT_EXIST = "The order does not exist"
+    override fun findProductInCurrentOrder(product: Product): OrderDetail? {
+        return orderLocalDataSource.findProductInOrder(product)
     }
 }

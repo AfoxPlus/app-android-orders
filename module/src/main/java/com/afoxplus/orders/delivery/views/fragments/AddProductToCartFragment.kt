@@ -24,13 +24,14 @@ class AddProductToCartFragment : BaseFragment() {
     }
 
     override fun setUpView() {
-        binding.plusItem.setOnClickListener { addProductToOrderViewModel.plusProductToDifferentContextOrder() }
-        binding.lessItem.setOnClickListener { addProductToOrderViewModel.lessProductToDifferentContextOrder() }
+        binding.quantityButtonQuantity.onValueChangeListener = {
+            addProductToOrderViewModel.calculateSubTotalByProduct(it)
+        }
     }
 
     override fun observerViewModel() {
         addProductToOrderViewModel.quantity.observe(viewLifecycleOwner) {
-            binding.labelQuantity.text = it?.toString() ?: "-"
+            binding.quantityButtonQuantity.value = it ?: 0
         }
     }
 }

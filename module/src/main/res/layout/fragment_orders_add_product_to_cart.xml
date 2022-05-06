@@ -37,37 +37,15 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <LinearLayout
+                <com.afoxplus.uikit.customview.quantitybutton.QuantityButton
+                    android:id="@+id/quantityButtonQuantity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="12dp"
-                    android:orientation="horizontal"
+                    app:buttonType="quantity"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/lessItem"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:srcCompat="@drawable/ic_uikit_arrow_down" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/labelQuantity"
-                        style="@style/Title_09"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="4dp"
-                        android:layout_marginEnd="4dp"
-                        tools:text="1" />
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/plusItem"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:srcCompat="@drawable/ic_uikit_arrow_up" />
-
-                </LinearLayout>
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
