@@ -4,19 +4,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import com.afoxplus.orders.databinding.FragmentShopCartBinding
+import com.afoxplus.orders.databinding.FragmentOrdersShopCartBinding
 import com.afoxplus.orders.delivery.viewmodels.ShopCartViewModel
 import com.afoxplus.orders.delivery.views.adapters.ItemCartProductAdapter
 import com.afoxplus.uikit.fragments.BaseFragment
 
 class ShopCartFragment : BaseFragment() {
-    private lateinit var binding: FragmentShopCartBinding
+    private lateinit var binding: FragmentOrdersShopCartBinding
+
     private val cartProductsViewModel: ShopCartViewModel by activityViewModels()
     private val adapter: ItemCartProductAdapter by lazy { ItemCartProductAdapter() }
 
     override fun getMainView(inflater: LayoutInflater, container: ViewGroup?): View {
-        binding = FragmentShopCartBinding.inflate(inflater)
-        binding.lifecycleOwner = viewLifecycleOwner
+        binding = FragmentOrdersShopCartBinding.inflate(inflater)
         return binding.root
     }
 
@@ -25,9 +25,7 @@ class ShopCartFragment : BaseFragment() {
     }
 
     override fun setUpView() {
-        binding.shopCartViewModel = cartProductsViewModel
-        binding.adapter = adapter
-        binding.marketName.text = "Restaurante Doña Esther"
+        binding.recyclerProductsOrder.adapter = adapter
     }
 
     override fun observerViewModel() {

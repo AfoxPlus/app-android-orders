@@ -20,6 +20,7 @@ internal class ShopCartViewModel @Inject constructor(
     private val mOrder: MutableLiveData<Order> by lazy { MutableLiveData<Order>() }
     val order: LiveData<Order> get() = mOrder
 
+
     private val mEventOnClickSendOrder: MutableLiveData<Event<Unit>> by lazy { MutableLiveData<Event<Unit>>() }
     val eventOnClickSendOrder: LiveData<Event<Unit>> get() = mEventOnClickSendOrder
 

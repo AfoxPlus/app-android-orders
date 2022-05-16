@@ -20,23 +20,31 @@ class OrderPreviewActivity : BaseActivity() {
 
     override fun setMainView() {
         binding = ActivityOrdersPreviewBinding.inflate(layoutInflater)
-        binding.lifecycleOwner = this
         setContentView(binding.root)
     }
 
     override fun setUpView() {
-       getIntentData()
+        getIntentData()
         addFragmentToActivity(
             supportFragmentManager,
             shopCartProductFragment,
             binding.fragmentContainer.id
         )
+        binding.marketName.text = "Restaurante Doña Esther"
+        binding.topAppBar.setNavigationOnClickListener { this.onBackPressed() }
+        binding.buttonSendOrder.setOnClickListener {
+            shopCartViewModel.onClickSendOrder()
+        }
+
     }
 
     override fun observerViewModel() {
         shopCartViewModel.eventOnClickSendOrder.observe(this, EventObserver {
             showOrderSentSuccessfullyFragment()
         })
+        shopCartViewModel.order.observe(this) { order ->
+            displayOrder(order)
+        }
     }
 
     private fun getIntentData() {
@@ -44,12 +52,16 @@ class OrderPreviewActivity : BaseActivity() {
             shopCartViewModel.setOrder(order)
         }
     }
-    
+
     private fun showOrderSentSuccessfullyFragment() {
         val fragment = OrderSentSuccessfullyFragment.getInstance()
         supportFragmentManager.beginTransaction().run {
             remove(shopCartProductFragment)
             add(binding.fragmentContainer.id, fragment).commit()
         }
+    }
+
+    private fun displayOrder(order: Order) {
+        binding.subTotalOrder.text = order.getTotalWithFormat()
     }
 }
