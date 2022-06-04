@@ -7,6 +7,7 @@ import androidx.fragment.app.activityViewModels
 import com.afoxplus.orders.databinding.FragmentOrdersShopCartBinding
 import com.afoxplus.orders.delivery.viewmodels.ShopCartViewModel
 import com.afoxplus.orders.delivery.views.adapters.ItemCartProductAdapter
+import com.afoxplus.orders.entities.Order
 import com.afoxplus.uikit.fragments.BaseFragment
 
 class ShopCartFragment : BaseFragment() {
@@ -32,5 +33,13 @@ class ShopCartFragment : BaseFragment() {
         cartProductsViewModel.order.observe(viewLifecycleOwner) { order ->
             adapter.submitList(order?.getOrderDetails())
         }
+
+        cartProductsViewModel.order.observe(this) { order ->
+            displayOrder(order)
+        }
+    }
+
+    private fun displayOrder(order: Order) {
+        binding.subTotalOrder.text = order.getTotalWithFormat()
     }
 }

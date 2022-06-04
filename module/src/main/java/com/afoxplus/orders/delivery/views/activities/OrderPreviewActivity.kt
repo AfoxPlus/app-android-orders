@@ -3,8 +3,8 @@ package com.afoxplus.orders.delivery.views.activities
 import androidx.activity.viewModels
 import com.afoxplus.orders.databinding.ActivityOrdersPreviewBinding
 import com.afoxplus.orders.delivery.viewmodels.ShopCartViewModel
-import com.afoxplus.orders.delivery.views.fragments.ShopCartFragment
 import com.afoxplus.orders.delivery.views.fragments.OrderSentSuccessfullyFragment
+import com.afoxplus.orders.delivery.views.fragments.ShopCartFragment
 import com.afoxplus.orders.entities.Order
 import com.afoxplus.uikit.activities.BaseActivity
 import com.afoxplus.uikit.activities.extensions.addFragmentToActivity
@@ -35,16 +35,12 @@ class OrderPreviewActivity : BaseActivity() {
         binding.buttonSendOrder.setOnClickListener {
             shopCartViewModel.onClickSendOrder()
         }
-
     }
 
     override fun observerViewModel() {
         shopCartViewModel.eventOnClickSendOrder.observe(this, EventObserver {
             showOrderSentSuccessfullyFragment()
         })
-        shopCartViewModel.order.observe(this) { order ->
-            displayOrder(order)
-        }
     }
 
     private fun getIntentData() {
@@ -61,7 +57,4 @@ class OrderPreviewActivity : BaseActivity() {
         }
     }
 
-    private fun displayOrder(order: Order) {
-        binding.subTotalOrder.text = order.getTotalWithFormat()
-    }
 }
