@@ -41,6 +41,9 @@ class OrderPreviewActivity : BaseActivity() {
         shopCartViewModel.eventOnClickSendOrder.observe(this, EventObserver {
             showOrderSentSuccessfullyFragment()
         })
+        shopCartViewModel.nameButtonSendOrderLiveData.observe(this) {
+            binding.buttonSendOrder.text = it
+        }
     }
 
     private fun getIntentData() {

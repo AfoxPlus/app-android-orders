@@ -40,15 +40,16 @@ class MarketOrderActivity : BaseActivity() {
 
     override fun setMainView() {
         binding = ActivityOrdersMarketPanelBinding.inflate(layoutInflater)
-        binding.lifecycleOwner = this
         setContentView(binding.root)
     }
 
     override fun setUpView() {
-        binding.viewModel = marketOrderViewModel
         binding.marketOrderToolBar.setNavigationOnClickListener { marketOrderViewModel.onBackPressed() }
         setUpMarkerOrderTab()
         binding.marketOrderRestaurantName.text = "Rest. Doña Esther"
+        binding.buttonViewOrder.setOnClickListener {
+            marketOrderViewModel.onClickViewOrder()
+        }
     }
 
     override fun observerViewModel() {
@@ -61,7 +62,10 @@ class MarketOrderActivity : BaseActivity() {
         })
 
         marketOrderViewModel.order.observe(this) { order ->
-            order?.let { binding.buttonViewOrder.visibility = View.VISIBLE }
+            order?.let {
+                binding.buttonViewOrder.visibility = View.VISIBLE
+                binding.buttonViewOrder.text = it.getLabelViewMyOrder()
+            }
         }
 
         marketOrderViewModel.eventOnBackPressed.observe(this, EventObserver { onBackPressed() })

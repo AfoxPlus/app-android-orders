@@ -6,6 +6,7 @@ import com.afoxplus.orders.repositories.sources.local.OrderLocalDataSource
 import com.afoxplus.orders.repositories.sources.network.OrderNetworkDataSource
 import com.afoxplus.orders.usecases.repositories.OrderRepository
 import com.afoxplus.products.entities.Product
+import kotlinx.coroutines.flow.SharedFlow
 import javax.inject.Inject
 
 internal class OrderRepositorySource @Inject constructor(
@@ -22,12 +23,16 @@ internal class OrderRepositorySource @Inject constructor(
         return orderLocalDataSource.getCurrentOrder()
     }
 
+    override suspend fun getCurrentOrderFlow(): SharedFlow<Order?> {
+        return orderLocalDataSource.getCurrentOrderFlow()
+    }
+
     override suspend fun sendOrder(order: Order) {
         orderRemoteDataSource.sendOrder(order)
         orderLocalDataSource.clearCurrentOrder()
     }
 
-    override fun addOrUpdateProductToCurrentOrder(quantity: Int, product: Product) {
+    override suspend fun addOrUpdateProductToCurrentOrder(quantity: Int, product: Product) {
         orderLocalDataSource.addOrUpdateProductToCurrentOrder(quantity, product)
     }
 

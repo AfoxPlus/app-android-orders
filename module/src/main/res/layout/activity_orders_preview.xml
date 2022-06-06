@@ -72,9 +72,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonSendOrder"
