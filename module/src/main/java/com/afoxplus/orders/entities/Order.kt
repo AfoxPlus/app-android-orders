@@ -18,8 +18,9 @@ class Order(
         product: Product,
         quantity: Int
     ) {
-        orderDetails.find { item -> item.product.code == product.code }
-            ?.run { this.quantity = quantity } ?: addNewProductWithQuantity(product, quantity)
+        if (quantity > 0)
+            orderDetails.find { item -> item.product.code == product.code }
+                ?.run { this.quantity = quantity } ?: addNewProductWithQuantity(product, quantity)
     }
 
     private fun addNewProductWithQuantity(

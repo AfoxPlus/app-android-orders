@@ -43,6 +43,10 @@ class OrderPreviewActivity : BaseActivity() {
         shopCartViewModel.nameButtonSendOrderLiveData.observe(this) {
             binding.buttonSendOrder.text = it
         }
+
+        shopCartViewModel.eventOnBackSendOrder.observe(this) {
+            onBackPressed()
+        }
     }
 
     private fun showOrderSentSuccessfullyFragment() {
@@ -52,5 +56,4 @@ class OrderPreviewActivity : BaseActivity() {
             add(binding.fragmentContainer.id, fragment).commit()
         }
     }
-
 }

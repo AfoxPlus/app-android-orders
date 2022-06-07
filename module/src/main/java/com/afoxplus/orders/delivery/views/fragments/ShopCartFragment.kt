@@ -36,6 +36,7 @@ class ShopCartFragment : BaseFragment(), ItemCartProductListener {
             adapter.submitList(order?.getOrderDetails())
             displayOrder(order)
         }
+
     }
 
     private fun displayOrder(order: Order) {

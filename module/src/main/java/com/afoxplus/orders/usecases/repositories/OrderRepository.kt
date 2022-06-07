@@ -10,6 +10,7 @@ interface OrderRepository {
     fun findProductInCurrentOrder(product: Product): OrderDetail?
     fun clearCurrentOrder()
     suspend fun getCurrentOrder(): SharedFlow<Order?>
+    suspend fun deleteProductToCurrentOrder(product: Product)
 
     suspend fun sendOrder(order: Order)
 

@@ -40,6 +40,11 @@ internal class OrderLocalCache @Inject constructor() : OrderLocalDataSource {
         return orderStateFlow
     }
 
+    override suspend fun deleteProductToCurrentOrder(product: Product) {
+        order?.removeItemOrderDetailByProduct(product)
+        orderStateFlow.emit(order)
+    }
+
     private fun newOrder(): Order {
         val newOrder = Order(date = Calendar.getInstance().time)
         order = newOrder

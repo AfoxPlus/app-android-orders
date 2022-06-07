@@ -10,4 +10,5 @@ internal interface OrderLocalDataSource {
     fun clearCurrentOrder()
     fun findProductInOrder(product: Product): OrderDetail?
     suspend fun getCurrentOrder(): SharedFlow<Order?>
+    suspend fun deleteProductToCurrentOrder(product: Product)
 }

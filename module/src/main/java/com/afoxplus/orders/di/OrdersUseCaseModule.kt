@@ -54,4 +54,7 @@ internal abstract class OrdersUseCaseInternalModule {
 
     @Binds
     abstract fun bindGetCurrentOrderFlow(getCurrentOrderFlow: GetCurrentOrderUseCase): GetCurrentOrder
+
+    @Binds
+    abstract fun bindDeleteProductToCurrentOrder(deleteProductToCurrentOrder:DeleteProductToCurrentOrderUseCase):  DeleteProductToCurrentOrder
 }
