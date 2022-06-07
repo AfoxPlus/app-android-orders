@@ -19,12 +19,8 @@ internal class OrderRepositorySource @Inject constructor(
         orderLocalDataSource.clearCurrentOrder()
     }
 
-    override fun getCurrentOrder(): Order {
+    override suspend fun getCurrentOrder(): SharedFlow<Order?> {
         return orderLocalDataSource.getCurrentOrder()
-    }
-
-    override suspend fun getCurrentOrderFlow(): SharedFlow<Order?> {
-        return orderLocalDataSource.getCurrentOrderFlow()
     }
 
     override suspend fun sendOrder(order: Order) {

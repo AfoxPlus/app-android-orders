@@ -9,11 +9,5 @@ internal interface OrderLocalDataSource {
     suspend fun addOrUpdateProductToCurrentOrder(quantity: Int, product: Product)
     fun clearCurrentOrder()
     fun findProductInOrder(product: Product): OrderDetail?
-
-    @Deprecated(
-        "This method is no longer valid, to get the current order you must get it from getCurrentOrderFlow",
-        ReplaceWith("fun getCurrentOrderFlow(): StateFlow<Order>")
-    )
-    fun getCurrentOrder(): Order
-    suspend fun getCurrentOrderFlow(): SharedFlow<Order?>
+    suspend fun getCurrentOrder(): SharedFlow<Order?>
 }

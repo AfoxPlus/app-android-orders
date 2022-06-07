@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.afoxplus.orders.entities.Order
 import com.afoxplus.orders.entities.OrderDetail
 import com.afoxplus.orders.usecases.actions.AddOrUpdateProductToCurrentOrder
-import com.afoxplus.orders.usecases.actions.GetCurrentOrderFlow
+import com.afoxplus.orders.usecases.actions.GetCurrentOrder
 import com.afoxplus.uikit.bus.Event
 import com.afoxplus.uikit.di.UIKitMainDispatcher
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,7 +20,7 @@ import javax.inject.Inject
 internal class ShopCartViewModel @Inject constructor(
     @UIKitMainDispatcher private val mainDispatcher: CoroutineDispatcher,
     private val addOrUpdateProductToCurrentOrder: AddOrUpdateProductToCurrentOrder,
-    private val getCurrentOrderFlow: GetCurrentOrderFlow
+    private val getCurrentOrder: GetCurrentOrder
 ) : ViewModel() {
 
     private val mOrder: MutableLiveData<Order> by lazy { MutableLiveData<Order>() }
@@ -38,12 +38,10 @@ internal class ShopCartViewModel @Inject constructor(
 
     private fun loadCurrentOrder() {
         viewModelScope.launch(mainDispatcher) {
-            getCurrentOrderFlow().collect {
-                println("Here is order update")
-                if (it != null) {
+            getCurrentOrder().collect {
+                if (it != null)
                     mOrder.postValue(it)
-                    println("Here is order update: ${it.getTotalWithFormat()}")
-                } else
+                else
                     closeScreen()
             }
         }
@@ -56,11 +54,6 @@ internal class ShopCartViewModel @Inject constructor(
     fun onClickSendOrder() = viewModelScope.launch(mainDispatcher) {
         mEventOnClickSendOrder.postValue(Event(Unit))
     }
-
-    fun setOrder(order: Order) {
-        // mOrder.postValue(order)
-    }
-
 
     fun deleteItem(orderDetail: OrderDetail) {
 

@@ -1,7 +1,9 @@
 package com.afoxplus.orders.delivery.viewmodels
 
-import androidx.lifecycle.*
-import com.afoxplus.orders.delivery.views.events.AddedProductToCurrentOrderSuccessfullyEvent
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.afoxplus.orders.entities.Order
 import com.afoxplus.orders.usecases.actions.ClearCurrentOrder
 import com.afoxplus.orders.usecases.actions.GetCurrentOrder
@@ -12,6 +14,7 @@ import com.afoxplus.uikit.bus.EventBusListener
 import com.afoxplus.uikit.di.UIKitMainDispatcher
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -43,12 +46,14 @@ internal class MarketOrderViewModel @Inject constructor(
                 }
             }
         }
+        loadCurrentOrder()
+    }
 
+    private fun loadCurrentOrder() {
         viewModelScope.launch(mainDispatcher) {
-            eventBusListener.subscribe().collectLatest { event ->
-                if (event is AddedProductToCurrentOrderSuccessfullyEvent) {
-                    mOrder.postValue(getCurrentOrder())
-                }
+            getCurrentOrder().collect {
+                if (it != null)
+                    mOrder.postValue(it)
             }
         }
     }

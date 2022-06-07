@@ -9,8 +9,7 @@ interface OrderRepository {
     suspend fun addOrUpdateProductToCurrentOrder(quantity: Int, product: Product)
     fun findProductInCurrentOrder(product: Product): OrderDetail?
     fun clearCurrentOrder()
-    fun getCurrentOrder(): Order
-    suspend fun getCurrentOrderFlow(): SharedFlow<Order?>
+    suspend fun getCurrentOrder(): SharedFlow<Order?>
 
     suspend fun sendOrder(order: Order)
 

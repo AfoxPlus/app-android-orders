@@ -5,7 +5,6 @@ import com.afoxplus.orders.databinding.ActivityOrdersPreviewBinding
 import com.afoxplus.orders.delivery.viewmodels.ShopCartViewModel
 import com.afoxplus.orders.delivery.views.fragments.OrderSentSuccessfullyFragment
 import com.afoxplus.orders.delivery.views.fragments.ShopCartFragment
-import com.afoxplus.orders.entities.Order
 import com.afoxplus.uikit.activities.BaseActivity
 import com.afoxplus.uikit.activities.extensions.addFragmentToActivity
 import com.afoxplus.uikit.bus.EventObserver
@@ -24,7 +23,6 @@ class OrderPreviewActivity : BaseActivity() {
     }
 
     override fun setUpView() {
-        getIntentData()
         addFragmentToActivity(
             supportFragmentManager,
             shopCartProductFragment,
@@ -41,14 +39,9 @@ class OrderPreviewActivity : BaseActivity() {
         shopCartViewModel.eventOnClickSendOrder.observe(this, EventObserver {
             showOrderSentSuccessfullyFragment()
         })
+
         shopCartViewModel.nameButtonSendOrderLiveData.observe(this) {
             binding.buttonSendOrder.text = it
-        }
-    }
-
-    private fun getIntentData() {
-        intent.getParcelableExtra<Order>(Order::class.java.name)?.let { order ->
-            shopCartViewModel.setOrder(order)
         }
     }
 

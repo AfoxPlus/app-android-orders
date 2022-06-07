@@ -35,11 +35,7 @@ internal class OrderLocalCache @Inject constructor() : OrderLocalDataSource {
         return order?.getOrderDetails()?.find { item -> item.product.code == product.code }
     }
 
-    override fun getCurrentOrder(): Order {
-        return order ?: throw Exception(ERROR_ORDER_IS_NULL)
-    }
-
-    override suspend fun getCurrentOrderFlow(): SharedFlow<Order?> {
+    override suspend fun getCurrentOrder(): SharedFlow<Order?> {
         orderStateFlow.emit(order)
         return orderStateFlow
     }
