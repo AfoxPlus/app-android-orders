@@ -4,6 +4,9 @@ import com.afoxplus.orders.entities.Order
 import com.afoxplus.orders.entities.OrderDetail
 import com.afoxplus.orders.repositories.sources.local.OrderLocalDataSource
 import com.afoxplus.products.entities.Product
+import kotlinx.coroutines.channels.BufferOverflow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
 import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -11,10 +14,17 @@ import javax.inject.Singleton
 @Singleton
 internal class OrderLocalCache @Inject constructor() : OrderLocalDataSource {
     private var order: Order? = null
+    private val orderStateFlow: MutableSharedFlow<Order?> by lazy {
+        MutableSharedFlow(
+            replay = 1,
+            onBufferOverflow = BufferOverflow.DROP_OLDEST
+        )
+    }
 
-    override fun addOrUpdateProductToCurrentOrder(quantity: Int, product: Product) {
+    override suspend fun addOrUpdateProductToCurrentOrder(quantity: Int, product: Product) {
         order?.addProductWithQuantity(product, quantity)
             ?: newOrder().addProductWithQuantity(product, quantity)
+        orderStateFlow.emit(order)
     }
 
     override fun clearCurrentOrder() {
@@ -25,8 +35,14 @@ internal class OrderLocalCache @Inject constructor() : OrderLocalDataSource {
         return order?.getOrderDetails()?.find { item -> item.product.code == product.code }
     }
 
-    override fun getCurrentOrder(): Order {
-        return order ?: throw Exception(ERROR_ORDER_IS_NULL)
+    override suspend fun getCurrentOrder(): SharedFlow<Order?> {
+        orderStateFlow.emit(order)
+        return orderStateFlow
+    }
+
+    override suspend fun deleteProductToCurrentOrder(product: Product) {
+        order?.removeItemOrderDetailByProduct(product)
+        orderStateFlow.emit(order)
     }
 
     private fun newOrder(): Order {

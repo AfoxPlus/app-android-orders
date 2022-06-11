@@ -53,5 +53,8 @@ internal abstract class OrdersUseCaseInternalModule {
     abstract fun bindCalculateSubTotalByProduct(calculateSubTotalByProduct: CalculateSubTotalByProductUseCase): CalculateSubTotalByProduct
 
     @Binds
-    abstract fun bindGetCurrentOrder(GetCurrentOrder: GetCurrentOrderUseCase): GetCurrentOrder
+    abstract fun bindGetCurrentOrderFlow(getCurrentOrderFlow: GetCurrentOrderUseCase): GetCurrentOrder
+
+    @Binds
+    abstract fun bindDeleteProductToCurrentOrder(deleteProductToCurrentOrder:DeleteProductToCurrentOrderUseCase):  DeleteProductToCurrentOrder
 }
