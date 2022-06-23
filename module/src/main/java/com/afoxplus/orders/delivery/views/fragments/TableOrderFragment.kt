@@ -7,6 +7,7 @@ import androidx.fragment.app.activityViewModels
 import com.afoxplus.orders.R
 import com.afoxplus.orders.databinding.FragmentOrdersChoseTableBinding
 import com.afoxplus.orders.delivery.viewmodels.ShopCartViewModel
+import com.afoxplus.uikit.bus.EventObserver
 import com.afoxplus.uikit.fragments.BaseFragment
 import com.afoxplus.uikit.objects.vendor.VendorAction
 import dagger.hilt.EntryPoint
@@ -32,6 +33,25 @@ class TableOrderFragment : BaseFragment() {
 
     override fun observerViewModel() {
         super.observerViewModel()
+        cartProductsViewModel.eventOnClickSendOrder.observe(viewLifecycleOwner, EventObserver {
+            cartProductsViewModel.sendOrder(
+                binding.tableNumber.text.toString(),
+                binding.tableClientName.text,
+                binding.tableClientPhone.text
+            )
+        })
+
+        cartProductsViewModel.errorClientNameLiveData.observe(viewLifecycleOwner) {
+            binding.tableClientName.error = it
+        }
+
+        cartProductsViewModel.errorClientPhoneNumberLiveData.observe(viewLifecycleOwner) {
+            binding.tableClientPhone.error = it
+        }
+    }
+
+    override fun setUpView() {
+        super.setUpView()
         vendorAction.fetch()?.run {
             binding.tableNumber.text = getString(R.string.orders_table_number, tableId)
         }

@@ -3,11 +3,11 @@ package com.afoxplus.orders.delivery.views.activities
 import androidx.activity.viewModels
 import com.afoxplus.orders.databinding.ActivityOrdersPreviewBinding
 import com.afoxplus.orders.delivery.viewmodels.ShopCartViewModel
+import com.afoxplus.orders.delivery.views.fragments.OrderSentSuccessfullyFragment
 import com.afoxplus.orders.delivery.views.fragments.ShopCartFragment
 import com.afoxplus.orders.delivery.views.fragments.TableOrderFragment
 import com.afoxplus.uikit.activities.BaseActivity
 import com.afoxplus.uikit.activities.extensions.addFragmentToActivity
-import com.afoxplus.uikit.bus.EventObserver
 import com.afoxplus.uikit.fragments.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -16,8 +16,11 @@ class OrderPreviewActivity : BaseActivity() {
 
     private lateinit var binding: ActivityOrdersPreviewBinding
     private val shopCartViewModel: ShopCartViewModel by viewModels()
+
     private val shopCartProductFragment: ShopCartFragment by lazy { ShopCartFragment.getInstance() }
     private val tableOrderFragment: TableOrderFragment by lazy { TableOrderFragment.getInstance() }
+    private val orderSentSuccessfullyFragment: OrderSentSuccessfullyFragment by lazy { OrderSentSuccessfullyFragment() }
+
     private lateinit var currentFragment: BaseFragment
     override fun setMainView() {
         binding = ActivityOrdersPreviewBinding.inflate(layoutInflater)
@@ -38,10 +41,6 @@ class OrderPreviewActivity : BaseActivity() {
     }
 
     override fun observerViewModel() {
-        shopCartViewModel.eventOnClickSendOrder.observe(this, EventObserver {
-            println("Here: send order and open success screen")
-        })
-
         shopCartViewModel.nameButtonSendOrderLiveData.observe(this) {
             binding.buttonSendOrder.text = it
         }
@@ -56,6 +55,10 @@ class OrderPreviewActivity : BaseActivity() {
 
         shopCartViewModel.eventRemoveTableOrder.observe(this) {
             removeFragments(tableOrderFragment, shopCartProductFragment)
+        }
+
+        shopCartViewModel.eventOpenSuccessOrder.observe(this) {
+            changeFragment(orderSentSuccessfullyFragment)
         }
     }
 

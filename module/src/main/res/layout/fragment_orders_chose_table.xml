@@ -27,47 +27,42 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dp16"
-                android:layout_marginTop="@dimen/dp16"
+                android:layout_marginTop="@dimen/dp24"
                 android:layout_marginBottom="12dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Mesa: 04" />
 
-            <androidx.appcompat.widget.AppCompatEditText
+            <com.afoxplus.uikit.customview.edittext.CustomEditText
                 android:id="@+id/tableClientName"
-                style="@style/Paragraph_03"
-                android:layout_width="0dp"
+                style="@style/UIKit.EditTextAppearance.OutlinedBox"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp20"
+                android:layout_marginStart="@dimen/dp16"
                 android:layout_marginTop="@dimen/dp22"
-                android:layout_marginEnd="@dimen/dp20"
+                android:layout_marginEnd="@dimen/dp16"
                 android:hint="@string/orders_table_client_name"
-                android:imeOptions="actionNext"
-                android:inputType="text"
-                android:maxLines="1"
+                app:errorIconDrawable="@null"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tableNumber"
-                app:layout_goneMarginEnd="@dimen/dp20" />
+                app:layout_constraintTop_toBottomOf="@id/tableNumber" />
 
-            <androidx.appcompat.widget.AppCompatEditText
+            <com.afoxplus.uikit.customview.edittext.CustomEditText
                 android:id="@+id/tableClientPhone"
-                style="@style/Paragraph_03"
-                android:layout_width="0dp"
+                style="@style/UIKit.EditTextAppearance.OutlinedBox"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp20"
+                android:layout_marginStart="@dimen/dp16"
                 android:layout_marginTop="@dimen/dp16"
-                android:layout_marginEnd="@dimen/dp20"
-                android:layout_marginBottom="@dimen/dp38"
+                android:layout_marginEnd="@dimen/dp16"
+                android:layout_marginBottom="@dimen/dp24"
                 android:hint="@string/orders_table_client_cellphone"
-                android:imeOptions="actionDone"
-                android:inputType="number"
-                android:maxLines="1"
+                app:errorIconDrawable="@null"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tableClientName"
-                app:layout_goneMarginEnd="@dimen/dp20" />
+                app:layout_constraintTop_toBottomOf="@id/tableClientName" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

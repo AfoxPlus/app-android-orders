@@ -26,9 +26,10 @@ internal class OrderRepositorySource @Inject constructor(
     override suspend fun deleteProductToCurrentOrder(product: Product) =
         orderLocalDataSource.deleteProductToCurrentOrder(product)
 
-    override suspend fun sendOrder(order: Order) {
-        orderRemoteDataSource.sendOrder(order)
+    override suspend fun sendOrder(order: Order): String {
+        val message = orderRemoteDataSource.sendOrder(order)
         orderLocalDataSource.clearCurrentOrder()
+        return message
     }
 
     override suspend fun addOrUpdateProductToCurrentOrder(quantity: Int, product: Product) {

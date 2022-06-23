@@ -12,6 +12,6 @@ interface OrderRepository {
     suspend fun getCurrentOrder(): SharedFlow<Order?>
     suspend fun deleteProductToCurrentOrder(product: Product)
 
-    suspend fun sendOrder(order: Order)
+    suspend fun sendOrder(order: Order): String
 
 }
