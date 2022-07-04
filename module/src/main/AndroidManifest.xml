@@ -4,6 +4,10 @@
 
     <application>
         <activity
+            android:name=".delivery.views.activities.OrderSuccessActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/UIKit.NoActionBar.Light" />
+        <activity
             android:name=".delivery.views.activities.OrderPreviewActivity"
             android:screenOrientation="portrait"
             android:theme="@style/UIKit.NoActionBar.Light" />
@@ -16,4 +20,5 @@
             android:screenOrientation="portrait"
             android:theme="@style/UIKit.NoActionBar.Light" />
     </application>
+
 </manifest>

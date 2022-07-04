@@ -56,6 +56,8 @@
                 android:layout_marginTop="@dimen/dp16"
                 android:layout_marginEnd="@dimen/dp16"
                 android:layout_marginBottom="@dimen/dp24"
+                android:inputType="number"
+                android:imeOptions="actionDone"
                 android:hint="@string/orders_table_client_cellphone"
                 app:errorIconDrawable="@null"
                 app:layout_constraintBottom_toBottomOf="parent"
