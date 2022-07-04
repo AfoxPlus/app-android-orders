@@ -35,8 +35,13 @@ internal class ShopCartViewModel @Inject constructor(
     val nameButtonSendOrderLiveData: LiveData<String> get() = nameButtonSendOrderMutableLiveData
 
     private val mEventOnBackSendOrder: MutableLiveData<Event<Unit>> by lazy { MutableLiveData<Event<Unit>>() }
-    val eventOnBackSendOrder: LiveData<Event<Unit>> get() = mEventOnClickSendOrder
+    val eventOnBackSendOrder: LiveData<Event<Unit>> get() = mEventOnBackSendOrder
 
+    private val mEventOpenTableOrder: MutableLiveData<Event<Unit>> by lazy { MutableLiveData<Event<Unit>>() }
+    val eventOpenTableOrder: LiveData<Event<Unit>> get() = mEventOpenTableOrder
+
+    private val mEventRemoveTableOrder: MutableLiveData<Event<Unit>> by lazy { MutableLiveData<Event<Unit>>() }
+    val eventRemoveTableOrder: LiveData<Event<Unit>> get() = mEventRemoveTableOrder
 
     init {
         loadCurrentOrder()
@@ -57,7 +62,7 @@ internal class ShopCartViewModel @Inject constructor(
         mEventOnBackSendOrder.postValue(Event(Unit))
     }
 
-    fun onClickSendOrder() = viewModelScope.launch(mainDispatcher) {
+    private fun onClickSendOrder() = viewModelScope.launch(mainDispatcher) {
         mEventOnClickSendOrder.postValue(Event(Unit))
     }
 
@@ -71,5 +76,21 @@ internal class ShopCartViewModel @Inject constructor(
         viewModelScope.launch(mainDispatcher) {
             addOrUpdateProductToCurrentOrder.invoke(quantity, orderDetail.product)
         }
+    }
+
+    fun handleClickSender(isOrderCartView: Boolean) {
+        if (isOrderCartView) {
+            mEventOpenTableOrder.postValue(Event(Unit))
+            nameButtonSendOrderMutableLiveData.postValue(mOrder.value?.getLabelSendMyOrder())
+        } else
+            onClickSendOrder()
+    }
+
+    fun handleBackPressed(isTableOrder: Boolean) {
+        if (isTableOrder) {
+            mEventRemoveTableOrder.postValue(Event(Unit))
+            nameButtonSendOrderMutableLiveData.postValue("Continuar")
+        } else
+            closeScreen()
     }
 }

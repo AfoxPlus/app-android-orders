@@ -65,5 +65,6 @@ class Order(
         "(${getTotalQuantity()}) Ver mi pedido ${getTotalWithFormat()}"
 
     fun getLabelSendMyOrder(): String =
-        "${getTotalWithFormat()} Enviar mi pedido"
+        "(${getTotalQuantity()}) Enviar mi pedido ${getTotalWithFormat()}"
+
 }
