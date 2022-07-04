@@ -14,5 +14,4 @@ internal class GetCurrentOrderUseCase @Inject constructor(private val orderRepos
     override suspend fun invoke(): SharedFlow<Order?> {
         return orderRepository.getCurrentOrder()
     }
-
 }
