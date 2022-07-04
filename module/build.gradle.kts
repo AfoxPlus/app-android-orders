@@ -65,6 +65,9 @@ dependencies {
     implementation(Deps.UI.materialDesign)
     implementation(Deps.UI.constraintLayout)
     implementation(Deps.UI.glide)
+    implementation("androidx.appcompat:appcompat:1.4.2")
+    implementation("com.google.android.material:material:1.4.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     kapt(Deps.UI.glideCompiler)
     implementation(Deps.UI.uikit)
 

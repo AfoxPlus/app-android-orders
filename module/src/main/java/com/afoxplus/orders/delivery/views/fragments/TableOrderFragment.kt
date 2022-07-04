@@ -33,7 +33,7 @@ class TableOrderFragment : BaseFragment() {
 
     override fun observerViewModel() {
         super.observerViewModel()
-        cartProductsViewModel.eventOnClickSendOrder.observe(viewLifecycleOwner, EventObserver {
+        cartProductsViewModel.eventValidateTableOrder.observe(viewLifecycleOwner, EventObserver {
             cartProductsViewModel.sendOrder(
                 binding.tableNumber.text.toString(),
                 binding.tableClientName.text,

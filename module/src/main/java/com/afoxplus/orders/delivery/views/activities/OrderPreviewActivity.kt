@@ -2,14 +2,17 @@ package com.afoxplus.orders.delivery.views.activities
 
 import androidx.activity.viewModels
 import com.afoxplus.orders.databinding.ActivityOrdersPreviewBinding
+import com.afoxplus.orders.delivery.flow.OrderFlow
 import com.afoxplus.orders.delivery.viewmodels.ShopCartViewModel
 import com.afoxplus.orders.delivery.views.fragments.OrderSentSuccessfullyFragment
 import com.afoxplus.orders.delivery.views.fragments.ShopCartFragment
 import com.afoxplus.orders.delivery.views.fragments.TableOrderFragment
 import com.afoxplus.uikit.activities.BaseActivity
 import com.afoxplus.uikit.activities.extensions.addFragmentToActivity
+import com.afoxplus.uikit.bus.EventObserver
 import com.afoxplus.uikit.fragments.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class OrderPreviewActivity : BaseActivity() {
@@ -22,6 +25,9 @@ class OrderPreviewActivity : BaseActivity() {
     private val orderSentSuccessfullyFragment: OrderSentSuccessfullyFragment by lazy { OrderSentSuccessfullyFragment() }
 
     private lateinit var currentFragment: BaseFragment
+    @Inject
+    lateinit var orderFlow: OrderFlow
+
     override fun setMainView() {
         binding = ActivityOrdersPreviewBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -41,6 +47,7 @@ class OrderPreviewActivity : BaseActivity() {
     }
 
     override fun observerViewModel() {
+
         shopCartViewModel.nameButtonSendOrderLiveData.observe(this) {
             binding.buttonSendOrder.text = it
         }
@@ -58,7 +65,7 @@ class OrderPreviewActivity : BaseActivity() {
         }
 
         shopCartViewModel.eventOpenSuccessOrder.observe(this) {
-            changeFragment(orderSentSuccessfullyFragment)
+            orderFlow.goToOrderSuccessActivity(this)
         }
     }
 

@@ -31,9 +31,6 @@ internal class ShopCartViewModel @Inject constructor(
     private val mOrder: MutableLiveData<Order> by lazy { MutableLiveData<Order>() }
     val order: LiveData<Order> get() = mOrder
 
-    private val mEventOnClickSendOrder: MutableLiveData<Event<Unit>> by lazy { MutableLiveData<Event<Unit>>() }
-    val eventOnClickSendOrder: LiveData<Event<Unit>> get() = mEventOnClickSendOrder
-
     private val nameButtonSendOrderMutableLiveData: MutableLiveData<String> by lazy { MutableLiveData<String>() }
     val nameButtonSendOrderLiveData: LiveData<String> get() = nameButtonSendOrderMutableLiveData
 
@@ -42,6 +39,9 @@ internal class ShopCartViewModel @Inject constructor(
 
     private val mEventOpenTableOrder: MutableLiveData<Event<Unit>> by lazy { MutableLiveData<Event<Unit>>() }
     val eventOpenTableOrder: LiveData<Event<Unit>> get() = mEventOpenTableOrder
+
+    private val mEventValidateTableOrder: MutableLiveData<Event<Unit>> by lazy { MutableLiveData<Event<Unit>>() }
+    val eventValidateTableOrder: LiveData<Event<Unit>> get() = mEventValidateTableOrder
 
     private val mEventRemoveTableOrder: MutableLiveData<Event<Unit>> by lazy { MutableLiveData<Event<Unit>>() }
     val eventRemoveTableOrder: LiveData<Event<Unit>> get() = mEventRemoveTableOrder
@@ -75,7 +75,7 @@ internal class ShopCartViewModel @Inject constructor(
     }
 
     private fun onClickSendOrder() = viewModelScope.launch(mainDispatcher) {
-        mEventOnClickSendOrder.postValue(Event(Unit))
+        mEventValidateTableOrder.postValue(Event(Unit))
     }
 
     fun deleteItem(orderDetail: OrderDetail) {
