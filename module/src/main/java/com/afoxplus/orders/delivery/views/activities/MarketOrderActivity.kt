@@ -1,5 +1,7 @@
 package com.afoxplus.orders.delivery.views.activities
 
+import android.app.Activity
+import android.content.Intent
 import android.view.View
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
@@ -20,6 +22,12 @@ import javax.inject.Inject
 class MarketOrderActivity : BaseActivity() {
 
     private lateinit var binding: ActivityOrdersMarketPanelBinding
+
+    companion object {
+        fun newInstance(activity: Activity): Intent {
+            return Intent(activity, MarketOrderActivity::class.java)
+        }
+    }
 
     @Inject
     lateinit var productFlow: ProductFlow
