@@ -1,51 +1,71 @@
 package com.afoxplus.orders.delivery.viewmodels
 
-import androidx.lifecycle.*
-import com.afoxplus.orders.delivery.views.events.ProductAddedToCartSuccessfullyEvent
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.afoxplus.orders.entities.Order
-import com.afoxplus.products.delivery.views.events.OnClickItemRecommendedEvent
+import com.afoxplus.orders.usecases.actions.ClearCurrentOrder
+import com.afoxplus.orders.usecases.actions.GetCurrentOrder
+import com.afoxplus.products.delivery.views.events.OnClickProductSaleEvent
 import com.afoxplus.products.entities.Product
 import com.afoxplus.uikit.bus.Event
 import com.afoxplus.uikit.bus.EventBusListener
+import com.afoxplus.uikit.di.UIKitMainDispatcher
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 internal class MarketOrderViewModel @Inject constructor(
-    private val eventBusListener: EventBusListener
+    private val eventBusListener: EventBusListener,
+    private val clearCurrentOrder: ClearCurrentOrder,
+    private val getCurrentOrder: GetCurrentOrder,
+    @UIKitMainDispatcher private val mainDispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
     private val mGoToAddCardProductEvent: MutableLiveData<Event<Product>> by lazy { MutableLiveData<Event<Product>>() }
-    val goToAddCardProductEvent: LiveData<Event<Product>> get() = mGoToAddCardProductEvent
     private val mOrder: MutableLiveData<Order?> by lazy { MutableLiveData<Order?>() }
-    val order: LiveData<Order?> get() = mOrder
     private val mEventOnClickViewOrder: MutableLiveData<Event<Order>> by lazy { MutableLiveData<Event<Order>>() }
+    private val mEventOnBackPressed: MutableLiveData<Event<Unit>> by lazy { MutableLiveData<Event<Unit>>() }
+
+
+    val goToAddCardProductEvent: LiveData<Event<Product>> get() = mGoToAddCardProductEvent
+    val order: LiveData<Order?> get() = mOrder
     val eventOnClickViewOrder: LiveData<Event<Order>> get() = mEventOnClickViewOrder
+    val eventOnBackPressed: LiveData<Event<Unit>> get() = mEventOnBackPressed
 
     init {
-        viewModelScope.launch(Dispatchers.Main) {
+        viewModelScope.launch(mainDispatcher) {
             eventBusListener.subscribe().collectLatest { event ->
-                if (event is OnClickItemRecommendedEvent) {
+                if (event is OnClickProductSaleEvent) {
                     mGoToAddCardProductEvent.postValue(Event(event.product))
                 }
             }
         }
+        loadCurrentOrder()
+    }
 
-        viewModelScope.launch(Dispatchers.Main) {
-            eventBusListener.subscribe().collectLatest { event ->
-                if (event is ProductAddedToCartSuccessfullyEvent) {
-                    mOrder.postValue(event.order)
-                }
+    private fun loadCurrentOrder() {
+        viewModelScope.launch(mainDispatcher) {
+            getCurrentOrder().collect {
+                if (it != null)
+                    mOrder.postValue(it)
             }
         }
     }
 
-    fun onClickViewOrder() = viewModelScope.launch(Dispatchers.Main) {
+    fun onClickViewOrder() = viewModelScope.launch(mainDispatcher) {
         mOrder.value?.let { order ->
             mEventOnClickViewOrder.postValue(Event(order))
         }
+    }
+
+    fun onBackPressed() = viewModelScope.launch(mainDispatcher) {
+        clearCurrentOrder()
+        mEventOnBackPressed.value = Event(Unit)
     }
 }

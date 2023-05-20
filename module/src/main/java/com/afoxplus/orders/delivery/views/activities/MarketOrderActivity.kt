@@ -1,7 +1,10 @@
 package com.afoxplus.orders.delivery.views.activities
 
+import android.app.Activity
+import android.content.Intent
 import android.view.View
 import androidx.activity.viewModels
+import androidx.core.content.ContextCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.afoxplus.orders.R
 import com.afoxplus.orders.databinding.ActivityOrdersMarketPanelBinding
@@ -20,6 +23,12 @@ class MarketOrderActivity : BaseActivity() {
 
     private lateinit var binding: ActivityOrdersMarketPanelBinding
 
+    companion object {
+        fun newInstance(activity: Activity): Intent {
+            return Intent(activity, MarketOrderActivity::class.java)
+        }
+    }
+
     @Inject
     lateinit var productFlow: ProductFlow
 
@@ -30,31 +39,44 @@ class MarketOrderActivity : BaseActivity() {
 
     private lateinit var viewPagerAdapter: ViewPagerAdapter
     private val marketOrderTabs: List<String> by lazy { listOf(*resources.getStringArray(R.array.orders_market_order_tabs)) }
+    private val marketOrderTabIcons: List<Int> by lazy {
+        listOf(
+            R.drawable.orders_ic_carta,
+            R.drawable.orders_ic_menu
+        )
+    }
 
     override fun setMainView() {
         binding = ActivityOrdersMarketPanelBinding.inflate(layoutInflater)
-        binding.lifecycleOwner = this
         setContentView(binding.root)
     }
 
     override fun setUpView() {
-        binding.viewModel = marketOrderViewModel
+        binding.marketOrderToolBar.setNavigationOnClickListener { marketOrderViewModel.onBackPressed() }
         setUpMarkerOrderTab()
-        binding.nameMarket.text = "Rest. Doña Esther"
+        binding.marketOrderRestaurantName.text = "Rest. Doña Esther"
+        binding.buttonViewOrder.setOnClickListener {
+            marketOrderViewModel.onClickViewOrder()
+        }
     }
 
     override fun observerViewModel() {
         marketOrderViewModel.goToAddCardProductEvent.observe(this, EventObserver { product ->
-            orderFlow.goToAddCartProduct(this, product)
+            orderFlow.goToAddProductToOrderActivity(this, product)
         })
 
         marketOrderViewModel.eventOnClickViewOrder.observe(this, EventObserver { order ->
-            orderFlow.goToCartProducts(this, order)
+            orderFlow.goToOrderPreviewActivity(this, order)
         })
 
         marketOrderViewModel.order.observe(this) { order ->
-            order?.let { binding.buttonViewOrder.visibility = View.VISIBLE }
+            order?.let {
+                binding.buttonViewOrder.visibility = View.VISIBLE
+                binding.buttonViewOrder.text = it.getLabelViewMyOrder()
+            }
         }
+
+        marketOrderViewModel.eventOnBackPressed.observe(this, EventObserver { onBackPressed() })
     }
 
     private fun setUpMarkerOrderTab() {
@@ -62,16 +84,19 @@ class MarketOrderActivity : BaseActivity() {
             supportFragmentManager,
             lifecycle,
             listOf(
-                productFlow.getFragmentRecommendedProducts(),
-                productFlow.getFragmentRecommendedProducts()
+                productFlow.getProductsSaleFragment(),
+                productFlow.getProductMenuFragment()
             )
         )
         binding.viewPagerMarket.adapter = viewPagerAdapter
         binding.viewPagerMarket.orientation = ViewPager2.ORIENTATION_HORIZONTAL
         TabLayoutMediator(
-            binding.tabMarket,
+            binding.marketOrderProductsTab,
             binding.viewPagerMarket
-        ) { tab, position -> tab.text = marketOrderTabs[position] }.attach()
+        ) { tab, position ->
+            tab.text = marketOrderTabs[position]
+            tab.icon = ContextCompat.getDrawable(this, marketOrderTabIcons[position])
+        }.attach()
     }
 
 }

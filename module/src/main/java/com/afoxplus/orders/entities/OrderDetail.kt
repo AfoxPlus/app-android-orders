@@ -16,10 +16,6 @@ class OrderDetail(
         this.saleOrderItemStrategy = saleOrderDetailStrategy
     }
 
-    fun addQuantity(quantity: Int) {
-        this.quantity += quantity
-    }
-
     private fun calculateSubTotalWithoutStrategy(): Double {
         return (product.getPriceForSale() * quantity)
     }
