@@ -19,7 +19,7 @@ interface OrderFlow {
 
     class OrderFlowImpl @Inject constructor() : OrderFlow {
         override fun goToMarketOrderActivity(activity: Activity) {
-            Intent(activity, MarketOrderActivity::class.java).run { activity.startActivity(this) }
+            activity.startActivity(MarketOrderActivity.newInstance(activity))
         }
 
         override fun goToAddProductToOrderActivity(activity: Activity, product: Product) {
