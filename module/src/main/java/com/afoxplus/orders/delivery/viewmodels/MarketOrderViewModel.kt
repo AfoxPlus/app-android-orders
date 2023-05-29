@@ -9,40 +9,38 @@ import com.afoxplus.orders.usecases.actions.ClearCurrentOrder
 import com.afoxplus.orders.usecases.actions.GetCurrentOrder
 import com.afoxplus.products.delivery.views.events.OnClickProductSaleEvent
 import com.afoxplus.products.entities.Product
-import com.afoxplus.uikit.bus.Event
-import com.afoxplus.uikit.bus.EventBusListener
-import com.afoxplus.uikit.di.UIKitMainDispatcher
+import com.afoxplus.uikit.bus.UIKitEvent
+import com.afoxplus.uikit.bus.UIKitEventBusWrapper
+import com.afoxplus.uikit.di.UIKitCoroutineDispatcher
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 internal class MarketOrderViewModel @Inject constructor(
-    private val eventBusListener: EventBusListener,
+    private val eventBusListener: UIKitEventBusWrapper,
     private val clearCurrentOrder: ClearCurrentOrder,
     private val getCurrentOrder: GetCurrentOrder,
-    @UIKitMainDispatcher private val mainDispatcher: CoroutineDispatcher
+    private val coroutines: UIKitCoroutineDispatcher
 ) : ViewModel() {
 
-    private val mGoToAddCardProductEvent: MutableLiveData<Event<Product>> by lazy { MutableLiveData<Event<Product>>() }
+    private val mGoToAddCardProductEvent: MutableLiveData<UIKitEvent<Product>> by lazy { MutableLiveData<UIKitEvent<Product>>() }
     private val mOrder: MutableLiveData<Order?> by lazy { MutableLiveData<Order?>() }
-    private val mEventOnClickViewOrder: MutableLiveData<Event<Order>> by lazy { MutableLiveData<Event<Order>>() }
-    private val mEventOnBackPressed: MutableLiveData<Event<Unit>> by lazy { MutableLiveData<Event<Unit>>() }
+    private val mEventOnClickViewOrder: MutableLiveData<UIKitEvent<Order>> by lazy { MutableLiveData<UIKitEvent<Order>>() }
+    private val mEventOnBackPressed: MutableLiveData<UIKitEvent<Unit>> by lazy { MutableLiveData<UIKitEvent<Unit>>() }
 
 
-    val goToAddCardProductEvent: LiveData<Event<Product>> get() = mGoToAddCardProductEvent
+    val goToAddCardProductEvent: LiveData<UIKitEvent<Product>> get() = mGoToAddCardProductEvent
     val order: LiveData<Order?> get() = mOrder
-    val eventOnClickViewOrder: LiveData<Event<Order>> get() = mEventOnClickViewOrder
-    val eventOnBackPressed: LiveData<Event<Unit>> get() = mEventOnBackPressed
+    val eventOnClickViewOrder: LiveData<UIKitEvent<Order>> get() = mEventOnClickViewOrder
+    val eventOnBackPressed: LiveData<UIKitEvent<Unit>> get() = mEventOnBackPressed
 
     init {
-        viewModelScope.launch(mainDispatcher) {
-            eventBusListener.subscribe().collectLatest { event ->
+        viewModelScope.launch(coroutines.getMainDispatcher()) {
+            eventBusListener.getBusEventFlow().collectLatest { event ->
                 if (event is OnClickProductSaleEvent) {
-                    mGoToAddCardProductEvent.postValue(Event(event.product))
+                    mGoToAddCardProductEvent.postValue(UIKitEvent(event.product))
                 }
             }
         }
@@ -50,7 +48,7 @@ internal class MarketOrderViewModel @Inject constructor(
     }
 
     private fun loadCurrentOrder() {
-        viewModelScope.launch(mainDispatcher) {
+        viewModelScope.launch(coroutines.getMainDispatcher()) {
             getCurrentOrder().collect {
                 if (it != null)
                     mOrder.postValue(it)
@@ -58,14 +56,14 @@ internal class MarketOrderViewModel @Inject constructor(
         }
     }
 
-    fun onClickViewOrder() = viewModelScope.launch(mainDispatcher) {
+    fun onClickViewOrder() = viewModelScope.launch(coroutines.getMainDispatcher()) {
         mOrder.value?.let { order ->
-            mEventOnClickViewOrder.postValue(Event(order))
+            mEventOnClickViewOrder.postValue(UIKitEvent(order))
         }
     }
 
-    fun onBackPressed() = viewModelScope.launch(mainDispatcher) {
+    fun onBackPressed() = viewModelScope.launch(coroutines.getMainDispatcher()) {
         clearCurrentOrder()
-        mEventOnBackPressed.value = Event(Unit)
+        mEventOnBackPressed.value = UIKitEvent(Unit)
     }
 }

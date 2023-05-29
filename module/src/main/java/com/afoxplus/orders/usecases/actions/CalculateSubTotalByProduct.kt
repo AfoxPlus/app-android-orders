@@ -3,7 +3,7 @@ package com.afoxplus.orders.usecases.actions
 import com.afoxplus.products.entities.Product
 import javax.inject.Inject
 
-internal interface CalculateSubTotalByProduct {
+internal fun interface CalculateSubTotalByProduct {
     operator fun invoke(quantity: Int, product: Product): Double
 }
 

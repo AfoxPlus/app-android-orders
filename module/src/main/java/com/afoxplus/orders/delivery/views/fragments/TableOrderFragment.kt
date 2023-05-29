@@ -7,20 +7,19 @@ import androidx.fragment.app.activityViewModels
 import com.afoxplus.orders.R
 import com.afoxplus.orders.databinding.FragmentOrdersChoseTableBinding
 import com.afoxplus.orders.delivery.viewmodels.ShopCartViewModel
-import com.afoxplus.uikit.bus.EventObserver
-import com.afoxplus.uikit.fragments.BaseFragment
-import com.afoxplus.uikit.objects.vendor.VendorAction
-import dagger.hilt.EntryPoint
+import com.afoxplus.uikit.bus.UIKitEventObserver
+import com.afoxplus.uikit.fragments.UIKitBaseFragment
+import com.afoxplus.uikit.objects.vendor.VendorShared
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class TableOrderFragment : BaseFragment() {
+class TableOrderFragment : UIKitBaseFragment() {
     private lateinit var binding: FragmentOrdersChoseTableBinding
     private val cartProductsViewModel: ShopCartViewModel by activityViewModels()
 
     @Inject
-    lateinit var vendorAction: VendorAction
+    lateinit var vendorShared: VendorShared
 
     override fun getMainView(inflater: LayoutInflater, container: ViewGroup?): View {
         binding = FragmentOrdersChoseTableBinding.inflate(inflater, container, false)
@@ -33,7 +32,7 @@ class TableOrderFragment : BaseFragment() {
 
     override fun observerViewModel() {
         super.observerViewModel()
-        cartProductsViewModel.eventValidateTableOrder.observe(viewLifecycleOwner, EventObserver {
+        cartProductsViewModel.eventValidateTableOrder.observe(viewLifecycleOwner, UIKitEventObserver {
             cartProductsViewModel.sendOrder(
                 binding.tableNumber.text.toString(),
                 binding.tableClientName.text,
@@ -52,7 +51,7 @@ class TableOrderFragment : BaseFragment() {
 
     override fun setUpView() {
         super.setUpView()
-        vendorAction.fetch()?.run {
+        vendorShared.fetch()?.run {
             binding.tableNumber.text = getString(R.string.orders_table_number, tableId)
         }
     }

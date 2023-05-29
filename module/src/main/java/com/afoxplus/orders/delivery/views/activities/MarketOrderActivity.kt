@@ -11,15 +11,15 @@ import com.afoxplus.orders.databinding.ActivityOrdersMarketPanelBinding
 import com.afoxplus.orders.delivery.flow.OrderFlow
 import com.afoxplus.orders.delivery.viewmodels.MarketOrderViewModel
 import com.afoxplus.products.delivery.flow.ProductFlow
-import com.afoxplus.uikit.activities.BaseActivity
-import com.afoxplus.uikit.adapters.ViewPagerAdapter
-import com.afoxplus.uikit.bus.EventObserver
+import com.afoxplus.uikit.activities.UIKitBaseActivity
+import com.afoxplus.uikit.adapters.UIKitViewPagerAdapter
+import com.afoxplus.uikit.bus.UIKitEventObserver
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class MarketOrderActivity : BaseActivity() {
+class MarketOrderActivity : UIKitBaseActivity() {
 
     private lateinit var binding: ActivityOrdersMarketPanelBinding
 
@@ -37,7 +37,7 @@ class MarketOrderActivity : BaseActivity() {
 
     private val marketOrderViewModel: MarketOrderViewModel by viewModels()
 
-    private lateinit var viewPagerAdapter: ViewPagerAdapter
+    private lateinit var viewPagerAdapter: UIKitViewPagerAdapter
     private val marketOrderTabs: List<String> by lazy { listOf(*resources.getStringArray(R.array.orders_market_order_tabs)) }
     private val marketOrderTabIcons: List<Int> by lazy {
         listOf(
@@ -61,11 +61,11 @@ class MarketOrderActivity : BaseActivity() {
     }
 
     override fun observerViewModel() {
-        marketOrderViewModel.goToAddCardProductEvent.observe(this, EventObserver { product ->
+        marketOrderViewModel.goToAddCardProductEvent.observe(this, UIKitEventObserver { product ->
             orderFlow.goToAddProductToOrderActivity(this, product)
         })
 
-        marketOrderViewModel.eventOnClickViewOrder.observe(this, EventObserver { order ->
+        marketOrderViewModel.eventOnClickViewOrder.observe(this, UIKitEventObserver { order ->
             orderFlow.goToOrderPreviewActivity(this, order)
         })
 
@@ -76,11 +76,11 @@ class MarketOrderActivity : BaseActivity() {
             }
         }
 
-        marketOrderViewModel.eventOnBackPressed.observe(this, EventObserver { onBackPressed() })
+        marketOrderViewModel.eventOnBackPressed.observe(this, UIKitEventObserver { onBackPressed() })
     }
 
     private fun setUpMarkerOrderTab() {
-        viewPagerAdapter = ViewPagerAdapter(
+        viewPagerAdapter = UIKitViewPagerAdapter(
             supportFragmentManager,
             lifecycle,
             listOf(

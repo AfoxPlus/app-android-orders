@@ -6,13 +6,13 @@ import com.afoxplus.orders.databinding.ActivityAddProductToOrderBinding
 import com.afoxplus.orders.delivery.viewmodels.AddProductToOrderViewModel
 import com.afoxplus.orders.delivery.views.fragments.AddProductToCartFragment
 import com.afoxplus.products.entities.Product
-import com.afoxplus.uikit.activities.BaseActivity
+import com.afoxplus.uikit.activities.UIKitBaseActivity
 import com.afoxplus.uikit.activities.extensions.addFragmentToActivity
-import com.afoxplus.uikit.bus.EventObserver
+import com.afoxplus.uikit.bus.UIKitEventObserver
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class AddProductToOrderActivity : BaseActivity() {
+class AddProductToOrderActivity : UIKitBaseActivity() {
 
     private lateinit var binding: ActivityAddProductToOrderBinding
     private val addProductToOrderViewModel: AddProductToOrderViewModel by viewModels()
@@ -37,7 +37,7 @@ class AddProductToOrderActivity : BaseActivity() {
     }
 
     override fun observerViewModel() {
-        addProductToOrderViewModel.eventProductAddedToCardSuccess.observe(this, EventObserver {
+        addProductToOrderViewModel.eventProductAddedToCardSuccess.observe(this, UIKitEventObserver {
             finish()
         })
 

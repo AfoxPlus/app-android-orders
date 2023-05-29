@@ -4,7 +4,7 @@ import com.afoxplus.orders.usecases.repositories.OrderRepository
 import com.afoxplus.products.entities.Product
 import javax.inject.Inject
 
-internal interface DeleteProductToCurrentOrder {
+internal fun interface DeleteProductToCurrentOrder {
     suspend operator fun invoke(product: Product)
 }
 

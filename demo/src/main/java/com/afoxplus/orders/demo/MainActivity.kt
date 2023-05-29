@@ -6,7 +6,7 @@ import com.afoxplus.orders.delivery.flow.OrderFlow
 import com.afoxplus.orders.demo.databinding.ActivityMainBinding
 import com.afoxplus.products.delivery.flow.ProductFlow
 import com.afoxplus.uikit.objects.vendor.Vendor
-import com.afoxplus.uikit.objects.vendor.VendorAction
+import com.afoxplus.uikit.objects.vendor.VendorShared
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var orderFlow: OrderFlow
 
     @Inject
-    lateinit var vendorAction: VendorAction
+    lateinit var vendorAction: VendorShared
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

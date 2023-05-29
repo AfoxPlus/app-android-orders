@@ -4,9 +4,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.afoxplus.orders.databinding.FragmentOrderSentSuccessfullyBinding
-import com.afoxplus.uikit.fragments.BaseFragment
+import com.afoxplus.uikit.fragments.UIKitBaseFragment
 
-class OrderSentSuccessfullyFragment : BaseFragment() {
+class OrderSentSuccessfullyFragment : UIKitBaseFragment() {
     private lateinit var binding: FragmentOrderSentSuccessfullyBinding
 
     override fun getMainView(inflater: LayoutInflater, container: ViewGroup?): View {

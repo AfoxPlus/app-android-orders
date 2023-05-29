@@ -2,12 +2,12 @@ package com.afoxplus.orders.delivery.views.activities
 
 import com.afoxplus.orders.databinding.ActivityOrderSuccessBinding
 import com.afoxplus.orders.delivery.views.fragments.OrderSentSuccessfullyFragment
-import com.afoxplus.uikit.activities.BaseActivity
+import com.afoxplus.uikit.activities.UIKitBaseActivity
 import com.afoxplus.uikit.activities.extensions.addFragmentToActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class OrderSuccessActivity : BaseActivity() {
+class OrderSuccessActivity : UIKitBaseActivity() {
     private lateinit var binding: ActivityOrderSuccessBinding
     private val fragment = OrderSentSuccessfullyFragment.getInstance()
 
@@ -17,7 +17,6 @@ class OrderSuccessActivity : BaseActivity() {
     }
 
     override fun setUpView() {
-        super.setUpView()
         addFragmentToActivity(
             supportFragmentManager,
             fragment,
