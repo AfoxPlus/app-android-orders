@@ -17,7 +17,6 @@ import javax.inject.Singleton
 internal class OrderLocalCache @Inject constructor(
     private val vendorShared: VendorShared
 ) : OrderLocalDataSource {
-
     private var order: Order? = null
     private val orderStateFlow: MutableSharedFlow<Order?> by lazy {
         MutableSharedFlow(
