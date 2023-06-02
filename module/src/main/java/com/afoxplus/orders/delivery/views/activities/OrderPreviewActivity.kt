@@ -7,15 +7,14 @@ import com.afoxplus.orders.delivery.viewmodels.ShopCartViewModel
 import com.afoxplus.orders.delivery.views.fragments.OrderSentSuccessfullyFragment
 import com.afoxplus.orders.delivery.views.fragments.ShopCartFragment
 import com.afoxplus.orders.delivery.views.fragments.TableOrderFragment
-import com.afoxplus.uikit.activities.BaseActivity
+import com.afoxplus.uikit.activities.UIKitBaseActivity
 import com.afoxplus.uikit.activities.extensions.addFragmentToActivity
-import com.afoxplus.uikit.bus.EventObserver
-import com.afoxplus.uikit.fragments.BaseFragment
+import com.afoxplus.uikit.fragments.UIKitBaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class OrderPreviewActivity : BaseActivity() {
+class OrderPreviewActivity : UIKitBaseActivity() {
 
     private lateinit var binding: ActivityOrdersPreviewBinding
     private val shopCartViewModel: ShopCartViewModel by viewModels()
@@ -24,7 +23,7 @@ class OrderPreviewActivity : BaseActivity() {
     private val tableOrderFragment: TableOrderFragment by lazy { TableOrderFragment.getInstance() }
     private val orderSentSuccessfullyFragment: OrderSentSuccessfullyFragment by lazy { OrderSentSuccessfullyFragment() }
 
-    private lateinit var currentFragment: BaseFragment
+    private lateinit var currentFragment: UIKitBaseFragment
     @Inject
     lateinit var orderFlow: OrderFlow
 
@@ -65,11 +64,12 @@ class OrderPreviewActivity : BaseActivity() {
         }
 
         shopCartViewModel.eventOpenSuccessOrder.observe(this) {
+            finish()
             orderFlow.goToOrderSuccessActivity(this)
         }
     }
 
-    private fun changeFragment(fragment: BaseFragment) {
+    private fun changeFragment(fragment: UIKitBaseFragment) {
         addFragmentToActivity(
             supportFragmentManager,
             fragment,
@@ -79,8 +79,8 @@ class OrderPreviewActivity : BaseActivity() {
     }
 
     private fun removeFragments(
-        fragmentToRemove: BaseFragment,
-        fragmentToReplace: BaseFragment
+        fragmentToRemove: UIKitBaseFragment,
+        fragmentToReplace: UIKitBaseFragment
     ) {
         supportFragmentManager.beginTransaction().run {
             remove(fragmentToRemove)

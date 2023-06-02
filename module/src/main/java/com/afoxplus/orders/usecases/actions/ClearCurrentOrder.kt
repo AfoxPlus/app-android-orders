@@ -3,7 +3,7 @@ package com.afoxplus.orders.usecases.actions
 import com.afoxplus.orders.usecases.repositories.OrderRepository
 import javax.inject.Inject
 
-internal interface ClearCurrentOrder {
+internal fun interface ClearCurrentOrder {
     operator fun invoke()
 }
 

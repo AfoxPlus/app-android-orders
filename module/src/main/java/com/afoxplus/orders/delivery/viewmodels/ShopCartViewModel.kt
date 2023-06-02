@@ -11,21 +11,19 @@ import com.afoxplus.orders.usecases.actions.AddOrUpdateProductToCurrentOrder
 import com.afoxplus.orders.usecases.actions.DeleteProductToCurrentOrder
 import com.afoxplus.orders.usecases.actions.GetCurrentOrder
 import com.afoxplus.orders.usecases.actions.SendOrder
-import com.afoxplus.uikit.bus.Event
-import com.afoxplus.uikit.di.UIKitMainDispatcher
+import com.afoxplus.uikit.bus.UIKitEvent
+import com.afoxplus.uikit.di.UIKitCoroutineDispatcher
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 internal class ShopCartViewModel @Inject constructor(
-    @UIKitMainDispatcher private val mainDispatcher: CoroutineDispatcher,
     private val addOrUpdateProductToCurrentOrder: AddOrUpdateProductToCurrentOrder,
     private val getCurrentOrder: GetCurrentOrder,
     private val deleteProductToCurrentOrder: DeleteProductToCurrentOrder,
-    private val sendOrder: SendOrder
+    private val sendOrder: SendOrder,
+    private val coroutines: UIKitCoroutineDispatcher
 ) : ViewModel() {
 
     private val mOrder: MutableLiveData<Order> by lazy { MutableLiveData<Order>() }
@@ -34,17 +32,17 @@ internal class ShopCartViewModel @Inject constructor(
     private val nameButtonSendOrderMutableLiveData: MutableLiveData<String> by lazy { MutableLiveData<String>() }
     val nameButtonSendOrderLiveData: LiveData<String> get() = nameButtonSendOrderMutableLiveData
 
-    private val mEventOnBackSendOrder: MutableLiveData<Event<Unit>> by lazy { MutableLiveData<Event<Unit>>() }
-    val eventOnBackSendOrder: LiveData<Event<Unit>> get() = mEventOnBackSendOrder
+    private val mEventOnBackSendOrder: MutableLiveData<UIKitEvent<Unit>> by lazy { MutableLiveData<UIKitEvent<Unit>>() }
+    val eventOnBackSendOrder: LiveData<UIKitEvent<Unit>> get() = mEventOnBackSendOrder
 
-    private val mEventOpenTableOrder: MutableLiveData<Event<Unit>> by lazy { MutableLiveData<Event<Unit>>() }
-    val eventOpenTableOrder: LiveData<Event<Unit>> get() = mEventOpenTableOrder
+    private val mEventOpenTableOrder: MutableLiveData<UIKitEvent<Unit>> by lazy { MutableLiveData<UIKitEvent<Unit>>() }
+    val eventOpenTableOrder: LiveData<UIKitEvent<Unit>> get() = mEventOpenTableOrder
 
-    private val mEventValidateTableOrder: MutableLiveData<Event<Unit>> by lazy { MutableLiveData<Event<Unit>>() }
-    val eventValidateTableOrder: LiveData<Event<Unit>> get() = mEventValidateTableOrder
+    private val mEventValidateTableOrder: MutableLiveData<UIKitEvent<Unit>> by lazy { MutableLiveData<UIKitEvent<Unit>>() }
+    val eventValidateTableOrder: LiveData<UIKitEvent<Unit>> get() = mEventValidateTableOrder
 
-    private val mEventRemoveTableOrder: MutableLiveData<Event<Unit>> by lazy { MutableLiveData<Event<Unit>>() }
-    val eventRemoveTableOrder: LiveData<Event<Unit>> get() = mEventRemoveTableOrder
+    private val mEventRemoveTableOrder: MutableLiveData<UIKitEvent<Unit>> by lazy { MutableLiveData<UIKitEvent<Unit>>() }
+    val eventRemoveTableOrder: LiveData<UIKitEvent<Unit>> get() = mEventRemoveTableOrder
 
     private val mErrorClientNameMutableLiveData: MutableLiveData<String> by lazy { MutableLiveData<String>() }
     val errorClientNameLiveData: LiveData<String> get() = mErrorClientNameMutableLiveData
@@ -52,15 +50,15 @@ internal class ShopCartViewModel @Inject constructor(
     private val mErrorClientPhoneNumberMutableLiveData: MutableLiveData<String> by lazy { MutableLiveData<String>() }
     val errorClientPhoneNumberLiveData: LiveData<String> get() = mErrorClientPhoneNumberMutableLiveData
 
-    private val mEventSuccessOrder: MutableLiveData<Event<String>> by lazy { MutableLiveData<Event<String>>() }
-    val eventOpenSuccessOrder: LiveData<Event<String>> get() = mEventSuccessOrder
+    private val mEventSuccessOrder: MutableLiveData<UIKitEvent<String>> by lazy { MutableLiveData<UIKitEvent<String>>() }
+    val eventOpenSuccessOrder: LiveData<UIKitEvent<String>> get() = mEventSuccessOrder
 
     init {
         loadCurrentOrder()
     }
 
     private fun loadCurrentOrder() {
-        viewModelScope.launch(mainDispatcher) {
+        viewModelScope.launch(coroutines.getMainDispatcher()) {
             getCurrentOrder().collect {
                 if (it != null && it.getOrderDetails().isNotEmpty())
                     mOrder.postValue(it)
@@ -71,28 +69,28 @@ internal class ShopCartViewModel @Inject constructor(
     }
 
     private fun closeScreen() {
-        mEventOnBackSendOrder.postValue(Event(Unit))
+        mEventOnBackSendOrder.postValue(UIKitEvent(Unit))
     }
 
-    private fun onClickSendOrder() = viewModelScope.launch(mainDispatcher) {
-        mEventValidateTableOrder.postValue(Event(Unit))
+    private fun onClickSendOrder() = viewModelScope.launch(coroutines.getMainDispatcher()) {
+        mEventValidateTableOrder.postValue(UIKitEvent(Unit))
     }
 
     fun deleteItem(orderDetail: OrderDetail) {
-        viewModelScope.launch(mainDispatcher) {
+        viewModelScope.launch(coroutines.getMainDispatcher()) {
             deleteProductToCurrentOrder.invoke(orderDetail.product)
         }
     }
 
     fun updateQuantity(orderDetail: OrderDetail, quantity: Int) {
-        viewModelScope.launch(mainDispatcher) {
+        viewModelScope.launch(coroutines.getMainDispatcher()) {
             addOrUpdateProductToCurrentOrder.invoke(quantity, orderDetail.product)
         }
     }
 
     fun handleClickSender(isOrderCartView: Boolean) {
         if (isOrderCartView) {
-            mEventOpenTableOrder.postValue(Event(Unit))
+            mEventOpenTableOrder.postValue(UIKitEvent(Unit))
             nameButtonSendOrderMutableLiveData.postValue(mOrder.value?.getLabelSendMyOrder())
         } else
             onClickSendOrder()
@@ -100,7 +98,7 @@ internal class ShopCartViewModel @Inject constructor(
 
     fun handleBackPressed(isTableOrder: Boolean) {
         if (isTableOrder) {
-            mEventRemoveTableOrder.postValue(Event(Unit))
+            mEventRemoveTableOrder.postValue(UIKitEvent(Unit))
             nameButtonSendOrderMutableLiveData.postValue("Continuar")
         } else
             closeScreen()
@@ -114,7 +112,7 @@ internal class ShopCartViewModel @Inject constructor(
                 it.clientPhoneNumber = clientPhone
             }
             if (order != null)
-                viewModelScope.launch(mainDispatcher) {
+                viewModelScope.launch(coroutines.getMainDispatcher()) {
                     val message = sendOrder.invoke(order)
                     openSuccessOrder(message)
                 }
@@ -122,7 +120,7 @@ internal class ShopCartViewModel @Inject constructor(
     }
 
     private fun openSuccessOrder(message: String) {
-        mEventSuccessOrder.postValue(Event(message))
+        mEventSuccessOrder.postValue(UIKitEvent(message))
     }
 
     private fun validateClient(clientName: String, clientPhone: String): Boolean {

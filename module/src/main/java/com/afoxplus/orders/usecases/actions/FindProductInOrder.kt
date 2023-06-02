@@ -5,7 +5,7 @@ import com.afoxplus.orders.usecases.repositories.OrderRepository
 import com.afoxplus.products.entities.Product
 import javax.inject.Inject
 
-interface FindProductInOrder {
+fun interface FindProductInOrder {
     operator fun invoke(product: Product): OrderDetail?
 }
 

@@ -6,13 +6,13 @@ import com.afoxplus.orders.databinding.ActivityAddProductToOrderBinding
 import com.afoxplus.orders.delivery.viewmodels.AddProductToOrderViewModel
 import com.afoxplus.orders.delivery.views.fragments.AddProductToCartFragment
 import com.afoxplus.products.entities.Product
-import com.afoxplus.uikit.activities.BaseActivity
+import com.afoxplus.uikit.activities.UIKitBaseActivity
 import com.afoxplus.uikit.activities.extensions.addFragmentToActivity
-import com.afoxplus.uikit.bus.EventObserver
+import com.afoxplus.uikit.bus.UIKitEventObserver
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class AddProductToOrderActivity : BaseActivity() {
+class AddProductToOrderActivity : UIKitBaseActivity() {
 
     private lateinit var binding: ActivityAddProductToOrderBinding
     private val addProductToOrderViewModel: AddProductToOrderViewModel by viewModels()
@@ -37,18 +37,13 @@ class AddProductToOrderActivity : BaseActivity() {
     }
 
     override fun observerViewModel() {
-        addProductToOrderViewModel.eventProductAddedToCardSuccess.observe(this, EventObserver {
+        addProductToOrderViewModel.eventProductAddedToCardSuccess.observe(this, UIKitEventObserver {
             finish()
         })
 
-        addProductToOrderViewModel.subTotal.observe(this) {
-            it?.let { subTotal ->
-                binding.buttonViewOrder.text =
-                    getString(R.string.orders_market_add_product, subTotal)
-            }
-        }
-        addProductToOrderViewModel.enableSubTotalButton.observe(this) {
-            binding.buttonViewOrder.isEnabled = it
+        addProductToOrderViewModel.buttonSubTotalState.observe(this) { model ->
+            binding.buttonViewOrder.isEnabled = model.enabled
+            binding.buttonViewOrder.text = getString(model.title, model.paramTitle)
         }
     }
 
@@ -58,7 +53,7 @@ class AddProductToOrderActivity : BaseActivity() {
 
     private fun getIntentData() {
         intent.getParcelableExtra<Product>(Product::class.java.name)?.let { product ->
-            addProductToOrderViewModel.setProduct(product)
+            addProductToOrderViewModel.startWithProduct(product)
         }
     }
 

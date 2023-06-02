@@ -4,6 +4,7 @@ import com.afoxplus.orders.entities.Order
 import com.afoxplus.orders.entities.OrderDetail
 import com.afoxplus.orders.repositories.sources.local.OrderLocalDataSource
 import com.afoxplus.products.entities.Product
+import com.afoxplus.uikit.objects.vendor.VendorShared
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -12,7 +13,9 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-internal class OrderLocalCache @Inject constructor() : OrderLocalDataSource {
+internal class OrderLocalCache @Inject constructor(
+    private val vendorShared: VendorShared
+) : OrderLocalDataSource {
     private var order: Order? = null
     private val orderStateFlow: MutableSharedFlow<Order?> by lazy {
         MutableSharedFlow(
@@ -46,7 +49,10 @@ internal class OrderLocalCache @Inject constructor() : OrderLocalDataSource {
     }
 
     private fun newOrder(): Order {
-        val newOrder = Order(date = Calendar.getInstance().time)
+        val newOrder = Order(
+            date = Calendar.getInstance().time,
+            restaurantId = vendorShared.fetch()?.restaurantId ?: ""
+        )
         order = newOrder
         return newOrder
     }

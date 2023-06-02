@@ -5,7 +5,7 @@ import com.afoxplus.orders.usecases.repositories.OrderRepository
 import kotlinx.coroutines.flow.SharedFlow
 import javax.inject.Inject
 
-internal interface GetCurrentOrder {
+internal fun interface GetCurrentOrder {
     suspend operator fun invoke(): SharedFlow<Order?>
 }
 
