@@ -31,7 +31,10 @@ internal data class OrderRequest(
     }
 }
 
-internal data class ClientRequest(val name: String, val cellphone: String)
+internal data class ClientRequest(
+    @SerializedName("name") val name: String,
+    @SerializedName("cel") val cellphone: String
+)
 
 internal data class OrderDetailRequest(
     @SerializedName("product_id") val productId: String,

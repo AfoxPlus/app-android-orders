@@ -3,7 +3,6 @@ package com.afoxplus.orders.delivery.viewmodels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.afoxplus.orders.delivery.views.events.GoToNewOrderEvent
-import com.afoxplus.orders.usecases.actions.ClearCurrentOrder
 import com.afoxplus.uikit.bus.UIKitEventBusWrapper
 import com.afoxplus.uikit.di.UIKitCoroutineDispatcher
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,7 +15,6 @@ import javax.inject.Inject
 @HiltViewModel
 internal class OrderSuccessViewModel @Inject constructor(
     private val eventBus: UIKitEventBusWrapper,
-    private val clearCurrentOrder: ClearCurrentOrder,
     private val coroutineDispatcher: UIKitCoroutineDispatcher
 ) : ViewModel() {
 
@@ -26,7 +24,6 @@ internal class OrderSuccessViewModel @Inject constructor(
         .shareIn(scope = viewModelScope, started = SharingStarted.Eagerly)
 
     fun clickOnNewOrder() = viewModelScope.launch(coroutineDispatcher.getMainDispatcher()) {
-        clearCurrentOrder()
         eventBus.send(GoToNewOrderEvent.build())
     }
 }
