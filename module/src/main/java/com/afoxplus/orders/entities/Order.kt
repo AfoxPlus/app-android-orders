@@ -11,6 +11,7 @@ class Order(
     val date: Date,
     val code: String = "",
     var tableNumber: String = "",
+    var restaurantId: String = "",
     var clientName: String = "",
     var clientPhoneNumber: String = "",
     private val orderDetails: MutableList<OrderDetail> = mutableListOf(),

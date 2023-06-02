@@ -64,6 +64,7 @@ class OrderPreviewActivity : UIKitBaseActivity() {
         }
 
         shopCartViewModel.eventOpenSuccessOrder.observe(this) {
+            finish()
             orderFlow.goToOrderSuccessActivity(this)
         }
     }

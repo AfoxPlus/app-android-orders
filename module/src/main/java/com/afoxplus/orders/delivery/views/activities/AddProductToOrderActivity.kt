@@ -41,14 +41,9 @@ class AddProductToOrderActivity : UIKitBaseActivity() {
             finish()
         })
 
-        addProductToOrderViewModel.subTotal.observe(this) {
-            it?.let { subTotal ->
-                binding.buttonViewOrder.text =
-                    getString(R.string.orders_market_add_product, subTotal)
-            }
-        }
-        addProductToOrderViewModel.enableSubTotalButton.observe(this) {
-            binding.buttonViewOrder.isEnabled = it
+        addProductToOrderViewModel.buttonSubTotalState.observe(this) { model ->
+            binding.buttonViewOrder.isEnabled = model.enabled
+            binding.buttonViewOrder.text = getString(model.title, model.paramTitle)
         }
     }
 
@@ -58,7 +53,7 @@ class AddProductToOrderActivity : UIKitBaseActivity() {
 
     private fun getIntentData() {
         intent.getParcelableExtra<Product>(Product::class.java.name)?.let { product ->
-            addProductToOrderViewModel.setProduct(product)
+            addProductToOrderViewModel.startWithProduct(product)
         }
     }
 

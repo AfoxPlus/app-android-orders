@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.afoxplus.orders.delivery.models.ButtonStateModel
 import com.afoxplus.orders.delivery.views.events.AddedProductToCurrentOrderSuccessfullyEvent
 import com.afoxplus.orders.delivery.views.extensions.getAmountFormat
 import com.afoxplus.orders.entities.OrderDetail
@@ -29,40 +30,49 @@ internal class AddProductToOrderViewModel @Inject constructor(
 
     private val mProduct: MutableLiveData<Product> by lazy { MutableLiveData<Product>() }
     private val mQuantity: MutableLiveData<Int> by lazy { MutableLiveData<Int>() }
-    private val mSubTotal: MutableLiveData<String> by lazy { MutableLiveData<String>() }
-    private val mEnableSubTotalButton: MutableLiveData<Boolean> by lazy {
-        MutableLiveData<Boolean>(false)
+    private val mButtonSubTotalState: MutableLiveData<ButtonStateModel> by lazy {
+        MutableLiveData<ButtonStateModel>(ButtonStateModel.getAddButtonState())
     }
+
+    private val mStateScreen: MutableLiveData<StateScreen> by lazy { MutableLiveData(StateScreen.Add) }
 
     val product: LiveData<Product> get() = mProduct
     val quantity: LiveData<Int> get() = mQuantity
-    val subTotal: LiveData<String> get() = mSubTotal
-    val enableSubTotalButton: LiveData<Boolean> get() = mEnableSubTotalButton
+    val buttonSubTotalState: LiveData<ButtonStateModel> get() = mButtonSubTotalState
 
     private var quantityChanged: Int = 0
 
     private val mEventProductAddedToCardSuccess: MutableLiveData<UIKitEvent<Unit>> by lazy { MutableLiveData<UIKitEvent<Unit>>() }
     val eventProductAddedToCardSuccess: LiveData<UIKitEvent<Unit>> get() = mEventProductAddedToCardSuccess
 
-    fun setProduct(product: Product) = viewModelScope.launch(coroutines.getMainDispatcher()) {
+
+    fun startWithProduct(product: Product) = viewModelScope.launch(coroutines.getMainDispatcher()) {
         mProduct.postValue(product)
         findProductInOrder(product)?.let { orderDetail ->
-            setOrderAndVerifyQuantity(orderDetail)
+            setupUpdateScreen(orderDetail)
         } ?: mQuantity.postValue(null)
+    }
+
+    private fun setupUpdateScreen(orderDetail: OrderDetail) {
+        mStateScreen.value = StateScreen.Update
+        setOrderAndVerifyQuantity(orderDetail)
     }
 
     fun calculateSubTotalByProduct(quantity: Int) =
         viewModelScope.launch(coroutines.getMainDispatcher()) {
             product.value?.let { product ->
                 quantityChanged = quantity
-                displaySubTotal(calculateSubTotalByProduct(quantity, product))
-
+                val subTotal = calculateSubTotalByProduct(quantity, product)
+                setupStateButtonSubTotal(
+                    subTotal.getAmountFormat(), isQuantityEnabled(quantityChanged)
+                )
             }
         }
 
     private fun setOrderAndVerifyQuantity(orderDetail: OrderDetail) {
-        mSubTotal.value = orderDetail.calculateSubTotal().getAmountFormat()
+        val subTotal = orderDetail.calculateSubTotal().getAmountFormat()
         mQuantity.postValue(orderDetail.quantity)
+        setupStateButtonSubTotal(subTotal, enabledButton = true)
     }
 
     fun addOrUpdateToCurrentOrder() =
@@ -74,13 +84,34 @@ internal class AddProductToOrderViewModel @Inject constructor(
             }
         }
 
-    private fun displaySubTotal(subTotal: Double) {
-        if (subTotal > 0.0) {
-            mSubTotal.value = subTotal.getAmountFormat()
-            mEnableSubTotalButton.value = true
-        } else {
-            mSubTotal.value = ""
-            mEnableSubTotalButton.value = false
+    private fun isQuantityEnabled(quantity: Int): Boolean = quantity > 0
+    private fun setupStateButtonSubTotal(subTotal: String, enabledButton: Boolean) {
+        when (mStateScreen.value) {
+            is StateScreen.Update ->
+                setButtonSubTotalState(
+                    ButtonStateModel.getUpdateButtonState(
+                        paramTitle = subTotal,
+                        enabledButton
+                    )
+                )
+
+            else ->
+                setButtonSubTotalState(
+                    ButtonStateModel.getAddButtonState(
+                        paramTitle = subTotal,
+                        enabledButton
+                    )
+                )
         }
     }
+
+    private fun setButtonSubTotalState(buttonStateModel: ButtonStateModel) {
+        mButtonSubTotalState.value = buttonStateModel
+    }
+
+    sealed interface StateScreen {
+        object Add : StateScreen
+        object Update : StateScreen
+    }
+
 }

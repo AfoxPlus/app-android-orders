@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.afoxplus.orders.delivery.views.events.GoToNewOrderEvent
 import com.afoxplus.orders.entities.Order
 import com.afoxplus.orders.usecases.actions.ClearCurrentOrder
 import com.afoxplus.orders.usecases.actions.GetCurrentOrder
@@ -13,7 +14,10 @@ import com.afoxplus.uikit.bus.UIKitEvent
 import com.afoxplus.uikit.bus.UIKitEventBusWrapper
 import com.afoxplus.uikit.di.UIKitCoroutineDispatcher
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -30,6 +34,10 @@ internal class MarketOrderViewModel @Inject constructor(
     private val mEventOnClickViewOrder: MutableLiveData<UIKitEvent<Order>> by lazy { MutableLiveData<UIKitEvent<Order>>() }
     private val mEventOnBackPressed: MutableLiveData<UIKitEvent<Unit>> by lazy { MutableLiveData<UIKitEvent<Unit>>() }
 
+
+    val eventOnNewOrder =
+        eventBusListener.getBusEventFlow().filter { event -> event is GoToNewOrderEvent }
+            .shareIn(scope = viewModelScope, started = SharingStarted.Eagerly)
 
     val goToAddCardProductEvent: LiveData<UIKitEvent<Product>> get() = mGoToAddCardProductEvent
     val order: LiveData<Order?> get() = mOrder

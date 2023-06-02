@@ -5,6 +5,7 @@ import android.content.Intent
 import android.view.View
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
 import com.afoxplus.orders.R
 import com.afoxplus.orders.databinding.ActivityOrdersMarketPanelBinding
@@ -16,6 +17,7 @@ import com.afoxplus.uikit.adapters.UIKitViewPagerAdapter
 import com.afoxplus.uikit.bus.UIKitEventObserver
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -54,6 +56,7 @@ class MarketOrderActivity : UIKitBaseActivity() {
     override fun setUpView() {
         binding.marketOrderToolBar.setNavigationOnClickListener { marketOrderViewModel.onBackPressed() }
         setUpMarkerOrderTab()
+        //TODO: Get restaurant
         binding.marketOrderRestaurantName.text = "Rest. Doña Esther"
         binding.buttonViewOrder.setOnClickListener {
             marketOrderViewModel.onClickViewOrder()
@@ -76,7 +79,15 @@ class MarketOrderActivity : UIKitBaseActivity() {
             }
         }
 
-        marketOrderViewModel.eventOnBackPressed.observe(this, UIKitEventObserver { onBackPressed() })
+        marketOrderViewModel.eventOnBackPressed.observe(
+            this,
+            UIKitEventObserver { onBackPressed() })
+
+        lifecycleScope.launchWhenCreated {
+            marketOrderViewModel.eventOnNewOrder.collectLatest {
+                binding.buttonViewOrder.visibility = View.GONE
+            }
+        }
     }
 
     private fun setUpMarkerOrderTab() {
