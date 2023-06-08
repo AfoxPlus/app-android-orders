@@ -14,6 +14,12 @@ class OrdersApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        vendorShared.save(Vendor(tableId = "01", restaurantId = "61a19c440b6de1476436de4a"))
+        vendorShared.save(
+            Vendor(
+                tableId = "01",
+                restaurantId = "61a19c440b6de1476436de4a",
+                additionalInfo = mutableMapOf("restaurant_name" to "Rest. Pepito sazon!")
+            )
+        )
     }
 }

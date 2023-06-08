@@ -8,6 +8,7 @@ import com.afoxplus.orders.delivery.views.events.GoToNewOrderEvent
 import com.afoxplus.orders.entities.Order
 import com.afoxplus.orders.usecases.actions.ClearCurrentOrder
 import com.afoxplus.orders.usecases.actions.GetCurrentOrder
+import com.afoxplus.orders.usecases.actions.GetRestaurantName
 import com.afoxplus.products.delivery.views.events.OnClickProductSaleEvent
 import com.afoxplus.products.entities.Product
 import com.afoxplus.uikit.bus.UIKitEvent
@@ -26,6 +27,7 @@ internal class MarketOrderViewModel @Inject constructor(
     private val eventBusListener: UIKitEventBusWrapper,
     private val clearCurrentOrder: ClearCurrentOrder,
     private val getCurrentOrder: GetCurrentOrder,
+    private val getRestaurantName: GetRestaurantName,
     private val coroutines: UIKitCoroutineDispatcher
 ) : ViewModel() {
 
@@ -64,6 +66,8 @@ internal class MarketOrderViewModel @Inject constructor(
         }
     }
 
+    fun restaurantName(): String = getRestaurantName()
+
     fun onClickViewOrder() = viewModelScope.launch(coroutines.getMainDispatcher()) {
         mOrder.value?.let { order ->
             mEventOnClickViewOrder.postValue(UIKitEvent(order))
@@ -74,4 +78,6 @@ internal class MarketOrderViewModel @Inject constructor(
         clearCurrentOrder()
         mEventOnBackPressed.value = UIKitEvent(Unit)
     }
+
+
 }

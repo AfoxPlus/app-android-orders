@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.collectLatest
 @AndroidEntryPoint
 class OrderSuccessActivity : UIKitBaseActivity() {
     private lateinit var binding: ActivityOrderSuccessBinding
-    private val viewModel : OrderSuccessViewModel by viewModels()
+    private val viewModel: OrderSuccessViewModel by viewModels()
     private val fragment = OrderSentSuccessfullyFragment.getInstance()
 
     override fun setMainView() {
@@ -26,6 +26,12 @@ class OrderSuccessActivity : UIKitBaseActivity() {
             viewModel.eventOnNewOrder.collectLatest { finish() }
         }
     }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        viewModel.clickOnNewOrder()
+    }
+
     override fun setUpView() {
         addFragmentToActivity(
             supportFragmentManager,
