@@ -56,8 +56,7 @@ class MarketOrderActivity : UIKitBaseActivity() {
     override fun setUpView() {
         binding.marketOrderToolBar.setNavigationOnClickListener { marketOrderViewModel.onBackPressed() }
         setUpMarkerOrderTab()
-        //TODO: Get restaurant
-        binding.marketOrderRestaurantName.text = "Rest. Doña Esther"
+        binding.marketOrderRestaurantName.text = marketOrderViewModel.restaurantName()
         binding.buttonViewOrder.setOnClickListener {
             marketOrderViewModel.onClickViewOrder()
         }
@@ -82,8 +81,11 @@ class MarketOrderActivity : UIKitBaseActivity() {
         marketOrderViewModel.eventOnBackPressed.observe(
             this,
             UIKitEventObserver { onBackPressed() })
+    }
 
-        lifecycleScope.launchWhenCreated {
+    override fun onResume() {
+        super.onResume()
+        lifecycleScope.launchWhenResumed {
             marketOrderViewModel.eventOnNewOrder.collectLatest {
                 binding.buttonViewOrder.visibility = View.GONE
             }

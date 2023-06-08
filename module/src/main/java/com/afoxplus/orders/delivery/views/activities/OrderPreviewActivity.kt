@@ -21,7 +21,6 @@ class OrderPreviewActivity : UIKitBaseActivity() {
 
     private val shopCartProductFragment: ShopCartFragment by lazy { ShopCartFragment.getInstance() }
     private val tableOrderFragment: TableOrderFragment by lazy { TableOrderFragment.getInstance() }
-    private val orderSentSuccessfullyFragment: OrderSentSuccessfullyFragment by lazy { OrderSentSuccessfullyFragment() }
 
     private lateinit var currentFragment: UIKitBaseFragment
     @Inject
@@ -34,7 +33,7 @@ class OrderPreviewActivity : UIKitBaseActivity() {
 
     override fun setUpView() {
         changeFragment(shopCartProductFragment)
-        binding.marketName.text = "Restaurante Doña Esther"
+        binding.marketName.text = shopCartViewModel.restaurantName()
         binding.topAppBar.setNavigationOnClickListener {
             shopCartViewModel.handleBackPressed(
                 currentFragment == tableOrderFragment
