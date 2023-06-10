@@ -7,19 +7,15 @@ import androidx.fragment.app.activityViewModels
 import com.afoxplus.orders.R
 import com.afoxplus.orders.databinding.FragmentOrdersChoseTableBinding
 import com.afoxplus.orders.delivery.viewmodels.ShopCartViewModel
+import com.afoxplus.orders.entities.DeliveryType
 import com.afoxplus.uikit.bus.UIKitEventObserver
 import com.afoxplus.uikit.fragments.UIKitBaseFragment
-import com.afoxplus.uikit.objects.vendor.VendorShared
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class TableOrderFragment : UIKitBaseFragment() {
     private lateinit var binding: FragmentOrdersChoseTableBinding
     private val cartProductsViewModel: ShopCartViewModel by activityViewModels()
-
-    @Inject
-    lateinit var vendorShared: VendorShared
 
     override fun getMainView(inflater: LayoutInflater, container: ViewGroup?): View {
         binding = FragmentOrdersChoseTableBinding.inflate(inflater, container, false)
@@ -32,13 +28,14 @@ class TableOrderFragment : UIKitBaseFragment() {
 
     override fun observerViewModel() {
         super.observerViewModel()
-        cartProductsViewModel.eventValidateTableOrder.observe(viewLifecycleOwner, UIKitEventObserver {
-            cartProductsViewModel.sendOrder(
-                binding.tableNumber.text.toString(),
-                binding.tableClientName.text,
-                binding.tableClientPhone.text
-            )
-        })
+        cartProductsViewModel.eventValidateTableOrder.observe(
+            viewLifecycleOwner,
+            UIKitEventObserver {
+                cartProductsViewModel.sendOrder(
+                    binding.tableClientName.text,
+                    binding.tableClientPhone.text
+                )
+            })
 
         cartProductsViewModel.errorClientNameLiveData.observe(viewLifecycleOwner) {
             binding.tableClientName.error = it
@@ -47,12 +44,25 @@ class TableOrderFragment : UIKitBaseFragment() {
         cartProductsViewModel.errorClientPhoneNumberLiveData.observe(viewLifecycleOwner) {
             binding.tableClientPhone.error = it
         }
+
+        cartProductsViewModel.order.observe(viewLifecycleOwner) { order ->
+            setupChipInfo(order.deliveryType)
+        }
     }
 
-    override fun setUpView() {
-        super.setUpView()
-        vendorShared.fetch()?.run {
-            binding.tableNumber.text = getString(R.string.orders_table_number, tableId)
+    private fun setupChipInfo(deliveryType: DeliveryType) {
+        when (deliveryType) {
+            DeliveryType.Local -> {
+                binding.chipInfoTitle.text = deliveryType.value
+                binding.chipInfo.backgroundTintList =
+                    resources.getColorStateList(R.color.dark_03, null)
+            }
+
+            DeliveryType.Delivery -> {
+                binding.chipInfoTitle.text = deliveryType.value
+                binding.chipInfo.backgroundTintList =
+                    resources.getColorStateList(R.color.red_01, null)
+            }
         }
     }
 

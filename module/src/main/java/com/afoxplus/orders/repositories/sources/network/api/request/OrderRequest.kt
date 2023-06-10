@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName
 internal data class OrderRequest(
     @SerializedName("client") val client: ClientRequest,
     @SerializedName("date") val date: String,
-    @SerializedName("table_number") val tableNumber: String,
+    @SerializedName("delivery_type") val deliveryType: String,
     @SerializedName("restaurant_id") val restaurantId: String,
     @SerializedName("detail") val detail: List<OrderDetailRequest>,
     @SerializedName("total") val total: Double
@@ -20,7 +20,7 @@ internal data class OrderRequest(
                     name = order.clientName,
                     cellphone = order.clientPhoneNumber
                 ),
-                tableNumber = order.tableNumber,
+                deliveryType = order.deliveryType.value,
                 restaurantId = order.restaurantId,
                 total = order.calculateTotal(),
                 date = order.date.toString(),
