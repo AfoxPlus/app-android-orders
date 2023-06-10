@@ -106,10 +106,9 @@ internal class ShopCartViewModel @Inject constructor(
             closeScreen()
     }
 
-    fun sendOrder(tableNumber: String, clientName: String, clientPhone: String) {
+    fun sendOrder(clientName: String, clientPhone: String) {
         if (validateClient(clientName, clientPhone)) {
             val order = mOrder.value?.also {
-                it.tableNumber = tableNumber
                 it.clientName = clientName
                 it.clientPhoneNumber = clientPhone
             }

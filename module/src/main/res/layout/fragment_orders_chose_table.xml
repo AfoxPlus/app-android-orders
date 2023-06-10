@@ -21,17 +21,31 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tableNumber"
-                style="@style/Number_14"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/chipInfo"
+                android:layout_width="108dp"
+                android:layout_height="@dimen/dp26"
                 android:layout_marginStart="@dimen/dp16"
                 android:layout_marginTop="@dimen/dp24"
-                android:layout_marginBottom="12dp"
+                android:layout_marginBottom="@dimen/dp12"
+                android:background="@drawable/orders_shape_chip_table"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="Mesa: 04" />
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/chipInfoTitle"
+                    style="@style/Paragraph01_SemiBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textAlignment="center"
+                    android:textColor="@color/light_01"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Mesa: 01" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <com.afoxplus.uikit.customview.edittext.CustomEditText
                 android:id="@+id/tableClientName"
@@ -45,7 +59,7 @@
                 app:errorIconDrawable="@null"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tableNumber" />
+                app:layout_constraintTop_toBottomOf="@id/chipInfo" />
 
             <com.afoxplus.uikit.customview.edittext.CustomEditText
                 android:id="@+id/tableClientPhone"
@@ -56,9 +70,9 @@
                 android:layout_marginTop="@dimen/dp16"
                 android:layout_marginEnd="@dimen/dp16"
                 android:layout_marginBottom="@dimen/dp24"
-                android:inputType="number"
-                android:imeOptions="actionDone"
                 android:hint="@string/orders_table_client_cellphone"
+                android:imeOptions="actionDone"
+                android:inputType="number"
                 app:errorIconDrawable="@null"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

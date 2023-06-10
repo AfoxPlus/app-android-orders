@@ -1,5 +1,6 @@
 package com.afoxplus.orders.repositories.sources.local.cache
 
+import com.afoxplus.orders.entities.DeliveryType
 import com.afoxplus.orders.entities.Order
 import com.afoxplus.orders.entities.OrderDetail
 import com.afoxplus.orders.repositories.sources.local.OrderLocalDataSource
@@ -51,12 +52,21 @@ internal class OrderLocalCache @Inject constructor(
     private fun newOrder(): Order {
         val newOrder = Order(
             date = Calendar.getInstance().time,
-            restaurantId = vendorShared.fetch()?.restaurantId ?: ""
+            restaurantId = vendorShared.fetch()?.restaurantId ?: "",
+            deliveryType = getDeliveryType()
         )
         order = newOrder
         return newOrder
     }
 
+    private fun getDeliveryType(): DeliveryType {
+        vendorShared.fetch()?.let {
+            val isOwnDelivery = it.additionalInfo["restaurant_own_delivery"] as Boolean
+            return if (it.tableId == "-" && isOwnDelivery)
+                DeliveryType.Delivery
+            else DeliveryType.Local.apply { value = "Mesa: ${it.tableId}" }
+        } ?: throw Exception("No found DeliveryType")
+    }
     companion object {
         private const val ERROR_ORDER_IS_NULL = "Order is null"
     }
