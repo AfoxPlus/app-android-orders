@@ -28,7 +28,6 @@ internal class OrderNetworkService @Inject constructor(
         } ?: emptyList()
     }
 
-
     companion object {
         const val API_HEADERS_CURRENCY_ID = "currency_id"
     }
