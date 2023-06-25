@@ -7,7 +7,7 @@ import androidx.fragment.app.activityViewModels
 import com.afoxplus.orders.R
 import com.afoxplus.orders.databinding.FragmentOrdersChoseTableBinding
 import com.afoxplus.orders.delivery.viewmodels.ShopCartViewModel
-import com.afoxplus.orders.entities.DeliveryType
+import com.afoxplus.orders.entities.OrderType
 import com.afoxplus.uikit.bus.UIKitEventObserver
 import com.afoxplus.uikit.fragments.UIKitBaseFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -46,20 +46,20 @@ class TableOrderFragment : UIKitBaseFragment() {
         }
 
         cartProductsViewModel.order.observe(viewLifecycleOwner) { order ->
-            setupChipInfo(order.deliveryType)
+            setupChipInfo(order.orderType)
         }
     }
 
-    private fun setupChipInfo(deliveryType: DeliveryType) {
-        when (deliveryType) {
-            DeliveryType.Local -> {
-                binding.chipInfoTitle.text = deliveryType.value
+    private fun setupChipInfo(orderType: OrderType) {
+        when (orderType) {
+            OrderType.Local -> {
+                binding.chipInfoTitle.text = orderType.toString()
                 binding.chipInfo.backgroundTintList =
                     resources.getColorStateList(R.color.dark_03, null)
             }
 
-            DeliveryType.Delivery -> {
-                binding.chipInfoTitle.text = deliveryType.value
+            OrderType.Delivery -> {
+                binding.chipInfoTitle.text = orderType.toString()
                 binding.chipInfo.backgroundTintList =
                     resources.getColorStateList(R.color.red_01, null)
             }

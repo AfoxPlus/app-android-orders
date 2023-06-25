@@ -9,6 +9,14 @@ class AppPropertiesDemo @Inject constructor() : AppProperties {
         return "demo - orders"
     }
 
+    override fun getUserUUID(): String {
+        return "6c4795bd-5a51-46e3-8cf2-3943d53ae271"
+    }
+
+    override fun getCurrencyID(): String {
+        return "61a18be00b6de1476436de41"
+    }
+
     override fun isAppDebug(): Boolean {
         return BuildConfig.DEBUG
     }

@@ -10,7 +10,7 @@ import java.util.*
 class Order(
     val date: Date,
     val code: String = "",
-    var deliveryType: DeliveryType,
+    var orderType: OrderType,
     var restaurantId: String = "",
     var clientName: String = "",
     var clientPhoneNumber: String = "",

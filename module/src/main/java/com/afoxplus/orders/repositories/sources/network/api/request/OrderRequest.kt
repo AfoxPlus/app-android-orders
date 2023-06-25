@@ -6,8 +6,7 @@ import com.google.gson.annotations.SerializedName
 
 internal data class OrderRequest(
     @SerializedName("client") val client: ClientRequest,
-    @SerializedName("date") val date: String,
-    @SerializedName("delivery_type") val deliveryType: String,
+    @SerializedName("order_type") val orderType: OrderTypeRequest,
     @SerializedName("restaurant_id") val restaurantId: String,
     @SerializedName("detail") val detail: List<OrderDetailRequest>,
     @SerializedName("total") val total: Double
@@ -20,10 +19,13 @@ internal data class OrderRequest(
                     name = order.clientName,
                     cellphone = order.clientPhoneNumber
                 ),
-                deliveryType = order.deliveryType.value,
+                orderType = OrderTypeRequest(
+                    code = order.orderType.code,
+                    title = order.orderType.title,
+                    description = order.orderType.description
+                ),
                 restaurantId = order.restaurantId,
                 total = order.calculateTotal(),
-                date = order.date.toString(),
                 detail = order.getOrderDetails()
                     .map { item -> OrderDetailRequest.getOrderDetailRequest(item) }
             )
@@ -36,13 +38,18 @@ internal data class ClientRequest(
     @SerializedName("cel") val cellphone: String
 )
 
+internal data class OrderTypeRequest(
+    @SerializedName("code") val code: String,
+    @SerializedName("title") val title: String,
+    @SerializedName("description") val description: String? = null
+)
+
 internal data class OrderDetailRequest(
     @SerializedName("product_id") val productId: String,
     @SerializedName("description") val description: String,
     @SerializedName("unit_price") val unitPrice: Double,
     @SerializedName("quantity") val quantity: Int,
-    @SerializedName("sub_total") val subTotal: Double,
-    @SerializedName("currency_code") val currencyCode: String
+    @SerializedName("sub_total") val subTotal: Double
 ) {
 
     companion object {
@@ -52,8 +59,7 @@ internal data class OrderDetailRequest(
                 description = orderDetail.product.description,
                 unitPrice = orderDetail.product.getPriceForSale(),
                 quantity = orderDetail.quantity,
-                subTotal = orderDetail.calculateSubTotal(),
-                currencyCode = orderDetail.product.currency.code
+                subTotal = orderDetail.calculateSubTotal()
             )
         }
     }
