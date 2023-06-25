@@ -8,6 +8,7 @@ import com.afoxplus.orders.repositories.sources.network.api.request.OrderRequest
 import com.afoxplus.orders.repositories.sources.network.api.response.OrderResponse
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.HeaderMap
 import retrofit2.http.POST
 
 @ServiceClient(type = UrlProvider.Type.API_ORDERS)
@@ -20,5 +21,5 @@ internal interface OrderApiNetwork {
 
     @POST("$PATH_ORDERS/$PATH_SEND")
     @EndpointInfo(type = UrlProvider.Type.API_ORDERS_V1)
-    suspend fun sendOrder(@Body orderRequest: OrderRequest): Response<BaseResponse<OrderResponse>>
+    suspend fun sendOrder(@HeaderMap headers: Map<String, String>, @Body orderRequest: OrderRequest): Response<BaseResponse<OrderResponse>>
 }
