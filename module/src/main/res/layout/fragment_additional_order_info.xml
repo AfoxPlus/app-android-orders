@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light_04">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/orderType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp16"
+        app:cardBackgroundColor="@color/light_01"
+        app:cardCornerRadius="@dimen/dp12"
+        app:cardElevation="@dimen/dp2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/dp16">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Paragraph01_Bold"
+                android:layout_width="@dimen/borderWidth0"
+                android:layout_height="wrap_content"
+                android:text="@string/orders_type_title"
+                app:layout_constraintBottom_toBottomOf="@+id/chipInfo"
+                app:layout_constraintEnd_toStartOf="@+id/chipInfo"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/chipInfo"
+                tools:text="Tipo de entrega:" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/chipInfo"
+                android:layout_width="108dp"
+                android:layout_height="@dimen/dp26"
+                android:background="@drawable/orders_shape_chip_table"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/chipInfoTitle"
+                    style="@style/Paragraph01_SemiBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textAlignment="center"
+                    android:textColor="@color/light_01"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Mesa: 01" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp16"
+        app:cardBackgroundColor="@color/light_01"
+        app:cardCornerRadius="@dimen/dp12"
+        app:cardElevation="@dimen/dp2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/orderType">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp16">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/lblClient"
+                style="@style/Paragraph01_Bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/orders_client_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Cliente:" />
+
+            <com.afoxplus.uikit.customview.edittext.CustomEditText
+                android:id="@+id/clientName"
+                style="@style/UIKit.EditTextAppearance.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp22"
+                android:hint="@string/orders_table_client_name"
+                android:imeOptions="actionNext"
+                app:errorIconDrawable="@null"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/lblClient" />
+
+            <com.afoxplus.uikit.customview.edittext.CustomEditText
+                android:id="@+id/clientPhone"
+                style="@style/UIKit.EditTextAppearance.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp16"
+                android:hint="@string/orders_table_client_cellphone"
+                android:imeOptions="actionNext"
+                android:inputType="number"
+                app:errorIconDrawable="@null"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/clientName" />
+
+            <com.afoxplus.uikit.customview.edittext.CustomEditText
+                android:id="@+id/clientAddressReference"
+                style="@style/UIKit.EditTextAppearance.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp16"
+                android:layout_marginBottom="@dimen/dp16"
+                android:hint="@string/orders_client_address_reference"
+                android:imeOptions="actionDone"
+                app:errorIconDrawable="@null"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/clientPhone" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

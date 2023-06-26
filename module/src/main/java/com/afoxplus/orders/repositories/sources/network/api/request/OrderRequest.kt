@@ -16,8 +16,9 @@ internal data class OrderRequest(
         fun getOrderRequest(order: Order): OrderRequest {
             return OrderRequest(
                 client = ClientRequest(
-                    name = order.clientName,
-                    cellphone = order.clientPhoneNumber
+                    name = order.client?.name ?: "",
+                    cellphone = order.client?.phone,
+                    addressReference = order.client?.addressReference
                 ),
                 orderType = OrderTypeRequest(
                     code = order.orderType.code,
@@ -35,7 +36,8 @@ internal data class OrderRequest(
 
 internal data class ClientRequest(
     @SerializedName("name") val name: String,
-    @SerializedName("cel") val cellphone: String
+    @SerializedName("cel") val cellphone: String? = null,
+    @SerializedName("address_reference") val addressReference: String? = null
 )
 
 internal data class OrderTypeRequest(
