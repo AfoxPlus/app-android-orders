@@ -41,7 +41,6 @@ class OrderStatusFragment : UIKitBaseFragment(), ItemClickListener<OrderStatus> 
                     binding.rvOrderStatus.visibility = View.VISIBLE
                     adapter.submitList(state.orders.toMutableList())
                 }
-
                 else -> {
                     //Nothing
                 }
