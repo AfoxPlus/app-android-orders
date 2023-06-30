@@ -61,12 +61,13 @@ internal class OrderLocalCache @Inject constructor(
 
     private fun getDeliveryType(): DeliveryType {
         vendorShared.fetch()?.let {
-            val isOwnDelivery = it.additionalInfo["restaurant_own_delivery"] as Boolean
+            val isOwnDelivery = it.additionalInfo["restaurant_own_delivery"] as Boolean? ?:false
             return if (it.tableId == "-" && isOwnDelivery)
                 DeliveryType.Delivery
             else DeliveryType.Local.apply { value = "Mesa: ${it.tableId}" }
         } ?: throw Exception("No found DeliveryType")
     }
+
     companion object {
         private const val ERROR_ORDER_IS_NULL = "Order is null"
     }

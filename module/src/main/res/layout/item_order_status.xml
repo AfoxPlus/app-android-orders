@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/clItemContainerOrderStatus"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/dp8"
+    android:background="@drawable/shape_radius"
+    android:backgroundTint="@color/light_03"
+    android:padding="@dimen/dp16"
+    tools:context=".delivery.views.fragments.OrderStatusFragment">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvStatusOrderRestaurantTitle"
+        style="@style/Paragraph02"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/order_status_restaurant"
+        android:textColor="@color/dark_04"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvStatusOrderRestaurantName"
+        style="@style/Paragraph01_SemiBold"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp4"
+        android:textColor="@color/dark_01"
+        app:layout_constraintStart_toStartOf="@id/tvStatusOrderRestaurantTitle"
+        app:layout_constraintTop_toBottomOf="@id/tvStatusOrderRestaurantTitle"
+        tools:text="Sabor y Sazón" />
+
+    <com.afoxplus.uikit.customview.type.order.OrderTypeStatus
+        android:id="@+id/ctosRestaurant"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp8"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvStatusOrderRestaurantName"
+        tools:description="01"
+        tools:orderType="restaurant"
+        tools:title="Mesa" />
+
+    <com.afoxplus.uikit.customview.type.order.OrderTypeStatus
+        android:id="@+id/ctosAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="5dp"
+        app:layout_constraintBottom_toBottomOf="@id/ctosRestaurant"
+        app:layout_constraintStart_toEndOf="@id/ctosRestaurant"
+        app:layout_constraintTop_toTopOf="@id/ctosRestaurant"
+        app:title="Total"
+        tools:description="S/ 199.50"
+        tools:orderType="amount" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/mbStatus"
+        style="@style/Paragraph02"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/orders_shape_chip_table"
+        android:backgroundTint="@color/dark_05"
+        android:gravity="center"
+        android:paddingVertical="@dimen/dp4"
+        android:textColor="@android:color/white"
+        app:layout_constraintEnd_toEndOf="@id/tvStatusId"
+        app:layout_constraintStart_toStartOf="@id/tvStatusId"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Pendiente" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvStatusId"
+        style="@style/Header04_Bold"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/dark_04"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="ID: #000451" />
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="0dp"
+        android:background="@color/gray_01"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/mbStatus"
+        app:layout_constraintStart_toEndOf="@id/ctosAmount"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
