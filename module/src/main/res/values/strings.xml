@@ -18,9 +18,12 @@
     <string name="orders_market_sub_total">Sub Total:</string>
     <string name="orders_market_continue">Continuar</string>
     <string name="orders_table_number">Mesa: %1$s</string>
-    <string name="orders_table_client_name">Nombre cliente*</string>
-    <string name="orders_table_client_cellphone">Celular*</string>
+    <string name="orders_table_client_name">Nombre*</string>
+    <string name="orders_table_client_cellphone">Celular</string>
+    <string name="orders_client_address_reference">Referencia de entrega</string>
     <string name="orders_success_order">¡Pedido enviado\ncorrectamente!</string>
+    <string name="orders_type_title">Tipo de entrega:</string>
+    <string name="orders_client_title">Cliente:</string>
     <string name="orders_status_product_quantity">Cant: %1$s</string>
     <string name="orders_status_id">ID: #%1$s</string>
     <string name="order_status_detail_title">Detalle del pedido</string>

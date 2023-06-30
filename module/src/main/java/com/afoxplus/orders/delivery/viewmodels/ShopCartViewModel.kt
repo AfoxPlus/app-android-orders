@@ -5,8 +5,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.afoxplus.orders.entities.Client
 import com.afoxplus.orders.entities.Order
 import com.afoxplus.orders.entities.OrderDetail
+import com.afoxplus.orders.entities.OrderType
 import com.afoxplus.orders.usecases.actions.AddOrUpdateProductToCurrentOrder
 import com.afoxplus.orders.usecases.actions.DeleteProductToCurrentOrder
 import com.afoxplus.orders.usecases.actions.GetCurrentOrder
@@ -55,6 +57,9 @@ internal class ShopCartViewModel @Inject constructor(
     private val mEventSuccessOrder: MutableLiveData<UIKitEvent<String>> by lazy { MutableLiveData<UIKitEvent<String>>() }
     val eventOpenSuccessOrder: LiveData<UIKitEvent<String>> get() = mEventSuccessOrder
 
+    private val mButtonSendLoading: MutableLiveData<UIKitEvent<Unit>> by lazy { MutableLiveData() }
+    val buttonSendLoading: LiveData<UIKitEvent<Unit>> get() = mButtonSendLoading
+
     init {
         loadCurrentOrder()
     }
@@ -96,6 +101,7 @@ internal class ShopCartViewModel @Inject constructor(
             nameButtonSendOrderMutableLiveData.postValue(mOrder.value?.getLabelSendMyOrder())
         } else
             onClickSendOrder()
+
     }
 
     fun handleBackPressed(isTableOrder: Boolean) {
@@ -106,17 +112,17 @@ internal class ShopCartViewModel @Inject constructor(
             closeScreen()
     }
 
-    fun sendOrder(clientName: String, clientPhone: String) {
-        if (validateClient(clientName, clientPhone)) {
-            val order = mOrder.value?.also {
-                it.clientName = clientName
-                it.clientPhoneNumber = clientPhone
-            }
-            if (order != null)
+    private fun getOrderType(): OrderType = mOrder.value?.orderType ?: OrderType.Delivery
+    fun sendOrder(client: Client) {
+        if (validateClient(client, getOrderType())) {
+            mOrder.value?.also { order ->
+                order.client = client
                 viewModelScope.launch(coroutines.getMainDispatcher()) {
+                    mButtonSendLoading.value = UIKitEvent(Unit)
                     val message = sendOrder.invoke(order)
                     openSuccessOrder(message)
                 }
+            }
         }
     }
 
@@ -125,14 +131,29 @@ internal class ShopCartViewModel @Inject constructor(
         mEventSuccessOrder.postValue(UIKitEvent(message))
     }
 
-    private fun validateClient(clientName: String, clientPhone: String): Boolean {
-        if (TextUtils.isEmpty(clientName)) {
-            mErrorClientNameMutableLiveData.postValue("El nombre es obligatorio.")
-            return false
-        }
-        if (TextUtils.isEmpty(clientPhone)) {
-            mErrorClientPhoneNumberMutableLiveData.postValue("El telefono es obligatorio.")
-            return false
+    private fun validateClient(client: Client, orderType: OrderType?): Boolean {
+        when (orderType) {
+            OrderType.Local -> {
+                if (TextUtils.isEmpty(client.name)) {
+                    mErrorClientNameMutableLiveData.postValue("El nombre es obligatorio.")
+                    return false
+                }
+            }
+
+            OrderType.Delivery -> {
+                if (TextUtils.isEmpty(client.name)) {
+                    mErrorClientNameMutableLiveData.postValue("El nombre es obligatorio.")
+                    return false
+                }
+                if (TextUtils.isEmpty(client.phone)) {
+                    mErrorClientPhoneNumberMutableLiveData.postValue("El telefono es obligatorio.")
+                    return false
+                }
+            }
+
+            else -> {
+                //Nothing
+            }
         }
         return true
     }

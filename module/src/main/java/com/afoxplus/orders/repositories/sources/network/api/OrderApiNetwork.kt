@@ -9,6 +9,7 @@ import com.afoxplus.orders.repositories.sources.network.api.response.OrderRespon
 import com.afoxplus.orders.repositories.sources.network.api.response.OrderStatusResponse
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.HeaderMap
 import retrofit2.http.GET
 import retrofit2.http.POST
 
@@ -23,7 +24,10 @@ internal interface OrderApiNetwork {
 
     @POST("$PATH_ORDERS/$PATH_SEND")
     @EndpointInfo(type = UrlProvider.Type.API_ORDERS_V1)
-    suspend fun sendOrder(@Body orderRequest: OrderRequest): Response<BaseResponse<OrderResponse>>
+    suspend fun sendOrder(
+        @HeaderMap headers: Map<String, String>,
+        @Body orderRequest: OrderRequest
+    ): Response<BaseResponse<OrderResponse>>
 
     @GET("$PATH_ORDERS/$PATH_STATUS")
     suspend fun getOrderStatus(): Response<BaseResponse<List<OrderStatusResponse>>>

@@ -11,10 +11,9 @@ import kotlinx.parcelize.Parcelize
 class Order(
     val date: Date,
     val code: String = "",
-    var deliveryType: DeliveryType,
+    var orderType: OrderType,
     var restaurantId: String = "",
-    var clientName: String = "",
-    var clientPhoneNumber: String = "",
+    var client: Client? = null,
     private val orderDetails: MutableList<OrderDetail> = mutableListOf(),
     private var saleOrderStrategy: SaleOrderStrategy? = null
 ) : Parcelable {

@@ -4,9 +4,8 @@ import androidx.activity.viewModels
 import com.afoxplus.orders.databinding.ActivityOrdersPreviewBinding
 import com.afoxplus.orders.delivery.flow.OrderFlow
 import com.afoxplus.orders.delivery.viewmodels.ShopCartViewModel
-import com.afoxplus.orders.delivery.views.fragments.OrderSentSuccessfullyFragment
 import com.afoxplus.orders.delivery.views.fragments.ShopCartFragment
-import com.afoxplus.orders.delivery.views.fragments.TableOrderFragment
+import com.afoxplus.orders.delivery.views.fragments.AdditionalOrderInfoFragment
 import com.afoxplus.uikit.activities.UIKitBaseActivity
 import com.afoxplus.uikit.activities.extensions.addFragmentToActivity
 import com.afoxplus.uikit.fragments.UIKitBaseFragment
@@ -20,9 +19,10 @@ class OrderPreviewActivity : UIKitBaseActivity() {
     private val shopCartViewModel: ShopCartViewModel by viewModels()
 
     private val shopCartProductFragment: ShopCartFragment by lazy { ShopCartFragment.getInstance() }
-    private val tableOrderFragment: TableOrderFragment by lazy { TableOrderFragment.getInstance() }
+    private val additionalOrderInfoFragment: AdditionalOrderInfoFragment by lazy { AdditionalOrderInfoFragment.getInstance() }
 
     private lateinit var currentFragment: UIKitBaseFragment
+
     @Inject
     lateinit var orderFlow: OrderFlow
 
@@ -36,7 +36,7 @@ class OrderPreviewActivity : UIKitBaseActivity() {
         binding.marketName.text = shopCartViewModel.restaurantName()
         binding.topAppBar.setNavigationOnClickListener {
             shopCartViewModel.handleBackPressed(
-                currentFragment == tableOrderFragment
+                currentFragment == additionalOrderInfoFragment
             )
         }
         binding.buttonSendOrder.setOnClickListener {
@@ -45,6 +45,10 @@ class OrderPreviewActivity : UIKitBaseActivity() {
     }
 
     override fun observerViewModel() {
+
+        shopCartViewModel.buttonSendLoading.observe(this) {
+            binding.buttonSendOrder.isEnabled = false
+        }
 
         shopCartViewModel.nameButtonSendOrderLiveData.observe(this) {
             binding.buttonSendOrder.text = it
@@ -55,11 +59,11 @@ class OrderPreviewActivity : UIKitBaseActivity() {
         }
 
         shopCartViewModel.eventOpenTableOrder.observe(this) {
-            changeFragment(tableOrderFragment)
+            changeFragment(additionalOrderInfoFragment)
         }
 
         shopCartViewModel.eventRemoveTableOrder.observe(this) {
-            removeFragments(tableOrderFragment, shopCartProductFragment)
+            removeFragments(additionalOrderInfoFragment, shopCartProductFragment)
         }
 
         shopCartViewModel.eventOpenSuccessOrder.observe(this) {
