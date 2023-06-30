@@ -48,6 +48,7 @@ internal data class OrderTypeRequest(
 
 internal data class OrderDetailRequest(
     @SerializedName("product_id") val productId: String,
+    @SerializedName("title") val title: String,
     @SerializedName("description") val description: String,
     @SerializedName("unit_price") val unitPrice: Double,
     @SerializedName("quantity") val quantity: Int,
@@ -58,6 +59,7 @@ internal data class OrderDetailRequest(
         fun getOrderDetailRequest(orderDetail: OrderDetail): OrderDetailRequest {
             return OrderDetailRequest(
                 productId = orderDetail.product.code,
+                title = orderDetail.product.name,
                 description = orderDetail.product.description,
                 unitPrice = orderDetail.product.getPriceForSale(),
                 quantity = orderDetail.quantity,

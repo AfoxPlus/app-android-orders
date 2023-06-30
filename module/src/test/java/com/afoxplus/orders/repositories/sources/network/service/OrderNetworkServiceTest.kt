@@ -1,5 +1,6 @@
 package com.afoxplus.orders.repositories.sources.network.service
 
+import com.afoxplus.network.global.AppProperties
 import com.afoxplus.network.response.BaseResponse
 import com.afoxplus.orders.repositories.sources.network.api.OrderApiNetwork
 import com.afoxplus.orders.repositories.sources.network.api.response.OrderStatusResponse
@@ -24,11 +25,13 @@ class OrderNetworkServiceTest {
 
     private val mockApi: OrderApiNetwork = mock()
 
+    private val mockProperties: AppProperties = mock()
+
     private lateinit var sutService: OrderNetworkService
 
     @Before
     fun setup() {
-        sutService = OrderNetworkService(mockApi)
+        sutService = OrderNetworkService(mockApi, mockProperties)
     }
 
     @Test
