@@ -3,8 +3,9 @@ package com.afoxplus.orders.entities
 import android.os.Parcelable
 import com.afoxplus.orders.entities.bussineslogic.SaleOrderStrategy
 import com.afoxplus.products.entities.Product
+import java.util.Date
 import kotlinx.parcelize.Parcelize
-import java.util.*
+
 
 @Parcelize
 class Order(

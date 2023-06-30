@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".delivery.views.activities.OrderStatusDetailActivity">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvProductTitle"
+        style="@style/Header05"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dp14"
+        android:textColor="@color/dark_02"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Jarra chicha morada" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvProductDescription"
+        style="@style/Paragraph01"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dp14"
+        android:layout_marginTop="@dimen/dp4"
+        android:textColor="@color/dark_04"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvProductTitle"
+        tools:text="Refrescante chicha morada 1 litro" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/lyProductSubTotal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dp14"
+        android:layout_marginTop="@dimen/dp12"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvProductDescription">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvProductPrice"
+            style="@style/Paragraph01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/dark_02"
+            tools:text="S/ 20.50" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvProductQuantity"
+            style="@style/Paragraph01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp4"
+            android:textColor="@color/dark_02"
+            tools:text="Cant: 1" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvProductSubTotal"
+            style="@style/Paragraph01_Bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:textColor="@color/dark_01"
+            tools:text="S/ 20.50" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/dp12"
+        android:layout_marginBottom="@dimen/dp12"
+        android:background="@color/gray_01"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lyProductSubTotal" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

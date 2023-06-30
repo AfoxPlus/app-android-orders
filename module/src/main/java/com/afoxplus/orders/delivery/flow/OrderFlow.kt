@@ -7,8 +7,10 @@ import com.afoxplus.orders.delivery.views.activities.AddProductToOrderActivity
 import com.afoxplus.orders.delivery.views.activities.OrderPreviewActivity
 import com.afoxplus.orders.delivery.views.activities.MarketOrderActivity
 import com.afoxplus.orders.delivery.views.activities.OrderSuccessActivity
+import com.afoxplus.orders.delivery.views.fragments.OrderStatusFragment
 import com.afoxplus.orders.entities.Order
 import com.afoxplus.products.entities.Product
+import com.afoxplus.uikit.fragments.UIKitBaseFragment
 import javax.inject.Inject
 
 interface OrderFlow {
@@ -16,6 +18,7 @@ interface OrderFlow {
     fun goToAddProductToOrderActivity(activity: Activity, product: Product)
     fun goToOrderPreviewActivity(activity: Activity, order: Order)
     fun goToOrderSuccessActivity(activity: Activity)
+    fun getStateOrdersFragment(): UIKitBaseFragment
 
     class OrderFlowImpl @Inject constructor() : OrderFlow {
         override fun goToMarketOrderActivity(activity: Activity) {
@@ -40,6 +43,10 @@ interface OrderFlow {
 
         override fun goToOrderSuccessActivity(activity: Activity) {
             activity.startActivity(Intent(activity, OrderSuccessActivity::class.java))
+        }
+
+        override fun getStateOrdersFragment(): UIKitBaseFragment {
+            return OrderStatusFragment()
         }
 
     }
