@@ -22,14 +22,14 @@ data class OrderStatusResponse(
 data class OrderTypeStatusResponse(
     val code: String,
     val title: String,
-    val description: String = ""
+    val description: String? = null
 )
 
 data class ClientStatusResponse(
-    val client: String,
-    val cel: String,
+    @SerializedName("name") val client: String,
+    val cel: String? = null,
     @SerializedName("address_reference")
-    val addressReference: String
+    val addressReference: String? = null
 )
 
 data class DetailStatusResponse(
@@ -58,15 +58,15 @@ fun OrderTypeStatusResponse.toEntity(): OrderTypeStatus {
     return OrderTypeStatus(
         code = code,
         title = title,
-        description = description
+        description = description ?: ""
     )
 }
 
 fun ClientStatusResponse.toEntity(): ClientStatus {
     return ClientStatus(
         client = client,
-        cel = cel,
-        addressReference = addressReference
+        cel = cel ?: "",
+        addressReference = addressReference ?: ""
     )
 }
 

@@ -10,7 +10,7 @@ class AppPropertiesDemo @Inject constructor() : AppProperties {
     }
 
     override fun getUserUUID(): String {
-        return "6c4795bd-5a51-46e3-8cf2-3943d53ae271"
+        return "6c4795bd-5a51-46e3-8cf2-3943d53ae847"
     }
 
     override fun getCurrencyID(): String {
