@@ -1,6 +1,7 @@
 package com.afoxplus.orders.repositories
 
 import com.afoxplus.orders.entities.Order
+import com.afoxplus.orders.entities.OrderAppetizerDetail
 import com.afoxplus.orders.entities.OrderDetail
 import com.afoxplus.orders.repositories.sources.local.OrderLocalDataSource
 import com.afoxplus.orders.repositories.sources.network.OrderNetworkDataSource
@@ -38,5 +39,13 @@ internal class OrderRepositorySource @Inject constructor(
 
     override fun findProductInCurrentOrder(product: Product): OrderDetail? {
         return orderLocalDataSource.findProductInOrder(product)
+    }
+
+    override suspend fun addOrUpdateAppetizerToCurrentOrder(quantity: Int, appetizer: Product, product: Product) {
+        orderLocalDataSource.addOrUpdateAppetizerToCurrentOrder(quantity,appetizer, product)
+    }
+
+    override suspend fun fetchAppetizersByProduct(product: Product): List<OrderAppetizerDetail> {
+        return orderLocalDataSource.fetchAppetizersByProduct(product)
     }
 }

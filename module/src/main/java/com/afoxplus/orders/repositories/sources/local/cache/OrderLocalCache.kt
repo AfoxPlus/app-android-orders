@@ -2,6 +2,7 @@ package com.afoxplus.orders.repositories.sources.local.cache
 
 import com.afoxplus.orders.entities.OrderType
 import com.afoxplus.orders.entities.Order
+import com.afoxplus.orders.entities.OrderAppetizerDetail
 import com.afoxplus.orders.entities.OrderDetail
 import com.afoxplus.orders.repositories.sources.local.OrderLocalDataSource
 import com.afoxplus.products.entities.Product
@@ -48,6 +49,18 @@ internal class OrderLocalCache @Inject constructor(
     override suspend fun deleteProductToCurrentOrder(product: Product) {
         order?.removeItemOrderDetailByProduct(product)
         orderStateFlow.emit(order)
+    }
+
+    override suspend fun addOrUpdateAppetizerToCurrentOrder(
+        quantity: Int,
+        appetizer: Product,
+        product: Product
+    ) {
+        findProductInOrder(product)?.addAppetizerWithQuantity(appetizer,quantity)
+    }
+
+    override suspend fun fetchAppetizersByProduct(product: Product): List<OrderAppetizerDetail> {
+        return findProductInOrder(product)?.appetizers?.toList() ?: arrayListOf()
     }
 
     private fun newOrder(): Order {

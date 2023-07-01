@@ -9,8 +9,26 @@ import kotlinx.parcelize.Parcelize
 class OrderDetail(
     val product: Product,
     var quantity: Int,
-    var saleOrderItemStrategy: SaleOrderItemStrategy? = null
+    var saleOrderItemStrategy: SaleOrderItemStrategy? = null,
+    var appetizers: MutableList<OrderAppetizerDetail> = arrayListOf()
 ) : Parcelable {
+
+    fun addAppetizerWithQuantity(
+        appetizer: Product,
+        quantity: Int
+    ) {
+        if (quantity > 0)
+            appetizers.find { item -> item.product.code == appetizer.code }
+                ?.run { this.quantity = quantity } ?: addNewAppetizerWithQuantity(appetizer, quantity)
+    }
+
+    private fun addNewAppetizerWithQuantity(
+        appetizer: Product,
+        quantity: Int
+    ) {
+        val orderDetail = OrderAppetizerDetail(appetizer, quantity)
+        appetizers.add(orderDetail)
+    }
 
     fun addSaleOrderItemStrategy(saleOrderDetailStrategy: SaleOrderItemStrategy?) {
         this.saleOrderItemStrategy = saleOrderDetailStrategy
