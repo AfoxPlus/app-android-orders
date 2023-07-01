@@ -39,7 +39,7 @@ class OrderStatusDetailActivity : UIKitBaseActivity() {
             appBar.subtitle = orderStatus.restaurant
             tvStatusId.text = String.format(
                 getString(R.string.orders_status_id),
-                orderStatus.id.take(6)
+                orderStatus.number
             )
             tvStatusDate.text = orderStatus.date
             tvStatusAmount.text = orderStatus.total

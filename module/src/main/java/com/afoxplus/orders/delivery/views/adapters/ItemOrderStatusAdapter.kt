@@ -48,8 +48,7 @@ class ItemOrderStatusAdapter(
                 ctosRestaurant.description = item.orderType.description
                 mbStatus.text = item.state
                 tvStatusId.text = String.format(
-                    itemView.context.getString(R.string.orders_status_id),
-                    item.id.take(6)
+                    itemView.context.getString(R.string.orders_status_id), item.number
                 )
             }
         }

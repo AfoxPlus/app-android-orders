@@ -30,6 +30,7 @@ internal interface OrderApiNetwork {
     ): Response<BaseResponse<OrderResponse>>
 
     @GET("$PATH_ORDERS/$PATH_STATUS")
+    @EndpointInfo(type = UrlProvider.Type.API_ORDERS)
     suspend fun getOrderStatus(): Response<BaseResponse<List<OrderStatusResponse>>>
 
 }
