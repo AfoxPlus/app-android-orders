@@ -1,6 +1,7 @@
 package com.afoxplus.orders.delivery.views.activities
 
 import androidx.activity.viewModels
+import com.afoxplus.orders.R
 import com.afoxplus.orders.databinding.ActivityOrdersPreviewBinding
 import com.afoxplus.orders.delivery.flow.OrderFlow
 import com.afoxplus.orders.delivery.viewmodels.ShopCartViewModel
@@ -33,7 +34,8 @@ class OrderPreviewActivity : UIKitBaseActivity() {
 
     override fun setUpView() {
         changeFragment(shopCartProductFragment)
-        binding.marketName.text = shopCartViewModel.restaurantName()
+        binding.topAppBar.subtitle = shopCartViewModel.restaurantName()
+        binding.topAppBar.title = getString(R.string.orders_market_label_my_order)
         binding.topAppBar.setNavigationOnClickListener {
             shopCartViewModel.handleBackPressed(
                 currentFragment == additionalOrderInfoFragment
