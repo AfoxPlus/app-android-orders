@@ -40,7 +40,7 @@ class OrderStatusFragment : UIKitBaseFragment(), ItemClickListener<OrderStatus> 
 
                 is OrderStateUIModel.Success -> {
                     binding.rvOrderStatus.visibility = View.VISIBLE
-                    adapter.submitList(state.orders.toMutableList())
+                    adapter.submitList(state.orders)
                 }
 
                 else -> {

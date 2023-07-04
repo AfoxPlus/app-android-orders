@@ -21,10 +21,6 @@ class ItemOrderStatusAdapter(
         holder.bind(getItem(position))
     }
 
-    override fun submitList(list: MutableList<OrderStatus>?) {
-        super.submitList(list)
-    }
-
     class ItemOrderStatusViewHolder(
         private val binding: ItemOrderStatusBinding,
         private val onClick: (OrderStatus) -> Unit

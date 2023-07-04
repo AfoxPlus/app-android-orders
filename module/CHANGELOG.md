@@ -1,5 +1,10 @@
 # app-android-orders Changelog
 
+## Version 3.0.11
+### Fix
+- Se modifico submitList.
+
+
 ## Version 3.0.10
 ### Added
 - Se lanza viewmodel en el onResume de OrderStatusFragment.
