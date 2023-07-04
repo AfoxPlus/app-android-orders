@@ -4,7 +4,7 @@
 ### Fix
 - Se modifico submitList.
 
-
+>>>>>>> RC01.2023
 ## Version 3.0.10
 ### Added
 - Se lanza viewmodel en el onResume de OrderStatusFragment.
