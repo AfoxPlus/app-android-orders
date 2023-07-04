@@ -29,7 +29,6 @@ class OrderStatusFragment : UIKitBaseFragment(), ItemClickListener<OrderStatus> 
 
     override fun setUpView() {
         setupAdapter()
-        setupViewModel()
     }
 
     override fun observerViewModel() {
@@ -38,10 +37,12 @@ class OrderStatusFragment : UIKitBaseFragment(), ItemClickListener<OrderStatus> 
                 is OrderStateUIModel.Error -> {
                     binding.rvOrderStatus.visibility = View.GONE
                 }
+
                 is OrderStateUIModel.Success -> {
                     binding.rvOrderStatus.visibility = View.VISIBLE
                     adapter.submitList(state.orders.toMutableList())
                 }
+
                 else -> {
                     //Nothing
                 }
@@ -49,14 +50,15 @@ class OrderStatusFragment : UIKitBaseFragment(), ItemClickListener<OrderStatus> 
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        ordersViewModel.fetchStateOrders()
+    }
+
     private fun setupAdapter() {
         binding.rvOrderStatus.adapter = adapter
         binding.rvOrderStatus.setHasFixedSize(true)
         binding.rvOrderStatus.itemAnimator = DefaultItemAnimator()
-    }
-
-    private fun setupViewModel() {
-        ordersViewModel.fetchStateOrders()
     }
 
     override fun onClick(item: OrderStatus) {
