@@ -10,6 +10,8 @@
         android:id="@+id/appBar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
+        android:layout_marginBottom="@dimen/dp12"
+        app:layout_constraintBottom_toTopOf="@+id/container"
         app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="@drawable/ic_uikit_navigation_back"
         app:subtitleTextAppearance="@style/Header04_Bold"
@@ -20,6 +22,7 @@
         tools:subtitle="Rest. Punto Sazon" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@color/light_04"
