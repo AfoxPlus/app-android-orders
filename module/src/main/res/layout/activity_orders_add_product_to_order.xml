@@ -12,7 +12,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/light_01">
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:id="@+id/panelCoordinator"
@@ -27,44 +28,22 @@
             <com.google.android.material.appbar.AppBarLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/light_02">
+                android:background="@color/light_01">
 
                 <com.google.android.material.appbar.MaterialToolbar
                     android:id="@+id/marketOrderToolBar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
+                    android:layout_marginBottom="@dimen/dp12"
+                    app:layout_constraintTop_toTopOf="parent"
                     app:navigationIcon="@drawable/ic_uikit_navigation_back"
-                    app:titleTextAppearance="@style/Title_09"
-                    app:titleTextColor="@color/dark_01" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:layout_marginBottom="6dp"
-                    android:orientation="vertical">
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/productName"
-                        style="@style/Title_09"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:text="@{viewModel.product.name}"
-                        tools:text="Nombre del producto" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/productPrice"
-                        style="@style/Paragraph_03"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:text="@{viewModel.product.priceForSaleWithFormat}"
-                        tools:text="S/ 50.50" />
-
-                </LinearLayout>
+                    app:subtitle="@{viewModel.product.priceForSaleWithFormat}"
+                    app:subtitleTextAppearance="@style/Header04_Bold"
+                    app:subtitleTextColor="@color/dark_01"
+                    app:title="@{viewModel.product.name}"
+                    app:titleTextAppearance="@style/Paragraph01"
+                    app:titleTextColor="@color/dark_04"
+                    tools:subtitle="Rest. Punto Sazon" />
 
             </com.google.android.material.appbar.AppBarLayout>
 
@@ -79,12 +58,10 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/buttonViewOrder"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp54"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="6dp"
-            android:layout_marginEnd="12dp"
-            android:layout_marginBottom="6dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp16"
             android:backgroundTint="@color/orders_selector_button_background_color"
+            android:padding="@dimen/dp16"
             android:text="@string/orders_market_add_product"
             android:textAllCaps="false"
             android:textAppearance="@style/UIKit.TextAppearance.Button"
