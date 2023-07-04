@@ -1,5 +1,9 @@
 # app-android-orders Changelog
 
+## Version 3.0.10
+### Added
+- Se lanza viewmodel en el onResume de OrderStatusFragment.
+
 ## Version 3.0.7
 ### Added
 - Se implemento el listado de las ordenes.
