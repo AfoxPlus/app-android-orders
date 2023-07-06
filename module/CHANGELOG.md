@@ -1,5 +1,9 @@
 # app-android-orders Changelog
 
+## Version 3.0.11
+### Added
+- Se modifico recycler para modo horizontal.
+
 ## Version 3.0.10
 ### Added
 - Se lanza viewmodel en el onResume de OrderStatusFragment.

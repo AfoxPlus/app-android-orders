@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import androidx.recyclerview.widget.DefaultItemAnimator
 import com.afoxplus.orders.databinding.FragmentOrderStatusBinding
 import com.afoxplus.orders.delivery.models.OrderStateUIModel
 import com.afoxplus.orders.delivery.viewmodels.OrderStatusViewModel
@@ -57,8 +56,6 @@ class OrderStatusFragment : UIKitBaseFragment(), ItemClickListener<OrderStatus> 
 
     private fun setupAdapter() {
         binding.rvOrderStatus.adapter = adapter
-        binding.rvOrderStatus.setHasFixedSize(true)
-        binding.rvOrderStatus.itemAnimator = DefaultItemAnimator()
     }
 
     override fun onClick(item: OrderStatus) {
