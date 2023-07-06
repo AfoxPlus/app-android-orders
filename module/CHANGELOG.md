@@ -1,6 +1,6 @@
 # app-android-orders Changelog
 
-## Version 3.0.11
+## Version 3.0.12
 ### Added
 - Se modifico recycler para modo horizontal.
 
