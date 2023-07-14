@@ -101,7 +101,6 @@ dependencies {
     implementation(Deps.UI.glide)
     kapt(Deps.UI.glideCompiler)
 
-    implementation(Deps.Arch.network)
     implementation(Deps.Arch.retrofit2)
     implementation(Deps.Arch.gson)
     implementation(Deps.Arch.loggingInterceptor)
@@ -121,6 +120,12 @@ dependencies {
     //Business Dependencies
     implementation(Deps.Arch.products)
     implementation(Deps.UI.uikit)
+    implementation(Deps.Arch.network)
+
+    // Chucker
+    debugImplementation(Deps.Arch.chucker)
+    "stagingImplementation"(Deps.Arch.chucker)
+    releaseImplementation(Deps.Arch.chuckerNoOp)
 
     LocalModules.setupBuildGradle(this, rootProject, "orders")
     implementation(project(mapOf("path" to ":module")))

@@ -9,7 +9,7 @@ import kotlinx.parcelize.Parcelize
 class OrderDetail(
     val product: Product,
     var quantity: Int,
-    private var saleOrderItemStrategy: SaleOrderItemStrategy? = null
+    var saleOrderItemStrategy: SaleOrderItemStrategy? = null
 ) : Parcelable {
 
     fun addSaleOrderItemStrategy(saleOrderDetailStrategy: SaleOrderItemStrategy?) {

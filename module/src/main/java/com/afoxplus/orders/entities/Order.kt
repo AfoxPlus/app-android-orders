@@ -3,16 +3,17 @@ package com.afoxplus.orders.entities
 import android.os.Parcelable
 import com.afoxplus.orders.entities.bussineslogic.SaleOrderStrategy
 import com.afoxplus.products.entities.Product
+import java.util.Date
 import kotlinx.parcelize.Parcelize
-import java.util.*
+
 
 @Parcelize
 class Order(
     val date: Date,
     val code: String = "",
-    var tableNumber: String = "",
-    var clientName: String = "",
-    var clientPhoneNumber: String = "",
+    var orderType: OrderType,
+    var restaurantId: String = "",
+    var client: Client? = null,
     private val orderDetails: MutableList<OrderDetail> = mutableListOf(),
     private var saleOrderStrategy: SaleOrderStrategy? = null
 ) : Parcelable {

@@ -60,4 +60,7 @@ internal abstract class OrdersUseCaseInternalModule {
 
     @Binds
     abstract fun bindSendOrder(sendOrderUseCase: SendOrderUseCase): SendOrder
+
+    @Binds
+    abstract fun bindGetRestaurantName(getRestaurantName: GetRestaurantNameUseCase): GetRestaurantName
 }

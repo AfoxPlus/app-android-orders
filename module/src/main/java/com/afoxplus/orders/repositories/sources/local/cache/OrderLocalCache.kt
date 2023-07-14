@@ -1,9 +1,11 @@
 package com.afoxplus.orders.repositories.sources.local.cache
 
+import com.afoxplus.orders.entities.OrderType
 import com.afoxplus.orders.entities.Order
 import com.afoxplus.orders.entities.OrderDetail
 import com.afoxplus.orders.repositories.sources.local.OrderLocalDataSource
 import com.afoxplus.products.entities.Product
+import com.afoxplus.uikit.objects.vendor.VendorShared
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -12,7 +14,10 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-internal class OrderLocalCache @Inject constructor() : OrderLocalDataSource {
+internal class OrderLocalCache @Inject constructor(
+    private val vendorShared: VendorShared
+) : OrderLocalDataSource {
+
     private var order: Order? = null
     private val orderStateFlow: MutableSharedFlow<Order?> by lazy {
         MutableSharedFlow(
@@ -46,12 +51,21 @@ internal class OrderLocalCache @Inject constructor() : OrderLocalDataSource {
     }
 
     private fun newOrder(): Order {
-        val newOrder = Order(date = Calendar.getInstance().time)
+        val newOrder = Order(
+            date = Calendar.getInstance().time,
+            restaurantId = vendorShared.fetch()?.restaurantId ?: "",
+            orderType = getDeliveryType()
+        )
         order = newOrder
         return newOrder
     }
 
-    companion object {
-        private const val ERROR_ORDER_IS_NULL = "Order is null"
+    private fun getDeliveryType(): OrderType {
+        vendorShared.fetch()?.let {
+            val isOwnDelivery = it.additionalInfo["restaurant_own_delivery"] == true
+            return if (isOwnDelivery)
+                OrderType.Delivery
+            else OrderType.Local.apply { description = it.tableId }
+        } ?: throw Exception("No found DeliveryType")
     }
 }

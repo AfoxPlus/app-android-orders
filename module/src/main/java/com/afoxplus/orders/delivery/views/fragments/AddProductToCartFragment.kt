@@ -6,9 +6,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import com.afoxplus.orders.databinding.FragmentOrdersAddProductToCartBinding
 import com.afoxplus.orders.delivery.viewmodels.AddProductToOrderViewModel
-import com.afoxplus.uikit.fragments.BaseFragment
+import com.afoxplus.uikit.fragments.UIKitBaseFragment
 
-class AddProductToCartFragment : BaseFragment() {
+class AddProductToCartFragment : UIKitBaseFragment() {
 
     private lateinit var binding: FragmentOrdersAddProductToCartBinding
     private val addProductToOrderViewModel: AddProductToOrderViewModel by activityViewModels()

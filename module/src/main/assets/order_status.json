@@ -1,0 +1,152 @@
+{
+  "success": true,
+  "payload": [
+    {
+      "id": "649921ba0f7ff56c0a169238",
+      "number": "#000007",
+      "date": "26 Jun 2023, 05:27 AM",
+      "state": "Pendiente",
+      "restaurant": "Kitchen",
+      "order_type": {
+        "code": "DELI",
+        "title": "Delivery"
+      },
+      "total": "S/ 35.80",
+      "client": {
+        "name": "Valentin Mendoza",
+        "cel": "996443263",
+        "address_reference": "bello horizonte"
+      },
+      "detail": [
+        {
+          "productId": "6499215b191a204c25d32516",
+          "description": "Acompañado de su rica tortilla",
+          "unitPrice": "S/ 35.80",
+          "quantity": 1,
+          "subTotal": "S/ 35.80"
+        }
+      ]
+    },
+    {
+      "id": "6499251936fc949a028e9d23",
+      "number": "#000008",
+      "date": "26 Jun 2023, 05:41 AM",
+      "state": "Pendiente",
+      "restaurant": "Kitchen",
+      "order_type": {
+        "code": "SALON",
+        "title": "Mesa",
+        "description": "05"
+      },
+      "total": "S/ 47.80",
+      "client": {
+        "name": "mario fernandez",
+        "cel": "",
+        "address_reference": ""
+      },
+      "detail": [
+        {
+          "productId": "6499215b191a204c25d32516",
+          "description": "Acompañado de su rica tortilla",
+          "unitPrice": "S/ 35.80",
+          "quantity": 1,
+          "subTotal": "S/ 35.80"
+        },
+        {
+          "productId": "61a5a68c0c327b1d087ccda8",
+          "description": "Acompañado con yuca o mote",
+          "unitPrice": "S/ 12.00",
+          "quantity": 1,
+          "subTotal": "S/ 12.00"
+        }
+      ]
+    },
+    {
+      "id": "64992c7c175da28689246ed8",
+      "number": "#000009",
+      "date": "26 Jun 2023, 06:13 AM",
+      "state": "Pendiente",
+      "restaurant": "Kitchen",
+      "order_type": {
+        "code": "DELI",
+        "title": "Delivery"
+      },
+      "total": "S/ 24.50",
+      "client": {
+        "name": "nila bonita",
+        "cel": "966979485",
+        "address_reference": ""
+      },
+      "detail": [
+        {
+          "productId": "649629a4d56a2a8d2c00a5a8",
+          "description": "Acompañado de arroz y ensalada",
+          "unitPrice": "S/ 12.50",
+          "quantity": 1,
+          "subTotal": "S/ 12.50"
+        },
+        {
+          "productId": "61a5a68c0c327b1d087ccda7",
+          "description": "Acompañado con yuca, mote y zarsa",
+          "unitPrice": "S/ 12.00",
+          "quantity": 1,
+          "subTotal": "S/ 12.00"
+        }
+      ]
+    },
+    {
+      "id": "6499f38215a2c120d07844a4",
+      "number": "#000010",
+      "date": "26 Jun 2023, 08:22 PM",
+      "state": "Pendiente",
+      "restaurant": "Kitchen",
+      "order_type": {
+        "code": "SALON",
+        "title": "Mesa",
+        "description": "05"
+      },
+      "total": "S/ 36.00",
+      "client": {
+        "name": "Nicolaz",
+        "cel": "",
+        "address_reference": ""
+      },
+      "detail": [
+        {
+          "productId": "61a5a68c0c327b1d087ccda7",
+          "description": "Acompañado con yuca, mote y zarsa",
+          "unitPrice": "S/ 12.00",
+          "quantity": 3,
+          "subTotal": "S/ 36.00"
+        }
+      ]
+    },
+    {
+      "id": "649a1c77fce8ab7d515a380d",
+      "number": "#000011",
+      "date": "26 Jun 2023, 11:17 PM",
+      "state": "Pendiente",
+      "restaurant": "Kitchen",
+      "order_type": {
+        "code": "DELI",
+        "title": "Delivery"
+      },
+      "total": "S/ 48.00",
+      "client": {
+        "name": "petter",
+        "cel": "9669997845",
+        "address_reference": "lima"
+      },
+      "detail": [
+        {
+          "productId": "61a5a68c0c327b1d087ccdaa",
+          "description": "Acompañado con arroz, frejol, papa sancochada y sarza",
+          "unitPrice": "S/ 12.00",
+          "quantity": 4,
+          "subTotal": "S/ 48.00"
+        }
+      ]
+    }
+  ],
+  "message": "Get status"
+}
