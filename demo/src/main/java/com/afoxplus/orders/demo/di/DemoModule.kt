@@ -1,7 +1,7 @@
 package com.afoxplus.orders.demo.di
 
-import com.afoxplus.network.global.AppProperties
-import com.afoxplus.orders.demo.global.AppPropertiesDemo
+import com.afoxplus.module.delivery.flow.StartDemoFlow
+import com.afoxplus.orders.demo.global.OrderStartDemoFlow
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -12,5 +12,5 @@ import dagger.hilt.components.SingletonComponent
 interface DemoModule {
 
     @Binds
-    fun bindAppPropertiesDemo(impl: AppPropertiesDemo): AppProperties
+    fun bindStartDemoFlow(impl: OrderStartDemoFlow): StartDemoFlow
 }

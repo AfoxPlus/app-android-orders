@@ -122,6 +122,8 @@ dependencies {
     implementation(Deps.UI.uikit)
     implementation(Deps.Arch.network)
 
+    implementation(Deps.Arch.demo_config)
+
     // Chucker
     debugImplementation(Deps.Arch.chucker)
     "stagingImplementation"(Deps.Arch.chucker)
