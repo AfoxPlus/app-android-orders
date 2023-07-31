@@ -1,5 +1,6 @@
 package com.afoxplus.orders.delivery.views.activities
 
+import androidx.activity.addCallback
 import androidx.activity.viewModels
 import com.afoxplus.orders.R
 import com.afoxplus.orders.databinding.ActivityAddProductToOrderBinding
@@ -45,6 +46,10 @@ class AddProductToOrderActivity : UIKitBaseActivity() {
             binding.buttonViewOrder.isEnabled = model.enabled
             binding.buttonViewOrder.text = getString(model.title, model.paramTitle)
         }
+
+        onBackPressedDispatcher.addCallback {
+            this@AddProductToOrderActivity.addProductToOrderViewModel.validateBackAction()
+        }
     }
 
     private fun setInitialButtonText() {
@@ -55,6 +60,10 @@ class AddProductToOrderActivity : UIKitBaseActivity() {
         intent.getParcelableExtra<Product>(Product::class.java.name)?.let { product ->
             addProductToOrderViewModel.startWithProduct(product)
         }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
     }
 
 }

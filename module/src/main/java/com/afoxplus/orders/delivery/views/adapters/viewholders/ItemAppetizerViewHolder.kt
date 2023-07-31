@@ -3,11 +3,11 @@ package com.afoxplus.orders.delivery.views.adapters.viewholders
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.afoxplus.orders.R
 import com.afoxplus.orders.databinding.ItemOrdersCartAppetizerBinding
 import com.afoxplus.orders.delivery.models.AppetizerStateModel
 import com.afoxplus.orders.delivery.views.adapters.listeners.ItemAppetizerListener
-import com.afoxplus.orders.entities.OrderAppetizerDetail
-import com.afoxplus.products.entities.Product
+import com.afoxplus.uikit.customview.quantitybutton.ButtonEnableType
 
 internal class ItemAppetizerViewHolder(
     private val binding: ItemOrdersCartAppetizerBinding,
@@ -15,11 +15,19 @@ internal class ItemAppetizerViewHolder(
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(appetizerStateModel: AppetizerStateModel) {
+        binding.appetizerQuantity.deleteIcon = R.drawable.ic_minus
         binding.appetizerName.text = appetizerStateModel.orderAppetizerDetail.product.name
         binding.appetizerQuantity.value = appetizerStateModel.orderAppetizerDetail.quantity
-        binding.appetizerQuantity.isEnable = appetizerStateModel.isEnable
+        binding.appetizerQuantity.setEnableButtonType(ButtonEnableType.NONE, true)
+        binding.appetizerQuantity.setEnableButtonType(
+            appetizerStateModel.buttonEnableType,
+            appetizerStateModel.isEnable
+        )
         binding.appetizerQuantity.onValueChangeListener = { quantity ->
-            itemAppetizerListener.updateQuantity(appetizerStateModel.orderAppetizerDetail.product, quantity)
+            itemAppetizerListener.updateQuantity(
+                appetizerStateModel.orderAppetizerDetail.product,
+                quantity
+            )
         }
     }
 

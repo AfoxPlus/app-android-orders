@@ -17,9 +17,8 @@ class OrderDetail(
         appetizer: Product,
         quantity: Int
     ) {
-        if (quantity > 0)
-            appetizers.find { item -> item.product.code == appetizer.code }
-                ?.run { this.quantity = quantity } ?: addNewAppetizerWithQuantity(appetizer, quantity)
+        appetizers.find { item -> item.product.code == appetizer.code }
+            ?.run { this.quantity = quantity } ?: addNewAppetizerWithQuantity(appetizer, quantity)
     }
 
     private fun addNewAppetizerWithQuantity(

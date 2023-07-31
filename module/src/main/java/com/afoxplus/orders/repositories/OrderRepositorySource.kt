@@ -41,11 +41,18 @@ internal class OrderRepositorySource @Inject constructor(
         return orderLocalDataSource.findProductInOrder(product)
     }
 
-    override suspend fun addOrUpdateAppetizerToCurrentOrder(quantity: Int, appetizer: Product, product: Product) {
-        orderLocalDataSource.addOrUpdateAppetizerToCurrentOrder(quantity,appetizer, product)
+    override suspend fun addOrUpdateAppetizerToCurrentOrder(
+        quantity: Int,
+        appetizer: Product,
+        product: Product
+    ) {
+        orderLocalDataSource.addOrUpdateAppetizerToCurrentOrder(quantity, appetizer, product)
     }
 
     override suspend fun fetchAppetizersByProduct(product: Product): List<OrderAppetizerDetail> {
         return orderLocalDataSource.fetchAppetizersByProduct(product)
     }
+
+    override suspend fun clearAppetizersByProduct(product: Product) =
+        orderLocalDataSource.clearAppetizersByProduct(product)
 }

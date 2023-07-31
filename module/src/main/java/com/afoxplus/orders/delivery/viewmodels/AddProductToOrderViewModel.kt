@@ -9,15 +9,20 @@ import com.afoxplus.orders.delivery.models.AppetizerStateModel
 import com.afoxplus.orders.delivery.models.ButtonStateModel
 import com.afoxplus.orders.delivery.views.events.AddedProductToCurrentOrderSuccessfullyEvent
 import com.afoxplus.orders.delivery.views.extensions.getAmountFormat
+import com.afoxplus.orders.entities.OrderAppetizerDetail
 import com.afoxplus.orders.entities.OrderDetail
+import com.afoxplus.orders.usecases.actions.AddOrUpdateAppetizerToCurrentOrder
 import com.afoxplus.orders.usecases.actions.AddOrUpdateProductToCurrentOrder
 import com.afoxplus.orders.usecases.actions.CalculateSubTotalByProduct
+import com.afoxplus.orders.usecases.actions.ClearAppetizersOrder
+import com.afoxplus.orders.usecases.actions.DeleteProductToCurrentOrder
 import com.afoxplus.orders.usecases.actions.FindProductInOrder
 import com.afoxplus.orders.usecases.actions.MatchAppetizersByOrder
 import com.afoxplus.products.entities.Product
 import com.afoxplus.products.usecases.actions.FetchAppetizerByCurrentRestaurant
 import com.afoxplus.uikit.bus.UIKitEvent
 import com.afoxplus.uikit.bus.UIKitEventBusWrapper
+import com.afoxplus.uikit.customview.quantitybutton.ButtonEnableType
 import com.afoxplus.uikit.di.UIKitCoroutineDispatcher
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -31,6 +36,9 @@ internal class AddProductToOrderViewModel @Inject constructor(
     private val addOrUpdateProductToCurrentOrder: AddOrUpdateProductToCurrentOrder,
     private val fetchAppetizerByCurrentRestaurant: FetchAppetizerByCurrentRestaurant,
     private val matchAppetizersByOrder: MatchAppetizersByOrder,
+    private val addOrUpdateAppetizerToCurrentOrder: AddOrUpdateAppetizerToCurrentOrder,
+    private val deleteProductToCurrentOrder: DeleteProductToCurrentOrder,
+    private val clearAppetizersOrder: ClearAppetizersOrder,
     private val coroutines: UIKitCoroutineDispatcher
 ) : ViewModel() {
 
@@ -61,7 +69,6 @@ internal class AddProductToOrderViewModel @Inject constructor(
     private val mEventProductAddedToCardSuccess: MutableLiveData<UIKitEvent<Unit>> by lazy { MutableLiveData<UIKitEvent<Unit>>() }
     val eventProductAddedToCardSuccess: LiveData<UIKitEvent<Unit>> get() = mEventProductAddedToCardSuccess
 
-
     fun startWithProduct(product: Product) = viewModelScope.launch(coroutines.getMainDispatcher()) {
         mProduct.postValue(product)
         findProductInOrder(product)?.let { orderDetail ->
@@ -85,16 +92,39 @@ internal class AddProductToOrderViewModel @Inject constructor(
     fun calculateSubTotalByProduct(quantity: Int) =
         viewModelScope.launch(coroutines.getMainDispatcher()) {
             product.value?.let { product ->
+                val appetizerClear = quantity < quantityChanged
                 quantityChanged = quantity
+                addOrUpdateProductToCurrentOrder(quantityChanged, product)
                 val subTotal = calculateSubTotalByProduct(quantity, product)
                 setupStateButtonSubTotal(
                     subTotal.getAmountFormat(), isQuantityEnabled(quantityChanged)
                 )
+                handleAppetizerByProductQuantity(appetizerClear)
             }
         }
 
+    private fun handleAppetizerByProductQuantity(shouldClearAppetizer: Boolean) {
+        product.value?.let {
+            if (!it.isMenuDishType()) return
+            if (shouldClearAppetizer)
+                clearAppetizers()
+            else
+                matchAppetizerByOrder()
+        }
+    }
+
+    private fun clearAppetizers() {
+        viewModelScope.launch(coroutines.getMainDispatcher()) {
+            product.value?.let {
+                clearAppetizersOrder(it)
+                matchAppetizerByOrder()
+            }
+        }
+    }
+
     private fun setOrderAndVerifyQuantity(orderDetail: OrderDetail) {
         val subTotal = orderDetail.calculateSubTotal().getAmountFormat()
+        quantityChanged = orderDetail.quantity
         mQuantity.postValue(orderDetail.quantity)
         setupStateButtonSubTotal(subTotal, enabledButton = true)
     }
@@ -143,22 +173,60 @@ internal class AddProductToOrderViewModel @Inject constructor(
     private fun matchAppetizerByOrder() {
         viewModelScope.launch(coroutines.getMainDispatcher()) {
             product.value?.let {
-                mAppetizersStateModel.postValue(
-                    matchAppetizersByOrder(
-                        appetizers,
-                        it
-                    ).map { appetizerOrder -> AppetizerStateModel(appetizerOrder, false) })
+                val orderAppetizerList = matchAppetizersByOrder(appetizers, it)
+                val appetizerModelList = orderAppetizerList.map { appetizerOrder ->
+                    val actionEnable = validateEnableAppetizer(
+                        fetchAppetizersAddedCount(orderAppetizerList)
+                    )
+                    AppetizerStateModel(
+                        appetizerOrder,
+                        actionEnable.second,
+                        actionEnable.first
+                    )
+                }
+                mAppetizersStateModel.postValue(appetizerModelList)
             }
         }
     }
 
-    fun handleAppetizerQuantity(product: Product, quantity: Int) {
+    private fun fetchAppetizersAddedCount(appetizerOrders: List<OrderAppetizerDetail>): Int {
+        return appetizerOrders.sumOf { appetizer -> appetizer.quantity }
+    }
 
+    fun handleAppetizerQuantity(appetizer: Product, quantity: Int) {
+        viewModelScope.launch(coroutines.getMainDispatcher()) {
+            product.value?.let {
+                addOrUpdateAppetizerToCurrentOrder(quantity, appetizer, it)
+                matchAppetizerByOrder()
+            }
+        }
+    }
+
+    private fun validateEnableAppetizer(appetizerAddedSize: Int): Pair<ButtonEnableType, Boolean> {
+        println("Here is the data: $appetizerAddedSize, and $quantityChanged")
+        if (quantityChanged == 0) return Pair(ButtonEnableType.ALL, false)
+        if (appetizerAddedSize == quantityChanged) {
+            // Enable decrease action
+            return Pair(ButtonEnableType.PLUS, false)
+        }
+
+        return Pair(ButtonEnableType.ALL, true)
+    }
+
+    fun validateBackAction() {
+        viewModelScope.launch(coroutines.getMainDispatcher()) {
+            if (mStateScreen.value == StateScreen.Add) {
+                product.value?.let {
+                    deleteProductToCurrentOrder(it)
+                }
+            }
+            mEventProductAddedToCardSuccess.postValue(UIKitEvent(Unit))
+            eventBusListener.send(AddedProductToCurrentOrderSuccessfullyEvent.build())
+        }
     }
 
     sealed interface StateScreen {
         object Add : StateScreen
         object Update : StateScreen
     }
-
 }

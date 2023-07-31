@@ -56,11 +56,16 @@ internal class OrderLocalCache @Inject constructor(
         appetizer: Product,
         product: Product
     ) {
-        findProductInOrder(product)?.addAppetizerWithQuantity(appetizer,quantity)
+        val product = findProductInOrder(product)
+        product?.addAppetizerWithQuantity(appetizer, quantity)
     }
 
     override suspend fun fetchAppetizersByProduct(product: Product): List<OrderAppetizerDetail> {
         return findProductInOrder(product)?.appetizers?.toList() ?: arrayListOf()
+    }
+
+    override suspend fun clearAppetizersByProduct(product: Product) {
+        findProductInOrder(product)?.appetizers?.clear()
     }
 
     private fun newOrder(): Order {

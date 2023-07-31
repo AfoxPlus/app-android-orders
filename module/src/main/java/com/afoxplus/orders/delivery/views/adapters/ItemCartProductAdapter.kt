@@ -22,6 +22,5 @@ internal class ItemCartProductAdapter(private val itemCartProductListener: ItemC
 
         override fun areContentsTheSame(oldItem: OrderDetail, newItem: OrderDetail): Boolean =
             oldItem.product == newItem.product
-
     }
 }

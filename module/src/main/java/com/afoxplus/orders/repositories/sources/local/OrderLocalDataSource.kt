@@ -13,6 +13,6 @@ internal interface OrderLocalDataSource {
     suspend fun getCurrentOrder(): SharedFlow<Order?>
     suspend fun deleteProductToCurrentOrder(product: Product)
     suspend fun addOrUpdateAppetizerToCurrentOrder(quantity: Int, appetizer: Product, product: Product)
-
     suspend fun fetchAppetizersByProduct(product: Product): List<OrderAppetizerDetail>
+    suspend fun clearAppetizersByProduct(product: Product)
 }

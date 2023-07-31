@@ -3,6 +3,7 @@ package com.afoxplus.orders.delivery.views.adapters.viewholders
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.afoxplus.orders.R
 import com.afoxplus.orders.databinding.ItemOrdersCartProductBinding
 import com.afoxplus.orders.delivery.views.adapters.listeners.ItemCartProductListener
 import com.afoxplus.orders.entities.OrderDetail
