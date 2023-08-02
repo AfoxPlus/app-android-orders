@@ -141,13 +141,19 @@ internal class AddProductToOrderViewModel @Inject constructor(
     private fun isQuantityEnabled(quantity: Int): Boolean = quantity > 0
     private fun setupStateButtonSubTotal(subTotal: String, enabledButton: Boolean) {
         when (mStateScreen.value) {
-            is StateScreen.Update ->
-                setButtonSubTotalState(
-                    ButtonStateModel.getUpdateButtonState(
-                        paramTitle = subTotal,
-                        enabledButton
+            is StateScreen.Update -> {
+                if (quantityChanged == 0)
+                    setButtonSubTotalState(
+                        ButtonStateModel.getDeleteButtonState()
                     )
-                )
+                else
+                    setButtonSubTotalState(
+                        ButtonStateModel.getUpdateButtonState(
+                            paramTitle = subTotal,
+                            enabledButton
+                        )
+                    )
+            }
 
             else ->
                 setButtonSubTotalState(
@@ -203,13 +209,10 @@ internal class AddProductToOrderViewModel @Inject constructor(
     }
 
     private fun validateEnableAppetizer(appetizerAddedSize: Int): Pair<ButtonEnableType, Boolean> {
-        println("Here is the data: $appetizerAddedSize, and $quantityChanged")
         if (quantityChanged == 0) return Pair(ButtonEnableType.ALL, false)
         if (appetizerAddedSize == quantityChanged) {
-            // Enable decrease action
             return Pair(ButtonEnableType.PLUS, false)
         }
-
         return Pair(ButtonEnableType.ALL, true)
     }
 

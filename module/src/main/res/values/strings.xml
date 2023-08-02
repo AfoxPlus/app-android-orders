@@ -5,6 +5,7 @@
     <string name="orders_market_button_view">%1$d Ver mi pedido %2$d</string>
     <string name="orders_market_add_product">Agregar a mi pedido %1$s</string>
     <string name="orders_market_update_product">Modificar mi pedido %1$s</string>
+    <string name="orders_market_delete_product">Eliminar mi pedido</string>
     <string name="orders_market_tab_menu">Menu</string>
     <string name="orders_market_tab_food">Cart</string>
     <string name="orders_market_add_quantity">Unidades</string>

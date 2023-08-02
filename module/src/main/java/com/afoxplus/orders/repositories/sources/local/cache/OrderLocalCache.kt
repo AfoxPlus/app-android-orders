@@ -28,8 +28,8 @@ internal class OrderLocalCache @Inject constructor(
     }
 
     override suspend fun addOrUpdateProductToCurrentOrder(quantity: Int, product: Product) {
-        order?.addProductWithQuantity(product, quantity)
-            ?: newOrder().addProductWithQuantity(product, quantity)
+        order?.addUpdateOrDeleteProductWithQuantity(product, quantity)
+            ?: newOrder().addUpdateOrDeleteProductWithQuantity(product, quantity)
         orderStateFlow.emit(order)
     }
 
@@ -70,7 +70,6 @@ internal class OrderLocalCache @Inject constructor(
 
     private fun newOrder(): Order {
         val newOrder = Order(
-            date = Calendar.getInstance().time,
             restaurantId = vendorShared.fetch()?.restaurantId ?: "",
             orderType = getDeliveryType()
         )

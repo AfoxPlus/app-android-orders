@@ -33,10 +33,13 @@ class ShopCartFragment : UIKitBaseFragment(), ItemCartProductListener {
 
     override fun observerViewModel() {
         cartProductsViewModel.order.observe(viewLifecycleOwner) { order ->
-            adapter.submitList(order?.getOrderDetails())
+            val newListO: MutableList<OrderDetail> = mutableListOf()
+            order.getOrderDetails().forEach {
+                newListO.add(OrderDetail(it.product, it.quantity, it.saleOrderItemStrategy))
+            }
+            adapter.submitList(newListO)
             displayOrder(order)
         }
-
     }
 
     private fun displayOrder(order: Order) {
@@ -49,5 +52,9 @@ class ShopCartFragment : UIKitBaseFragment(), ItemCartProductListener {
 
     override fun updateQuantity(orderDetail: OrderDetail, quantity: Int) {
         cartProductsViewModel.updateQuantity(orderDetail, quantity)
+    }
+
+    override fun editProduct(orderDetail: OrderDetail) {
+        cartProductsViewModel.editMenuDish(orderDetail)
     }
 }

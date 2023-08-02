@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import com.afoxplus.orders.R
 import com.afoxplus.orders.databinding.FragmentOrdersAddProductToCartBinding
 import com.afoxplus.orders.delivery.viewmodels.AddProductToOrderViewModel
 import com.afoxplus.orders.delivery.views.adapters.ItemAppetizerAdapter
@@ -33,6 +34,7 @@ class AddProductToCartFragment : UIKitBaseFragment(), ItemAppetizerListener {
             addProductToOrderViewModel.calculateSubTotalByProduct(it)
         }
         binding.recyclerProductAppetizer.adapter = adapter
+        binding.quantityButtonQuantity.deleteIcon = R.drawable.ic_minus
     }
 
     override fun observerViewModel() {

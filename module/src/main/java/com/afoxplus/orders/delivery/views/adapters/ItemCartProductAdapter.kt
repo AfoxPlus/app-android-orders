@@ -15,12 +15,12 @@ internal class ItemCartProductAdapter(private val itemCartProductListener: ItemC
 
     override fun onBindViewHolder(holder: ItemCartProductViewHolder, position: Int) =
         holder.bind(getItem(position))
-
+    
     class ItemCartProductUtilCallback : DiffUtil.ItemCallback<OrderDetail>() {
         override fun areItemsTheSame(oldItem: OrderDetail, newItem: OrderDetail): Boolean =
             oldItem.product.code == newItem.product.code
 
         override fun areContentsTheSame(oldItem: OrderDetail, newItem: OrderDetail): Boolean =
-            oldItem.product == newItem.product
+            oldItem == newItem
     }
 }

@@ -6,7 +6,7 @@ import com.afoxplus.products.entities.Product
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-class OrderDetail(
+data class OrderDetail(
     val product: Product,
     var quantity: Int,
     var saleOrderItemStrategy: SaleOrderItemStrategy? = null,
@@ -45,5 +45,4 @@ class OrderDetail(
     }
 
     fun getQuantityFormat(): String = "$quantity"
-
 }

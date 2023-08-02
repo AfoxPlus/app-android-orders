@@ -3,13 +3,10 @@ package com.afoxplus.orders.entities
 import android.os.Parcelable
 import com.afoxplus.orders.entities.bussineslogic.SaleOrderStrategy
 import com.afoxplus.products.entities.Product
-import java.util.Date
 import kotlinx.parcelize.Parcelize
-
 
 @Parcelize
 class Order(
-    val date: Date,
     val code: String = "",
     var orderType: OrderType,
     var restaurantId: String = "",
@@ -18,13 +15,15 @@ class Order(
     private var saleOrderStrategy: SaleOrderStrategy? = null
 ) : Parcelable {
 
-    fun addProductWithQuantity(
+    fun addUpdateOrDeleteProductWithQuantity(
         product: Product,
         quantity: Int
     ) {
         if (quantity > 0)
             orderDetails.find { item -> item.product.code == product.code }
                 ?.run { this.quantity = quantity } ?: addNewProductWithQuantity(product, quantity)
+        if (quantity == 0)
+            removeItemOrderDetailByProduct(product)
     }
 
     private fun addNewProductWithQuantity(
