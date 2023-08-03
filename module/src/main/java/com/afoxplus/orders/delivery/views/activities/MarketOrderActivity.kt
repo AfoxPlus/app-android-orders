@@ -74,7 +74,10 @@ class MarketOrderActivity : UIKitBaseActivity() {
 
         marketOrderViewModel.order.observe(this) { order ->
             order?.let {
-                binding.buttonViewOrder.visibility = View.VISIBLE
+                if (order.getOrderDetails().isEmpty())
+                    binding.buttonViewOrder.visibility = View.GONE
+                else
+                    binding.buttonViewOrder.visibility = View.VISIBLE
                 binding.buttonViewOrder.text = it.getLabelViewMyOrder()
             }
         }

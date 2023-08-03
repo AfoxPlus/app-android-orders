@@ -1,8 +1,33 @@
 package com.afoxplus.orders.di
 
-import com.afoxplus.orders.usecases.actions.*
-import com.afoxplus.orders.usecases.actions.AddProductsToOrderUseCase
+import com.afoxplus.orders.usecases.AddOrUpdateAppetizerToCurrentOrderUseCase
+import com.afoxplus.orders.usecases.AddOrUpdateProductToCurrentOrderUseCase
+import com.afoxplus.orders.usecases.AddProductsToOrderUseCase
+import com.afoxplus.orders.usecases.CalculateSubTotalByProductUseCase
+import com.afoxplus.orders.usecases.ClearAppetizersOrderUseCase
+import com.afoxplus.orders.usecases.ClearCurrentOrderUseCase
+import com.afoxplus.orders.usecases.DeleteProductToCurrentOrderUseCase
+import com.afoxplus.orders.usecases.FetchAppetizerByOrderUseCase
+import com.afoxplus.orders.usecases.FindProductInOrderUseCase
+import com.afoxplus.orders.usecases.GetCurrentOrderUseCase
+import com.afoxplus.orders.usecases.GetRestaurantNameUseCase
+import com.afoxplus.orders.usecases.MatchAppetizersByOrderUseCase
+import com.afoxplus.orders.usecases.SendOrderUseCase
+import com.afoxplus.orders.usecases.actions.AddOrUpdateAppetizerToCurrentOrder
+import com.afoxplus.orders.usecases.actions.AddOrUpdateProductToCurrentOrder
+import com.afoxplus.orders.usecases.actions.AddProductToOrder
+import com.afoxplus.orders.usecases.actions.CalculateSubTotalByProduct
+import com.afoxplus.orders.usecases.actions.ClearAppetizersOrder
+import com.afoxplus.orders.usecases.actions.ClearCurrentOrder
+import com.afoxplus.orders.usecases.actions.DeleteProductToCurrentOrder
+import com.afoxplus.orders.usecases.actions.FetchAppetizerByOrder
+import com.afoxplus.orders.usecases.actions.FindProductInOrder
+import com.afoxplus.orders.usecases.actions.FindSaleOrderItemStrategy
 import com.afoxplus.orders.usecases.actions.FindSaleOrderItemStrategyUseCase
+import com.afoxplus.orders.usecases.actions.GetCurrentOrder
+import com.afoxplus.orders.usecases.actions.GetRestaurantName
+import com.afoxplus.orders.usecases.actions.MatchAppetizersByOrder
+import com.afoxplus.orders.usecases.actions.SendOrder
 import com.afoxplus.orders.usecases.repositories.OrderRepository
 import com.afoxplus.products.usecases.actions.FindSaleProductStrategy
 import com.afoxplus.products.usecases.actions.HasProductStock
@@ -63,4 +88,16 @@ internal abstract class OrdersUseCaseInternalModule {
 
     @Binds
     abstract fun bindGetRestaurantName(getRestaurantName: GetRestaurantNameUseCase): GetRestaurantName
+
+    @Binds
+    abstract fun bindAddAppetizerToCurrentOrder(addAppetizerToCurrentOrderUseCase: AddOrUpdateAppetizerToCurrentOrderUseCase): AddOrUpdateAppetizerToCurrentOrder
+
+    @Binds
+    abstract fun bindFetchAppetizerByOrder(fetchAppetizerByOrderUseCase: FetchAppetizerByOrderUseCase): FetchAppetizerByOrder
+
+    @Binds
+    abstract fun bindMatchAppetizersByOrder(matchAppetizersByOrderUseCase: MatchAppetizersByOrderUseCase): MatchAppetizersByOrder
+
+    @Binds
+    abstract fun bindClearAppetizersByOrder(clearAppetizersOrderUseCase: ClearAppetizersOrderUseCase): ClearAppetizersOrder
 }

@@ -6,11 +6,28 @@ import com.afoxplus.products.entities.Product
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-class OrderDetail(
+data class OrderDetail(
     val product: Product,
     var quantity: Int,
-    var saleOrderItemStrategy: SaleOrderItemStrategy? = null
+    var saleOrderItemStrategy: SaleOrderItemStrategy? = null,
+    var appetizers: MutableList<OrderAppetizerDetail> = arrayListOf()
 ) : Parcelable {
+
+    fun addAppetizerWithQuantity(
+        appetizer: Product,
+        quantity: Int
+    ) {
+        appetizers.find { item -> item.product.code == appetizer.code }
+            ?.run { this.quantity = quantity } ?: addNewAppetizerWithQuantity(appetizer, quantity)
+    }
+
+    private fun addNewAppetizerWithQuantity(
+        appetizer: Product,
+        quantity: Int
+    ) {
+        val orderDetail = OrderAppetizerDetail(appetizer, quantity)
+        appetizers.add(orderDetail)
+    }
 
     fun addSaleOrderItemStrategy(saleOrderDetailStrategy: SaleOrderItemStrategy?) {
         this.saleOrderItemStrategy = saleOrderDetailStrategy
@@ -28,5 +45,4 @@ class OrderDetail(
     }
 
     fun getQuantityFormat(): String = "$quantity"
-
 }

@@ -9,6 +9,7 @@ import com.afoxplus.orders.delivery.views.fragments.ShopCartFragment
 import com.afoxplus.orders.delivery.views.fragments.AdditionalOrderInfoFragment
 import com.afoxplus.uikit.activities.UIKitBaseActivity
 import com.afoxplus.uikit.activities.extensions.addFragmentToActivity
+import com.afoxplus.uikit.bus.UIKitEventObserver
 import com.afoxplus.uikit.fragments.UIKitBaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -72,6 +73,10 @@ class OrderPreviewActivity : UIKitBaseActivity() {
             finish()
             orderFlow.goToOrderSuccessActivity(this)
         }
+
+        shopCartViewModel.goToAddCardProductEvent.observe(this, UIKitEventObserver { product ->
+            orderFlow.goToAddProductToOrderActivity(this, product)
+        })
     }
 
     private fun changeFragment(fragment: UIKitBaseFragment) {

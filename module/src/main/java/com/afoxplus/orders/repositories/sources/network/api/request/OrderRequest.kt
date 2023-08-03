@@ -1,7 +1,9 @@
 package com.afoxplus.orders.repositories.sources.network.api.request
 
 import com.afoxplus.orders.entities.Order
+import com.afoxplus.orders.entities.OrderAppetizerDetail
 import com.afoxplus.orders.entities.OrderDetail
+import com.afoxplus.products.entities.Product
 import com.google.gson.annotations.SerializedName
 
 internal data class OrderRequest(
@@ -52,7 +54,8 @@ internal data class OrderDetailRequest(
     @SerializedName("description") val description: String,
     @SerializedName("unit_price") val unitPrice: Double,
     @SerializedName("quantity") val quantity: Int,
-    @SerializedName("sub_total") val subTotal: Double
+    @SerializedName("sub_total") val subTotal: Double,
+    @SerializedName("sub_detail") val appetizers: List<OrderAppetizerRequest>
 ) {
 
     companion object {
@@ -63,7 +66,26 @@ internal data class OrderDetailRequest(
                 description = orderDetail.product.description,
                 unitPrice = orderDetail.product.getPriceForSale(),
                 quantity = orderDetail.quantity,
-                subTotal = orderDetail.calculateSubTotal()
+                subTotal = orderDetail.calculateSubTotal(),
+                appetizers = orderDetail.appetizers.map {
+                    OrderAppetizerRequest.getOrderAppetizerRequest(it)
+                }
+            )
+        }
+    }
+}
+
+internal data class OrderAppetizerRequest(
+    @SerializedName("product_id") val productId: String,
+    @SerializedName("title") val title: String,
+    @SerializedName("quantity") val quantity: String,
+) {
+    companion object {
+        fun getOrderAppetizerRequest(orderAppetizerDetail: OrderAppetizerDetail): OrderAppetizerRequest {
+            return OrderAppetizerRequest(
+                productId = orderAppetizerDetail.product.code,
+                title = orderAppetizerDetail.product.name,
+                quantity = orderAppetizerDetail.quantity.toString()
             )
         }
     }

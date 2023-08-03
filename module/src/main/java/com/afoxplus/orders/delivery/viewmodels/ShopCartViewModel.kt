@@ -14,6 +14,7 @@ import com.afoxplus.orders.usecases.actions.DeleteProductToCurrentOrder
 import com.afoxplus.orders.usecases.actions.GetCurrentOrder
 import com.afoxplus.orders.usecases.actions.GetRestaurantName
 import com.afoxplus.orders.usecases.actions.SendOrder
+import com.afoxplus.products.entities.Product
 import com.afoxplus.uikit.bus.UIKitEvent
 import com.afoxplus.uikit.di.UIKitCoroutineDispatcher
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -59,6 +60,8 @@ internal class ShopCartViewModel @Inject constructor(
 
     private val mButtonSendLoading: MutableLiveData<UIKitEvent<Unit>> by lazy { MutableLiveData() }
     val buttonSendLoading: LiveData<UIKitEvent<Unit>> get() = mButtonSendLoading
+    private val mGoToAddCardProductEvent: MutableLiveData<UIKitEvent<Product>> by lazy { MutableLiveData<UIKitEvent<Product>>() }
+    val goToAddCardProductEvent: LiveData<UIKitEvent<Product>> get() = mGoToAddCardProductEvent
 
     init {
         loadCurrentOrder()
@@ -85,13 +88,19 @@ internal class ShopCartViewModel @Inject constructor(
 
     fun deleteItem(orderDetail: OrderDetail) {
         viewModelScope.launch(coroutines.getMainDispatcher()) {
-            deleteProductToCurrentOrder.invoke(orderDetail.product)
+            deleteProductToCurrentOrder(orderDetail.product)
         }
     }
 
     fun updateQuantity(orderDetail: OrderDetail, quantity: Int) {
         viewModelScope.launch(coroutines.getMainDispatcher()) {
-            addOrUpdateProductToCurrentOrder.invoke(quantity, orderDetail.product)
+            addOrUpdateProductToCurrentOrder(quantity, orderDetail.product)
+        }
+    }
+
+    fun editMenuDish(orderDetail: OrderDetail) {
+        viewModelScope.launch(coroutines.getMainDispatcher()) {
+            mGoToAddCardProductEvent.postValue(UIKitEvent(orderDetail.product))
         }
     }
 

@@ -2,6 +2,7 @@ package com.afoxplus.orders.repositories.sources.local.cache
 
 import com.afoxplus.orders.entities.OrderType
 import com.afoxplus.orders.entities.Order
+import com.afoxplus.orders.entities.OrderAppetizerDetail
 import com.afoxplus.orders.entities.OrderDetail
 import com.afoxplus.orders.repositories.sources.local.OrderLocalDataSource
 import com.afoxplus.products.entities.Product
@@ -27,8 +28,8 @@ internal class OrderLocalCache @Inject constructor(
     }
 
     override suspend fun addOrUpdateProductToCurrentOrder(quantity: Int, product: Product) {
-        order?.addProductWithQuantity(product, quantity)
-            ?: newOrder().addProductWithQuantity(product, quantity)
+        order?.addUpdateOrDeleteProductWithQuantity(product, quantity)
+            ?: newOrder().addUpdateOrDeleteProductWithQuantity(product, quantity)
         orderStateFlow.emit(order)
     }
 
@@ -50,9 +51,25 @@ internal class OrderLocalCache @Inject constructor(
         orderStateFlow.emit(order)
     }
 
+    override suspend fun addOrUpdateAppetizerToCurrentOrder(
+        quantity: Int,
+        appetizer: Product,
+        product: Product
+    ) {
+        val product = findProductInOrder(product)
+        product?.addAppetizerWithQuantity(appetizer, quantity)
+    }
+
+    override suspend fun fetchAppetizersByProduct(product: Product): List<OrderAppetizerDetail> {
+        return findProductInOrder(product)?.appetizers?.toList() ?: arrayListOf()
+    }
+
+    override suspend fun clearAppetizersByProduct(product: Product) {
+        findProductInOrder(product)?.appetizers?.clear()
+    }
+
     private fun newOrder(): Order {
         val newOrder = Order(
-            date = Calendar.getInstance().time,
             restaurantId = vendorShared.fetch()?.restaurantId ?: "",
             orderType = getDeliveryType()
         )

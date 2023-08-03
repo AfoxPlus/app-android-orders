@@ -4,14 +4,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import com.afoxplus.orders.R
 import com.afoxplus.orders.databinding.FragmentOrdersAddProductToCartBinding
 import com.afoxplus.orders.delivery.viewmodels.AddProductToOrderViewModel
+import com.afoxplus.orders.delivery.views.adapters.ItemAppetizerAdapter
+import com.afoxplus.orders.delivery.views.adapters.listeners.ItemAppetizerListener
+import com.afoxplus.products.entities.Product
 import com.afoxplus.uikit.fragments.UIKitBaseFragment
 
-class AddProductToCartFragment : UIKitBaseFragment() {
+class AddProductToCartFragment : UIKitBaseFragment(), ItemAppetizerListener {
 
     private lateinit var binding: FragmentOrdersAddProductToCartBinding
     private val addProductToOrderViewModel: AddProductToOrderViewModel by activityViewModels()
+
+    private val adapter: ItemAppetizerAdapter by lazy { ItemAppetizerAdapter(this) }
 
     companion object {
         fun getInstance(): AddProductToCartFragment = AddProductToCartFragment()
@@ -27,11 +33,25 @@ class AddProductToCartFragment : UIKitBaseFragment() {
         binding.quantityButtonQuantity.onValueChangeListener = {
             addProductToOrderViewModel.calculateSubTotalByProduct(it)
         }
+        binding.recyclerProductAppetizer.adapter = adapter
+        binding.quantityButtonQuantity.deleteIcon = R.drawable.ic_minus
     }
 
     override fun observerViewModel() {
         addProductToOrderViewModel.quantity.observe(viewLifecycleOwner) {
             binding.quantityButtonQuantity.value = it ?: 0
         }
+
+        addProductToOrderViewModel.appetizerVisibility.observe(viewLifecycleOwner) {
+            binding.sectionAppetizer.visibility = it
+        }
+
+        addProductToOrderViewModel.appetizersStateModel.observe(viewLifecycleOwner) {
+            adapter.submitList(it)
+        }
+    }
+
+    override fun updateQuantity(product: Product, quantity: Int) {
+        addProductToOrderViewModel.handleAppetizerQuantity(product, quantity)
     }
 }
