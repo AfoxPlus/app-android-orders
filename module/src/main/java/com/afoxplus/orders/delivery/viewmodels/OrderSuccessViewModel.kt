@@ -11,13 +11,13 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class OrderSuccessViewModel @Inject constructor(
-    private val eventBus: UIKitEventBusWrapper,
+    private val eventBusWrapper: UIKitEventBusWrapper,
     private val coroutineDispatcher: UIKitCoroutineDispatcher
 ) : ViewModel() {
 
-    val onEventBusListener = eventBus.listen()
+    val onEventBusListener = eventBusWrapper.listen()
 
     fun clickOnNewOrder() = viewModelScope.launch(coroutineDispatcher.getMainDispatcher()) {
-        eventBus.send(GoToNewOrderEvent)
+        eventBusWrapper.send(GoToNewOrderEvent)
     }
 }
