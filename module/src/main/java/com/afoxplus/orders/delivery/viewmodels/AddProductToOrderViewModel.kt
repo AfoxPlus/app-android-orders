@@ -30,7 +30,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class AddProductToOrderViewModel @Inject constructor(
-    private val eventBusListener: UIKitEventBusWrapper,
+    private val eventBusWrapper: UIKitEventBusWrapper,
     private val findProductInOrder: FindProductInOrder,
     private val calculateSubTotalByProduct: CalculateSubTotalByProduct,
     private val addOrUpdateProductToCurrentOrder: AddOrUpdateProductToCurrentOrder,
@@ -134,7 +134,7 @@ internal class AddProductToOrderViewModel @Inject constructor(
             mProduct.value?.let { product ->
                 addOrUpdateProductToCurrentOrder(quantityChanged, product)
                 mEventProductAddedToCardSuccess.postValue(UIKitEvent(Unit))
-                eventBusListener.send(AddedProductToCurrentOrderSuccessfullyEvent.build())
+                eventBusWrapper.send(AddedProductToCurrentOrderSuccessfullyEvent)
             }
         }
 
@@ -224,7 +224,7 @@ internal class AddProductToOrderViewModel @Inject constructor(
                 }
             }
             mEventProductAddedToCardSuccess.postValue(UIKitEvent(Unit))
-            eventBusListener.send(AddedProductToCurrentOrderSuccessfullyEvent.build())
+            eventBusWrapper.send(AddedProductToCurrentOrderSuccessfullyEvent)
         }
     }
 

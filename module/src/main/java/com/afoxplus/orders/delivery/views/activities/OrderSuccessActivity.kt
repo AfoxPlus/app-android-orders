@@ -4,6 +4,7 @@ import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.afoxplus.orders.databinding.ActivityOrderSuccessBinding
 import com.afoxplus.orders.delivery.viewmodels.OrderSuccessViewModel
+import com.afoxplus.orders.delivery.views.events.GoToNewOrderEvent
 import com.afoxplus.orders.delivery.views.fragments.OrderSentSuccessfullyFragment
 import com.afoxplus.uikit.activities.UIKitBaseActivity
 import com.afoxplus.uikit.activities.extensions.addFragmentToActivity
@@ -23,7 +24,11 @@ class OrderSuccessActivity : UIKitBaseActivity() {
 
     override fun observerViewModel() {
         lifecycleScope.launchWhenCreated {
-            viewModel.eventOnNewOrder.collectLatest { finish() }
+            viewModel.onEventBusListener.collectLatest { events ->
+                when (events) {
+                    GoToNewOrderEvent -> finish()
+                }
+            }
         }
     }
 

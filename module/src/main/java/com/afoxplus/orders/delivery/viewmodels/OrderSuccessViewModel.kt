@@ -6,9 +6,6 @@ import com.afoxplus.orders.delivery.views.events.GoToNewOrderEvent
 import com.afoxplus.uikit.bus.UIKitEventBusWrapper
 import com.afoxplus.uikit.di.UIKitCoroutineDispatcher
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -18,12 +15,9 @@ internal class OrderSuccessViewModel @Inject constructor(
     private val coroutineDispatcher: UIKitCoroutineDispatcher
 ) : ViewModel() {
 
-
-    val eventOnNewOrder = eventBus.getBusEventFlow()
-        .filter { item -> item is GoToNewOrderEvent }
-        .shareIn(scope = viewModelScope, started = SharingStarted.Eagerly)
+    val onEventBusListener = eventBus.listen()
 
     fun clickOnNewOrder() = viewModelScope.launch(coroutineDispatcher.getMainDispatcher()) {
-        eventBus.send(GoToNewOrderEvent.build())
+        eventBus.send(GoToNewOrderEvent)
     }
 }
