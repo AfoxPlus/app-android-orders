@@ -11,10 +11,11 @@ import com.afoxplus.orders.R
 import com.afoxplus.orders.databinding.ActivityOrdersMarketPanelBinding
 import com.afoxplus.orders.delivery.flow.OrderFlow
 import com.afoxplus.orders.delivery.viewmodels.MarketOrderViewModel
+import com.afoxplus.orders.delivery.views.events.GoToNewOrderEvent
 import com.afoxplus.products.delivery.flow.ProductFlow
+import com.afoxplus.products.delivery.views.events.OnClickProductSaleEvent
 import com.afoxplus.uikit.activities.UIKitBaseActivity
 import com.afoxplus.uikit.adapters.UIKitViewPagerAdapter
-import com.afoxplus.uikit.bus.UIKitEventObserver
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -64,13 +65,31 @@ class MarketOrderActivity : UIKitBaseActivity() {
     }
 
     override fun observerViewModel() {
-        marketOrderViewModel.goToAddCardProductEvent.observe(this, UIKitEventObserver { product ->
-            orderFlow.goToAddProductToOrderActivity(this, product)
-        })
+        lifecycleScope.launchWhenCreated {
+            marketOrderViewModel.onEventBusListener.collectLatest { events ->
+                if (events is OnClickProductSaleEvent) {
+                    orderFlow.goToAddProductToOrderActivity(
+                        this@MarketOrderActivity,
+                        events.product
+                    )
+                }
+            }
+        }
 
-        marketOrderViewModel.eventOnClickViewOrder.observe(this, UIKitEventObserver { order ->
-            orderFlow.goToOrderPreviewActivity(this, order)
-        })
+        lifecycleScope.launchWhenCreated {
+            marketOrderViewModel.onMarketOrderEvent.collectLatest { events ->
+                when (events) {
+                    is MarketOrderViewModel.MarketOrderEvent.OnClickViewOrder -> {
+                        orderFlow.goToOrderPreviewActivity(this@MarketOrderActivity, events.order)
+                    }
+
+                    is MarketOrderViewModel.MarketOrderEvent.OnBackPressed -> {
+                        //TODO: Improve this
+                        onBackPressed()
+                    }
+                }
+            }
+        }
 
         marketOrderViewModel.order.observe(this) { order ->
             order?.let {
@@ -81,17 +100,14 @@ class MarketOrderActivity : UIKitBaseActivity() {
                 binding.buttonViewOrder.text = it.getLabelViewMyOrder()
             }
         }
-
-        marketOrderViewModel.eventOnBackPressed.observe(
-            this,
-            UIKitEventObserver { onBackPressed() })
     }
 
     override fun onResume() {
         super.onResume()
         lifecycleScope.launchWhenResumed {
-            marketOrderViewModel.eventOnNewOrder.collectLatest {
-                binding.buttonViewOrder.visibility = View.GONE
+            marketOrderViewModel.onEventBusListener.collectLatest { events ->
+                if (events == GoToNewOrderEvent)
+                    binding.buttonViewOrder.visibility = View.GONE
             }
         }
     }
