@@ -34,7 +34,7 @@ class ShopCartFragment : UIKitBaseFragment(), ItemCartProductListener {
     override fun observerViewModel() {
         cartProductsViewModel.order.observe(viewLifecycleOwner) { order ->
             val newListO: MutableList<OrderDetail> = mutableListOf()
-            order.getOrderDetails().forEach {
+            order.getOrderDetails().map {
                 newListO.add(OrderDetail(it.product, it.quantity, it.saleOrderItemStrategy))
             }
             adapter.submitList(newListO)
