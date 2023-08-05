@@ -11,6 +11,7 @@ import com.afoxplus.orders.delivery.views.adapters.ItemAppetizerAdapter
 import com.afoxplus.orders.delivery.views.adapters.listeners.ItemAppetizerListener
 import com.afoxplus.products.entities.Product
 import com.afoxplus.uikit.fragments.UIKitBaseFragment
+import com.afoxplus.uikit.modal.UIKitModal
 
 class AddProductToCartFragment : UIKitBaseFragment(), ItemAppetizerListener {
 
@@ -49,6 +50,19 @@ class AddProductToCartFragment : UIKitBaseFragment(), ItemAppetizerListener {
         addProductToOrderViewModel.appetizersStateModel.observe(viewLifecycleOwner) {
             adapter.submitList(it)
         }
+        addProductToOrderViewModel.appetizersShowModal.observe(viewLifecycleOwner) {
+            displayAppetizerAlertModal()
+        }
+    }
+
+    private fun displayAppetizerAlertModal() {
+        UIKitModal.Builder(parentFragmentManager)
+            .title(getString(R.string.order_appetizers_modal_title))
+            .message(getString(R.string.order_appetizers_modal_message))
+            .positiveButton(getString(R.string.order_appetizers_modal_action)) {
+                it.dismiss()
+            }
+            .show()
     }
 
     override fun updateQuantity(product: Product, quantity: Int) {

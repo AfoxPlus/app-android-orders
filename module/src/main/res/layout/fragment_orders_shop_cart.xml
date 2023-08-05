@@ -15,30 +15,99 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="12dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toTopOf="@id/subTotalOrder"
+        app:layout_constraintBottom_toTopOf="@id/shopCardDetail"
         app:layout_constraintTop_toTopOf="parent"
         tools:itemCount="5"
         tools:listitem="@layout/item_orders_cart_product" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        style="@style/Title_10"
-        android:layout_width="wrap_content"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/shopCardDetail"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dp16"
-        android:layout_marginBottom="5dp"
-        android:text="@string/orders_market_sub_total"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/subTotalOrder"
-        style="@style/Title_10"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/dp16"
-        android:layout_marginBottom="5dp"
-        android:fontFamily="@font/poppins_semi_bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:text="S/. 120.00" />
+        android:layout_marginBottom="@dimen/dp18"
+        app:cardCornerRadius="@dimen/dp4"
+        app:cardElevation="0dp"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/shopOrderSummary"
+                style="@style/Paragraph02_Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp16"
+                android:layout_marginTop="@dimen/dp16"
+                android:layout_marginBottom="5dp"
+                android:text="@string/order_market_shop_summary"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/shopOrderSummaryQuantity"
+                style="@style/Title_10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp16"
+                android:layout_marginTop="@dimen/dp8"
+                android:text="@string/order_market_shop_summary_quantity"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/shopOrderSummary" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/shopOrderSummaryQuantityValue"
+                style="@style/Paragraph01_SemiBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp16"
+                android:layout_marginEnd="@dimen/dp16"
+                app:layout_constraintBottom_toBottomOf="@+id/shopOrderSummaryQuantity"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/shopOrderSummaryQuantity"
+                tools:text="8" />
+
+            <View
+                android:id="@+id/shopOrderSummaryDivider"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp2"
+                android:layout_marginStart="@dimen/dp16"
+                android:layout_marginTop="@dimen/dp12"
+                android:layout_marginEnd="@dimen/dp16"
+                android:background="@color/gray_01"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/shopOrderSummaryQuantity" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/shopOrderSummarySubTotal"
+                style="@style/Title_10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp16"
+                android:layout_marginTop="@dimen/dp12"
+                android:layout_marginBottom="@dimen/dp16"
+                android:text="@string/orders_market_sub_total"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/shopOrderSummaryDivider" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/subTotalOrder"
+                style="@style/Title_10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dp16"
+                android:fontFamily="@font/poppins_semi_bold"
+                app:layout_constraintBottom_toBottomOf="@+id/shopOrderSummarySubTotal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/shopOrderSummarySubTotal"
+                tools:text="S/. 120.00" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -32,4 +32,9 @@
     <string name="order_status_detail_total">Total:</string>
     <string name="order_status_restaurant">Restaurante:</string>
     <string name="orders_market_appetizer">Entradas</string>
+    <string name="order_appetizers_modal_title">Debes elegir nuevamente tus entradas</string>
+    <string name="order_appetizers_modal_message">El total de tus unidades es menor a tus entradas seleccionadas</string>
+    <string name="order_appetizers_modal_action">Entendido</string>
+    <string name="order_market_shop_summary">Resumen de tu pedido</string>
+    <string name="order_market_shop_summary_quantity">Cantidad</string>
 </resources>

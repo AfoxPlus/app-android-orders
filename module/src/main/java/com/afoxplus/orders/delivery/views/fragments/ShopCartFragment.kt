@@ -44,6 +44,7 @@ class ShopCartFragment : UIKitBaseFragment(), ItemCartProductListener {
 
     private fun displayOrder(order: Order) {
         binding.subTotalOrder.text = order.getTotalWithFormat()
+        binding.shopOrderSummaryQuantityValue.text = order.getTotalQuantity().toString()
     }
 
     override fun deleteItem(orderDetail: OrderDetail) {
