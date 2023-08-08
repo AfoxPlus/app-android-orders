@@ -7,7 +7,6 @@ import com.afoxplus.orders.delivery.views.events.GoToNewOrderEvent
 import com.afoxplus.uikit.bus.UIKitEventBusWrapper
 import com.afoxplus.uikit.di.UIKitCoroutineDispatcher
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -23,10 +22,8 @@ internal class OrderSuccessViewModel @Inject constructor(
         eventBusWrapper.send(GoToNewOrderEvent)
     }
 
-    fun clickGoToHome(): Job {
-        return viewModelScope.launch(coroutineDispatcher.getMainDispatcher()) {
-            eventBusWrapper.send(GoToHomeEvent)
-        }
+    fun clickGoToHome() = viewModelScope.launch(coroutineDispatcher.getMainDispatcher()) {
+        eventBusWrapper.send(GoToHomeEvent)
     }
 
 }

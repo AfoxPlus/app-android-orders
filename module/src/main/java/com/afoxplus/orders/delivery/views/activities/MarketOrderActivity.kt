@@ -11,6 +11,7 @@ import com.afoxplus.orders.R
 import com.afoxplus.orders.databinding.ActivityOrdersMarketPanelBinding
 import com.afoxplus.orders.delivery.flow.OrderFlow
 import com.afoxplus.orders.delivery.viewmodels.MarketOrderViewModel
+import com.afoxplus.orders.delivery.views.events.GoToHomeEvent
 import com.afoxplus.orders.delivery.views.events.GoToNewOrderEvent
 import com.afoxplus.products.delivery.flow.ProductFlow
 import com.afoxplus.products.delivery.views.events.OnClickProductSaleEvent
@@ -19,6 +20,7 @@ import com.afoxplus.uikit.adapters.UIKitViewPagerAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -105,10 +107,14 @@ class MarketOrderActivity : UIKitBaseActivity() {
     override fun onResume() {
         super.onResume()
         lifecycleScope.launchWhenResumed {
-            marketOrderViewModel.onEventBusListener.collectLatest { events ->
-                if (events == GoToNewOrderEvent)
-                    binding.buttonViewOrder.visibility = View.GONE
-            }
+                marketOrderViewModel.onEventBusListener.collectLatest { events ->
+                    when (events) {
+                        GoToNewOrderEvent ->
+                            binding.buttonViewOrder.visibility = View.GONE
+
+                        GoToHomeEvent -> finish()
+                    }
+                }
         }
     }
 
