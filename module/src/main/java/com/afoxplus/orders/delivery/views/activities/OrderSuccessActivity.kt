@@ -4,12 +4,14 @@ import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.afoxplus.orders.databinding.ActivityOrderSuccessBinding
 import com.afoxplus.orders.delivery.viewmodels.OrderSuccessViewModel
+import com.afoxplus.orders.delivery.views.events.GoToHomeEvent
 import com.afoxplus.orders.delivery.views.events.GoToNewOrderEvent
 import com.afoxplus.orders.delivery.views.fragments.OrderSentSuccessfullyFragment
 import com.afoxplus.uikit.activities.UIKitBaseActivity
 import com.afoxplus.uikit.activities.extensions.addFragmentToActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class OrderSuccessActivity : UIKitBaseActivity() {
@@ -26,7 +28,7 @@ class OrderSuccessActivity : UIKitBaseActivity() {
         lifecycleScope.launchWhenCreated {
             viewModel.onEventBusListener.collectLatest { events ->
                 when (events) {
-                    GoToNewOrderEvent -> finish()
+                    GoToNewOrderEvent, GoToHomeEvent -> finish()
                 }
             }
         }

@@ -2,6 +2,7 @@ package com.afoxplus.orders.delivery.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.afoxplus.orders.delivery.views.events.GoToHomeEvent
 import com.afoxplus.orders.delivery.views.events.GoToNewOrderEvent
 import com.afoxplus.uikit.bus.UIKitEventBusWrapper
 import com.afoxplus.uikit.di.UIKitCoroutineDispatcher
@@ -20,4 +21,9 @@ internal class OrderSuccessViewModel @Inject constructor(
     fun clickOnNewOrder() = viewModelScope.launch(coroutineDispatcher.getMainDispatcher()) {
         eventBusWrapper.send(GoToNewOrderEvent)
     }
+
+    fun clickGoToHome() = viewModelScope.launch(coroutineDispatcher.getMainDispatcher()) {
+        eventBusWrapper.send(GoToHomeEvent)
+    }
+
 }
