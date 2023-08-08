@@ -56,13 +56,17 @@ internal class AddProductToOrderViewModel @Inject constructor(
 
     private val mStateScreen: MutableLiveData<StateScreen> by lazy { MutableLiveData(StateScreen.Add) }
 
+    private val mAppetizersShowModal: MutableLiveData<Unit> by lazy { MutableLiveData() }
+
     val product: LiveData<Product> get() = mProduct
     val appetizersStateModel: LiveData<List<AppetizerStateModel>> get() = mAppetizersStateModel
+    val appetizersShowModal: LiveData<Unit> get() = mAppetizersShowModal
     val quantity: LiveData<Int> get() = mQuantity
     val buttonSubTotalState: LiveData<ButtonStateModel> get() = mButtonSubTotalState
     val appetizerVisibility: LiveData<Int> get() = mAppetizerVisibility
 
     private var quantityChanged: Int = 0
+    private var appetizerAddedQuantity: Int = 0
 
     private var appetizers: List<Product> = arrayListOf()
 
@@ -106,11 +110,17 @@ internal class AddProductToOrderViewModel @Inject constructor(
     private fun handleAppetizerByProductQuantity(shouldClearAppetizer: Boolean) {
         product.value?.let {
             if (!it.isMenuDishType()) return
-            if (shouldClearAppetizer)
+            if (shouldClearAppetizer) {
                 clearAppetizers()
-            else
+                displayAppetizerModal()
+            } else
                 matchAppetizerByOrder()
         }
+    }
+
+    private fun displayAppetizerModal() {
+        if (appetizerAddedQuantity > 0)
+            mAppetizersShowModal.postValue(null)
     }
 
     private fun clearAppetizers() {
@@ -196,7 +206,8 @@ internal class AddProductToOrderViewModel @Inject constructor(
     }
 
     private fun fetchAppetizersAddedCount(appetizerOrders: List<OrderAppetizerDetail>): Int {
-        return appetizerOrders.sumOf { appetizer -> appetizer.quantity }
+        appetizerAddedQuantity = appetizerOrders.sumOf { appetizer -> appetizer.quantity }
+        return appetizerAddedQuantity
     }
 
     fun handleAppetizerQuantity(appetizer: Product, quantity: Int) {
