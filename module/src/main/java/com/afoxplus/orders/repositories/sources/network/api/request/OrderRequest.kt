@@ -49,6 +49,7 @@ internal data class OrderTypeRequest(
 )
 
 internal data class OrderDetailRequest(
+    @SerializedName("product_type") val type: String,
     @SerializedName("product_id") val productId: String,
     @SerializedName("title") val title: String,
     @SerializedName("description") val description: String,
@@ -67,6 +68,7 @@ internal data class OrderDetailRequest(
                 unitPrice = orderDetail.product.getPriceForSale(),
                 quantity = orderDetail.quantity,
                 subTotal = orderDetail.calculateSubTotal(),
+                type = orderDetail.product.productType.name,
                 appetizers = orderDetail.appetizers.map {
                     OrderAppetizerRequest.getOrderAppetizerRequest(it)
                 }
