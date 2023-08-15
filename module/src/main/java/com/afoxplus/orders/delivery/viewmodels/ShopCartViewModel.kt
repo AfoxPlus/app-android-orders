@@ -9,6 +9,7 @@ import com.afoxplus.orders.entities.Client
 import com.afoxplus.orders.entities.Order
 import com.afoxplus.orders.entities.OrderDetail
 import com.afoxplus.orders.entities.OrderType
+import com.afoxplus.orders.usecases.GetRestaurantPaymentsUseCase
 import com.afoxplus.orders.usecases.actions.AddOrUpdateProductToCurrentOrder
 import com.afoxplus.orders.usecases.actions.DeleteProductToCurrentOrder
 import com.afoxplus.orders.usecases.actions.GetCurrentOrder
@@ -17,6 +18,7 @@ import com.afoxplus.orders.usecases.actions.SendOrder
 import com.afoxplus.products.entities.Product
 import com.afoxplus.uikit.bus.UIKitEvent
 import com.afoxplus.uikit.di.UIKitCoroutineDispatcher
+import com.afoxplus.uikit.objects.vendor.PaymentMethod
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -28,6 +30,7 @@ internal class ShopCartViewModel @Inject constructor(
     private val deleteProductToCurrentOrder: DeleteProductToCurrentOrder,
     private val sendOrder: SendOrder,
     private val getRestaurantName: GetRestaurantName,
+    private val getRestaurantPaymentsUseCase: GetRestaurantPaymentsUseCase,
     private val coroutines: UIKitCoroutineDispatcher
 ) : ViewModel() {
 
@@ -136,6 +139,9 @@ internal class ShopCartViewModel @Inject constructor(
     }
 
     fun restaurantName(): String = getRestaurantName()
+
+    fun fetchPaymentMethods(): List<PaymentMethod> = getRestaurantPaymentsUseCase.invoke()
+
     private fun openSuccessOrder(message: String) {
         mEventSuccessOrder.postValue(UIKitEvent(message))
     }

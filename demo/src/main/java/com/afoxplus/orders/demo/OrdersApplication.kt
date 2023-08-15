@@ -1,6 +1,7 @@
 package com.afoxplus.orders.demo
 
 import android.app.Application
+import com.afoxplus.uikit.objects.vendor.PaymentMethod
 import com.afoxplus.uikit.objects.vendor.Vendor
 import com.afoxplus.uikit.objects.vendor.VendorShared
 import dagger.hilt.android.HiltAndroidApp
@@ -21,6 +22,12 @@ class OrdersApplication : Application() {
                 additionalInfo = mutableMapOf(
                     "restaurant_name" to "Rest. Pepito sazon!",
                     "restaurant_own_delivery" to false
+                ),
+                paymentMethod = arrayListOf(
+                    PaymentMethod("12", "Efectivo", true),
+                    PaymentMethod("13", "Yape", false),
+                    PaymentMethod("14", "Plin", false),
+                    PaymentMethod("15", "Credit Card", false)
                 )
             )
         )
