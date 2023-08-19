@@ -68,7 +68,7 @@ internal data class OrderDetailRequest(
                 unitPrice = orderDetail.product.getPriceForSale(),
                 quantity = orderDetail.quantity,
                 subTotal = orderDetail.calculateSubTotal(),
-                type = orderDetail.product.productType.name,
+                type = orderDetail.product.productType.code,
                 appetizers = orderDetail.appetizers.map {
                     OrderAppetizerRequest.getOrderAppetizerRequest(it)
                 }
