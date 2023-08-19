@@ -85,6 +85,7 @@ class AdditionalOrderInfoFragment : UIKitBaseFragment(), ItemPaymentMethodListen
                 binding.clientAddressReference.visibility = View.GONE
                 binding.clientPhone.hint =
                     getString(R.string.orders_table_client_cellphone)
+                binding.orderIfoAlertNote.visibility = View.GONE
             }
 
             OrderType.Delivery -> {
@@ -94,6 +95,7 @@ class AdditionalOrderInfoFragment : UIKitBaseFragment(), ItemPaymentMethodListen
                 binding.clientPhone.hint =
                     " ${getString(R.string.orders_table_client_cellphone)}*"
                 binding.clientAddressReference.visibility = View.VISIBLE
+                binding.orderIfoAlertNote.visibility = View.VISIBLE
             }
         }
     }
