@@ -41,4 +41,7 @@
     <string name="order_market_shop_summary_quantity">Cantidad</string>
     <string name="orders_payment_method_button"><u>Cambiar</u></string>
     <string name="order_payment_method">Método de pago</string>
+    <string name="order_payment_method_title">Método de pago:</string>
+    <string name="order_status_note_title">¡Nota!</string>
+    <string name="order_status_note_message">Recuerda que el delivery está a cargo del establecimiento</string>
 </resources>

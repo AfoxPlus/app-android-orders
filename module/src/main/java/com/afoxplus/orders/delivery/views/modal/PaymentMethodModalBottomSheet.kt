@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DefaultItemAnimator
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.afoxplus.orders.R
 import com.afoxplus.orders.databinding.ModalPaymentMethodsBinding
 import com.afoxplus.orders.delivery.views.adapters.ItemPaymentMethodAdapter
@@ -17,7 +16,7 @@ class PaymentMethodModalBottomSheet(
     private val paymentMethodListener: ItemPaymentMethodListener
 ) : BottomSheetDialogFragment() {
     private lateinit var binding: ModalPaymentMethodsBinding
-    private val adapter: ItemPaymentMethodAdapter = ItemPaymentMethodAdapter(paymentMethodListener)
+    private val mAdapter: ItemPaymentMethodAdapter = ItemPaymentMethodAdapter(paymentMethodListener)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,26 +34,15 @@ class PaymentMethodModalBottomSheet(
 
     private fun setUpView() {
         binding.modalRecyclerView.apply {
-            //layoutManager = LinearLayoutManager(requireContext())
-            adapter = adapter
+            adapter = mAdapter
             setHasFixedSize(true)
             itemAnimator = DefaultItemAnimator()
         }
-        adapter.submitList(
-            mutableListOf(
-                PaymentMethod("12", "Efectivo", true),
-                PaymentMethod("13", "Yape", false),
-                PaymentMethod("14", "Plin", false),
-                PaymentMethod("15", "Credit Card", false)
-            )
-        )
     }
 
     fun submitList(paymentMethods: List<PaymentMethod>) {
-
+        mAdapter.submitList(paymentMethods)
     }
 
-    /* override fun getTheme(): Int {
-         return R.style.CustomBottomSheet
-     }*/
+    override fun getTheme(): Int = R.style.BottomSheetDialogTheme
 }

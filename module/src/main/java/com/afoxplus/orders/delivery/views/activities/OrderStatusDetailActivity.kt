@@ -49,6 +49,7 @@ class OrderStatusDetailActivity : UIKitBaseActivity() {
             ctosTypeStatusOrder.configType(orderStatus.orderType.code)
             ctosTypeStatusOrder.title = orderStatus.orderType.title
             ctosTypeStatusOrder.description = orderStatus.orderType.description
+            tvPaymentMethod.text = orderStatus.paymentMethod
             tvStatus.text = orderStatus.state
             appBar.setNavigationOnClickListener { finish() }
         }

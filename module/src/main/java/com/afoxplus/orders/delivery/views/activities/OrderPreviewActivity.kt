@@ -48,7 +48,6 @@ class OrderPreviewActivity : UIKitBaseActivity() {
     }
 
     override fun observerViewModel() {
-
         shopCartViewModel.buttonSendLoading.observe(this) {
             binding.buttonSendOrder.isEnabled = false
         }

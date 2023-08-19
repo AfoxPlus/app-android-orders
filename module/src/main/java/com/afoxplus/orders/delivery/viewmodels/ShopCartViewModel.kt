@@ -66,8 +66,21 @@ internal class ShopCartViewModel @Inject constructor(
     private val mGoToAddCardProductEvent: MutableLiveData<UIKitEvent<Product>> by lazy { MutableLiveData<UIKitEvent<Product>>() }
     val goToAddCardProductEvent: LiveData<UIKitEvent<Product>> get() = mGoToAddCardProductEvent
 
+    private var paymentMethods: MutableList<PaymentMethod> = mutableListOf()
+
+    private val mPaymentMethodSelectedMutableLiveData: MutableLiveData<PaymentMethod> by lazy { MutableLiveData<PaymentMethod>() }
+    val paymentMethodSelectedLiveData: LiveData<PaymentMethod> get() = mPaymentMethodSelectedMutableLiveData
+
     init {
         loadCurrentOrder()
+        loadPaymentMethods()
+    }
+
+    private fun loadPaymentMethods() {
+        viewModelScope.launch(coroutines.getMainDispatcher()) {
+            paymentMethods = getRestaurantPaymentsUseCase.invoke().toMutableList()
+            mPaymentMethodSelectedMutableLiveData.postValue(paymentMethods.first { it.isSelected })
+        }
     }
 
     private fun loadCurrentOrder() {
@@ -129,6 +142,7 @@ internal class ShopCartViewModel @Inject constructor(
         if (validateClient(client, getOrderType())) {
             mOrder.value?.also { order ->
                 order.client = client
+                order.paymentMethod = mPaymentMethodSelectedMutableLiveData.value
                 viewModelScope.launch(coroutines.getMainDispatcher()) {
                     mButtonSendLoading.value = UIKitEvent(Unit)
                     val message = sendOrder.invoke(order)
@@ -140,7 +154,7 @@ internal class ShopCartViewModel @Inject constructor(
 
     fun restaurantName(): String = getRestaurantName()
 
-    fun fetchPaymentMethods(): List<PaymentMethod> = getRestaurantPaymentsUseCase.invoke()
+    fun fetchPaymentMethods(): List<PaymentMethod> = paymentMethods
 
     private fun openSuccessOrder(message: String) {
         mEventSuccessOrder.postValue(UIKitEvent(message))
@@ -171,5 +185,12 @@ internal class ShopCartViewModel @Inject constructor(
             }
         }
         return true
+    }
+
+    fun selectPaymentMethod(paymentMethod: PaymentMethod) {
+        mPaymentMethodSelectedMutableLiveData.postValue(paymentMethod)
+        paymentMethods.forEach {
+            it.isSelected = paymentMethod.id == it.id
+        }
     }
 }

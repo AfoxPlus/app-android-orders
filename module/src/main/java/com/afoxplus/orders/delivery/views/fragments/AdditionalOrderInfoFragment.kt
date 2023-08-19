@@ -50,6 +50,10 @@ class AdditionalOrderInfoFragment : UIKitBaseFragment(), ItemPaymentMethodListen
         cartProductsViewModel.order.observe(viewLifecycleOwner) { order ->
             setupChipInfo(order.orderType)
         }
+
+        cartProductsViewModel.paymentMethodSelectedLiveData.observe(viewLifecycleOwner) {
+            binding.paymentMethodLabel.text = it.name
+        }
     }
 
     override fun setUpView() {
@@ -95,7 +99,7 @@ class AdditionalOrderInfoFragment : UIKitBaseFragment(), ItemPaymentMethodListen
     }
 
     override fun onSelected(paymentMethod: PaymentMethod) {
-        println("Here is payment: $paymentMethod")
+        cartProductsViewModel.selectPaymentMethod(paymentMethod)
+        paymentMethodModalBottomSheet.dismiss()
     }
-
 }

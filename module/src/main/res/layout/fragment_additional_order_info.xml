@@ -94,9 +94,9 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/paymentMethodLabel"
                 style="@style/Paragraph02"
-                android:text="Efectivo"
                 android:layout_width="@dimen/borderWidth0"
                 android:layout_height="wrap_content"
+                android:text="Efectivo"
                 android:textColor="@color/dark_03"
                 app:layout_constraintEnd_toStartOf="@+id/paymentMethodButton"
                 app:layout_constraintStart_toStartOf="parent"
@@ -192,4 +192,16 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
+
+    <com.afoxplus.uikit.customview.alerts.UIKitAlertView
+        android:id="@+id/orderIfoAlertNote"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp16"
+        android:layout_marginEnd="@dimen/dp16"
+        android:layout_marginBottom="@dimen/dp16"
+        app:alert_color="@color/blue_01"
+        app:alert_message="@string/order_status_note_message"
+        app:alert_title="@string/order_status_note_title"
+        app:layout_constraintBottom_toBottomOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
