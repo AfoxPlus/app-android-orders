@@ -79,7 +79,9 @@ internal class ShopCartViewModel @Inject constructor(
     private fun loadPaymentMethods() {
         viewModelScope.launch(coroutines.getMainDispatcher()) {
             paymentMethods = getRestaurantPaymentsUseCase.invoke().toMutableList()
-            mPaymentMethodSelectedMutableLiveData.postValue(paymentMethods.first { it.isSelected })
+            if (paymentMethods.isNotEmpty()) {
+                mPaymentMethodSelectedMutableLiveData.postValue(paymentMethods.first { it.isSelected })
+            }
         }
     }
 

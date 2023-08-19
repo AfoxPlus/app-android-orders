@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@id/design_bottom_sheet"
+    style="@style/CustomBottomSheet"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    style="@style/CustomBottomSheet"
     android:background="@color/transparent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -50,6 +50,7 @@
             android:layout_marginTop="2dp"
             android:layout_marginEnd="@dimen/dp16"
             android:layout_marginBottom="@dimen/dp16"
+            android:paddingBottom="@dimen/dp16"
             android:clipToPadding="false"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constrainedHeight="true"
