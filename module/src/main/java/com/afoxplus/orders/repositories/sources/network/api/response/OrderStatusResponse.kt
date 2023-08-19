@@ -12,6 +12,8 @@ data class OrderStatusResponse(
     val date: String,
     val state: String,
     val restaurant: String,
+    @SerializedName("payment_method")
+    val paymentMethod: String? = "",
     @SerializedName("order_type")
     val orderType: OrderTypeStatusResponse,
     val total: String,
@@ -51,7 +53,9 @@ fun OrderStatusResponse.toEntity(): OrderStatus {
         orderType = orderType.toEntity(),
         total = total,
         client = client.toEntity(),
-        detail = detail.map { it.toEntity() })
+        detail = detail.map { it.toEntity() },
+        paymentMethod = paymentMethod ?: ""
+    )
 }
 
 fun OrderTypeStatusResponse.toEntity(): OrderTypeStatus {

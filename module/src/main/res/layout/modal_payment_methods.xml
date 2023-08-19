@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@id/design_bottom_sheet"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    style="@style/CustomBottomSheet"
+    android:background="@color/transparent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <View
+            android:id="@+id/modalIndicator"
+            android:layout_width="@dimen/dp46"
+            android:layout_height="@dimen/dp2"
+            android:layout_marginTop="@dimen/dp16"
+            android:background="@color/light_03"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/modalTitle"
+            style="@style/Header05_SemiBold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp16"
+            android:gravity="center"
+            android:text="@string/order_payment_method"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/modalIndicator" />
+
+        <View
+            android:id="@+id/modalDivider"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp2"
+            android:layout_marginTop="8dp"
+            android:background="@color/light_03"
+            app:layout_constraintTop_toBottomOf="@id/modalTitle" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/modalRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp16"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="@dimen/dp16"
+            android:layout_marginBottom="@dimen/dp16"
+            android:clipToPadding="false"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constrainedHeight="true"
+            app:layout_constraintTop_toBottomOf="@id/modalDivider"
+            tools:itemCount="3"
+            tools:listitem="@layout/item_payment_method" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

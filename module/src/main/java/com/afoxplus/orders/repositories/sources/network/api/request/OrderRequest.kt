@@ -11,7 +11,8 @@ internal data class OrderRequest(
     @SerializedName("order_type") val orderType: OrderTypeRequest,
     @SerializedName("restaurant_id") val restaurantId: String,
     @SerializedName("detail") val detail: List<OrderDetailRequest>,
-    @SerializedName("total") val total: Double
+    @SerializedName("total") val total: Double,
+    @SerializedName("payment_method") val paymentMethod: String
 ) {
 
     companion object {
@@ -30,7 +31,8 @@ internal data class OrderRequest(
                 restaurantId = order.restaurantId,
                 total = order.calculateTotal(),
                 detail = order.getOrderDetails()
-                    .map { item -> OrderDetailRequest.getOrderDetailRequest(item) }
+                    .map { item -> OrderDetailRequest.getOrderDetailRequest(item) },
+                paymentMethod = order.paymentMethod?.name ?: ""
             )
         }
     }

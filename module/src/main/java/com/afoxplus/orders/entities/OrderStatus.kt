@@ -13,7 +13,8 @@ data class OrderStatus(
     val orderType: OrderTypeStatus,
     val total: String,
     val client: ClientStatus,
-    val detail: List<DetailStatus> = emptyList()
+    val detail: List<DetailStatus> = emptyList(),
+    val paymentMethod: String
 ) : Parcelable
 
 @Parcelize

@@ -7,16 +7,20 @@ import androidx.fragment.app.activityViewModels
 import com.afoxplus.orders.R
 import com.afoxplus.orders.databinding.FragmentAdditionalOrderInfoBinding
 import com.afoxplus.orders.delivery.viewmodels.ShopCartViewModel
+import com.afoxplus.orders.delivery.views.adapters.listeners.ItemPaymentMethodListener
+import com.afoxplus.orders.delivery.views.modal.PaymentMethodModalBottomSheet
 import com.afoxplus.orders.entities.Client
 import com.afoxplus.orders.entities.OrderType
 import com.afoxplus.uikit.bus.UIKitEventObserver
 import com.afoxplus.uikit.fragments.UIKitBaseFragment
+import com.afoxplus.uikit.objects.vendor.PaymentMethod
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class AdditionalOrderInfoFragment : UIKitBaseFragment() {
+class AdditionalOrderInfoFragment : UIKitBaseFragment(), ItemPaymentMethodListener {
     private lateinit var binding: FragmentAdditionalOrderInfoBinding
     private val cartProductsViewModel: ShopCartViewModel by activityViewModels()
+    private val paymentMethodModalBottomSheet = PaymentMethodModalBottomSheet(this)
 
     override fun getMainView(inflater: LayoutInflater, container: ViewGroup?): View {
         binding = FragmentAdditionalOrderInfoBinding.inflate(inflater, container, false)
@@ -46,6 +50,22 @@ class AdditionalOrderInfoFragment : UIKitBaseFragment() {
         cartProductsViewModel.order.observe(viewLifecycleOwner) { order ->
             setupChipInfo(order.orderType)
         }
+
+        cartProductsViewModel.paymentMethodSelectedLiveData.observe(viewLifecycleOwner) {
+            binding.paymentMethodLabel.text = it.name
+        }
+    }
+
+    override fun setUpView() {
+        binding.paymentMethodButton.setOnClickListener {
+            displayPaymentMethods()
+        }
+    }
+
+    private fun displayPaymentMethods() {
+        val paymentMethods = cartProductsViewModel.fetchPaymentMethods()
+        paymentMethodModalBottomSheet.show(parentFragmentManager, "PaymentMethodModalBottomSheet")
+        paymentMethodModalBottomSheet.submitList(paymentMethods)
     }
 
     private fun getClientInfo(): Client {
@@ -65,6 +85,7 @@ class AdditionalOrderInfoFragment : UIKitBaseFragment() {
                 binding.clientAddressReference.visibility = View.GONE
                 binding.clientPhone.hint =
                     getString(R.string.orders_table_client_cellphone)
+                binding.orderIfoAlertNote.visibility = View.GONE
             }
 
             OrderType.Delivery -> {
@@ -74,8 +95,13 @@ class AdditionalOrderInfoFragment : UIKitBaseFragment() {
                 binding.clientPhone.hint =
                     " ${getString(R.string.orders_table_client_cellphone)}*"
                 binding.clientAddressReference.visibility = View.VISIBLE
+                binding.orderIfoAlertNote.visibility = View.VISIBLE
             }
         }
     }
 
+    override fun onSelected(paymentMethod: PaymentMethod) {
+        cartProductsViewModel.selectPaymentMethod(paymentMethod)
+        paymentMethodModalBottomSheet.dismiss()
+    }
 }

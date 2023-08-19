@@ -26,6 +26,7 @@
     <string name="orders_client_address_reference">Referencia de entrega</string>
     <string name="orders_success_order">¡Pedido enviado\ncorrectamente!</string>
     <string name="orders_type_title">Tipo de entrega:</string>
+    <string name="orders_payment_method_title">Método de pago:</string>
     <string name="orders_client_title">Cliente:</string>
     <string name="orders_status_product_quantity">Cant: %1$s</string>
     <string name="orders_status_id">ID: %1$s</string>
@@ -38,4 +39,9 @@
     <string name="order_appetizers_modal_action">Entendido</string>
     <string name="order_market_shop_summary">Resumen de tu pedido</string>
     <string name="order_market_shop_summary_quantity">Cantidad</string>
+    <string name="orders_payment_method_button"><u>Cambiar</u></string>
+    <string name="order_payment_method">Método de pago</string>
+    <string name="order_payment_method_title">Método de pago:</string>
+    <string name="order_status_note_title">¡Nota!</string>
+    <string name="order_status_note_message">Recuerda que el delivery está a cargo del establecimiento</string>
 </resources>
