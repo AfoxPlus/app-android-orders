@@ -72,4 +72,5 @@ class Order(
     fun getLabelSendMyOrder(): String =
         "(${getTotalQuantity()}) Enviar mi pedido ${getTotalWithFormat()}"
 
+    fun isOrderEmpty(): Boolean = getOrderDetails().isEmpty()
 }

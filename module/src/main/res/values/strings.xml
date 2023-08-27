@@ -44,4 +44,8 @@
     <string name="order_payment_method_title">Método de pago:</string>
     <string name="order_status_note_title">¡Nota!</string>
     <string name="order_status_note_message">Recuerda que el delivery está a cargo del establecimiento</string>
+    <string name="order_modal_want_to_leave">¿Quieres salir?</string>
+    <string name="order_modal_lost_products_message">Vas a perder los productos que agregaste a tu pedido.</string>
+    <string name="order_modal_affirmative_action">Sí, salir</string>
+    <string name="order_modal_negative_action">No, continuar pedido</string>
 </resources>

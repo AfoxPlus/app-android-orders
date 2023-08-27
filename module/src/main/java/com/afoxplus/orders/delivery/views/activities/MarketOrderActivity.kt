@@ -17,6 +17,7 @@ import com.afoxplus.products.delivery.flow.ProductFlow
 import com.afoxplus.products.delivery.views.events.OnClickProductSaleEvent
 import com.afoxplus.uikit.activities.UIKitBaseActivity
 import com.afoxplus.uikit.adapters.UIKitViewPagerAdapter
+import com.afoxplus.uikit.modal.UIKitModal
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -102,19 +103,37 @@ class MarketOrderActivity : UIKitBaseActivity() {
                 binding.buttonViewOrder.text = it.getLabelViewMyOrder()
             }
         }
+
+        marketOrderViewModel.displayOrderModalLiveData.observe(this) {
+            displayOrderModal()
+        }
+    }
+
+    private fun displayOrderModal() {
+        UIKitModal.Builder(supportFragmentManager)
+            .title(getString(R.string.order_modal_want_to_leave))
+            .message(getString(R.string.order_modal_lost_products_message))
+            .positiveButton(getString(R.string.order_modal_affirmative_action)) {
+                marketOrderViewModel.clearOrderAndGoBack()
+                it.dismiss()
+            }
+            .negativeButton(getString(R.string.order_modal_negative_action)) {
+                it.dismiss()
+            }
+            .show()
     }
 
     override fun onResume() {
         super.onResume()
         lifecycleScope.launchWhenResumed {
-                marketOrderViewModel.onEventBusListener.collectLatest { events ->
-                    when (events) {
-                        GoToNewOrderEvent ->
-                            binding.buttonViewOrder.visibility = View.GONE
+            marketOrderViewModel.onEventBusListener.collectLatest { events ->
+                when (events) {
+                    GoToNewOrderEvent ->
+                        binding.buttonViewOrder.visibility = View.GONE
 
-                        GoToHomeEvent -> finish()
-                    }
+                    GoToHomeEvent -> finish()
                 }
+            }
         }
     }
 

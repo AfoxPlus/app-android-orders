@@ -32,6 +32,9 @@ internal class MarketOrderViewModel @Inject constructor(
     private val mOrder: MutableLiveData<Order?> by lazy { MutableLiveData<Order?>() }
     val order: LiveData<Order?> get() = mOrder
 
+    private val mDisplayOrderModalLiveData: MutableLiveData<Unit> by lazy { MutableLiveData<Unit>() }
+    val displayOrderModalLiveData: LiveData<Unit> get() = mDisplayOrderModalLiveData
+
     init {
         loadCurrentOrder()
     }
@@ -53,9 +56,21 @@ internal class MarketOrderViewModel @Inject constructor(
         }
     }
 
-    fun onBackPressed() = viewModelScope.launch(coroutines.getMainDispatcher()) {
-        clearCurrentOrder()
-        mOnMarketOrderEvent.emit(MarketOrderEvent.OnBackPressed)
+    fun onBackPressed() = validateBackAction()
+
+    private fun validateBackAction() {
+        if (order.value?.isOrderEmpty() == false) {
+            mDisplayOrderModalLiveData.postValue(Unit)
+        } else {
+            clearOrderAndGoBack()
+        }
+    }
+
+    fun clearOrderAndGoBack() {
+        viewModelScope.launch(coroutines.getMainDispatcher()) {
+            clearCurrentOrder()
+            mOnMarketOrderEvent.emit(MarketOrderEvent.OnBackPressed)
+        }
     }
 
     sealed class MarketOrderEvent {
