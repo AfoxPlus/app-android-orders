@@ -3,6 +3,7 @@ package com.afoxplus.orders.repositories
 import com.afoxplus.orders.entities.OrderStatus
 import com.afoxplus.orders.repositories.sources.network.OrderNetworkDataSource
 import com.afoxplus.orders.utils.TestCoroutineRule
+import com.afoxplus.uikit.result.ResultState
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Assert
 import org.junit.Before
@@ -32,7 +33,7 @@ class OrderStatusRepositorySourceTest {
     fun `GIVEN list OrderStatus WHEN getOrderStatus THEN return list`() {
         testCoroutineRule.runBlockingTest {
             //GIVEN
-            val mockResponse: List<OrderStatus> = mock()
+            val mockResponse: ResultState<List<OrderStatus>> = mock()
             whenever(mockNetwork.getOrderStatus()).doReturn(mockResponse)
 
             //WHEN

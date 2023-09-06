@@ -7,6 +7,7 @@ import com.afoxplus.orders.repositories.sources.local.OrderLocalDataSource
 import com.afoxplus.orders.repositories.sources.network.OrderNetworkDataSource
 import com.afoxplus.orders.usecases.repositories.OrderRepository
 import com.afoxplus.products.entities.Product
+import com.afoxplus.uikit.result.ResultState
 import kotlinx.coroutines.flow.SharedFlow
 import javax.inject.Inject
 
@@ -27,7 +28,7 @@ internal class OrderRepositorySource @Inject constructor(
     override suspend fun deleteProductToCurrentOrder(product: Product) =
         orderLocalDataSource.deleteProductToCurrentOrder(product)
 
-    override suspend fun sendOrder(order: Order): String {
+    override suspend fun sendOrder(order: Order): ResultState<String> {
         val message = orderRemoteDataSource.sendOrder(order)
         orderLocalDataSource.clearCurrentOrder()
         return message

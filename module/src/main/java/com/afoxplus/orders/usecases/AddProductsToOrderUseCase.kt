@@ -20,7 +20,7 @@ internal class AddProductsToOrderUseCase @Inject constructor(
 ) : AddProductToOrder {
     override suspend fun invoke(product: Product, quantity: Int): Flow<Result<Order>> = flow {
         try {
-            if (hasProductStock(product, quantity)) {
+            /*if (hasProductStock(product, quantity)) {
                 //val productStrategy = findSaleProductStrategy(product)
                 //product.addSaleProductStrategy(productStrategy)
                 //val orderDetailStrategy = findSaleOrderItemStrategy(product)
@@ -28,7 +28,7 @@ internal class AddProductsToOrderUseCase @Inject constructor(
                 //order.addProduct(product, quantity, orderDetailStrategy)
                 //emit(Result.success(order))
             } else
-                emit(Result.failure<Order>(IOException("Has not stock product")))
+                emit(Result.failure<Order>(IOException("Has not stock product")))*/
         } catch (ex: Throwable) {
             emit(Result.failure<Order>(ex))
         }

@@ -123,9 +123,9 @@ dependencies {
     androidTestImplementation(Deps.Test.espresso)
 
     //Business Dependencies
-    implementation(Deps.Arch.products)
-    implementation(Deps.UI.uikit)
-    implementation(Deps.Arch.network)
+    //implementation(Deps.Arch.products)
+    //implementation(Deps.UI.uikit)
+    //implementation(Deps.Arch.network)
 
     LocalModules.setupBuildGradle(this, rootProject, "orders")
 }

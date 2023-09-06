@@ -24,6 +24,7 @@ import com.afoxplus.uikit.bus.UIKitEvent
 import com.afoxplus.uikit.bus.UIKitEventBusWrapper
 import com.afoxplus.uikit.customview.quantitybutton.ButtonEnableType
 import com.afoxplus.uikit.di.UIKitCoroutineDispatcher
+import com.afoxplus.uikit.result.ResultState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -181,8 +182,16 @@ internal class AddProductToOrderViewModel @Inject constructor(
 
     private fun fetchAppetizerByCurrentRestaurant() {
         viewModelScope.launch(coroutines.getMainDispatcher()) {
-            appetizers = fetchAppetizerByCurrentRestaurant.invoke()
-            matchAppetizerByOrder()
+            when (val result = fetchAppetizerByCurrentRestaurant.invoke()) {
+                is ResultState.Success -> {
+                    appetizers = result.data
+                    matchAppetizerByOrder()
+                }
+
+                is ResultState.Error -> {
+
+                }
+            }
         }
     }
 

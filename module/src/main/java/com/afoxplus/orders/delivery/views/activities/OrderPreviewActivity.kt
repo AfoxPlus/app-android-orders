@@ -11,6 +11,7 @@ import com.afoxplus.uikit.activities.UIKitBaseActivity
 import com.afoxplus.uikit.activities.extensions.addFragmentToActivity
 import com.afoxplus.uikit.bus.UIKitEventObserver
 import com.afoxplus.uikit.fragments.UIKitBaseFragment
+import com.afoxplus.uikit.modal.UIKitModal
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -76,6 +77,20 @@ class OrderPreviewActivity : UIKitBaseActivity() {
         shopCartViewModel.goToAddCardProductEvent.observe(this, UIKitEventObserver { product ->
             orderFlow.goToAddProductToOrderActivity(this, product)
         })
+
+        shopCartViewModel.orderError.observe(this) {
+            displayErrorModal(it)
+        }
+    }
+
+    private fun displayErrorModal(message: String) {
+        UIKitModal.Builder(supportFragmentManager)
+            .title("Hubo un problema al enviar el pedido")
+            .message(message)
+            .positiveButton("Entiendo") {
+                it.dismiss()
+            }
+            .show()
     }
 
     private fun changeFragment(fragment: UIKitBaseFragment) {

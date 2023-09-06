@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.afoxplus.orders.delivery.models.OrderStateUIModel
 import com.afoxplus.orders.usecases.OrderStatusUseCase
 import com.afoxplus.uikit.di.UIKitCoroutineDispatcher
+import com.afoxplus.uikit.result.ResultState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.launch
@@ -21,13 +22,19 @@ internal class OrderStatusViewModel @Inject constructor(
     val orders: LiveData<OrderStateUIModel> get() = _orders
 
     fun fetchStateOrders() = viewModelScope.launch(dispatcher.getIODispatcher()) {
-        try {
-            _orders.postValue(OrderStateUIModel.Loading)
-            val orders = useCase.getStatusOrders()
-            _orders.postValue(OrderStateUIModel.Success(orders))
-        } catch (e: Exception) {
-            _orders.postValue(OrderStateUIModel.Error(e))
+        _orders.postValue(OrderStateUIModel.Loading)
+        when (val response = useCase.getStatusOrders()) {
+            is ResultState.Success -> {
+                _orders.postValue(OrderStateUIModel.Success(response.data))
+            }
+
+            is ResultState.Error -> {
+                _orders.postValue(OrderStateUIModel.Error(Exception()))
+            }
+
+            else -> {
+                //Nothing
+            }
         }
     }
-
 }

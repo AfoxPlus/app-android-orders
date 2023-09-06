@@ -19,6 +19,7 @@ import com.afoxplus.products.entities.Product
 import com.afoxplus.uikit.bus.UIKitEvent
 import com.afoxplus.uikit.di.UIKitCoroutineDispatcher
 import com.afoxplus.uikit.objects.vendor.PaymentMethod
+import com.afoxplus.uikit.result.ResultState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -70,6 +71,9 @@ internal class ShopCartViewModel @Inject constructor(
 
     private val mPaymentMethodSelectedMutableLiveData: MutableLiveData<PaymentMethod> by lazy { MutableLiveData<PaymentMethod>() }
     val paymentMethodSelectedLiveData: LiveData<PaymentMethod> get() = mPaymentMethodSelectedMutableLiveData
+
+    private val _orderError: MutableLiveData<String> by lazy { MutableLiveData<String>() }
+    val orderError: LiveData<String> = _orderError
 
     init {
         loadCurrentOrder()
@@ -140,6 +144,7 @@ internal class ShopCartViewModel @Inject constructor(
     }
 
     private fun getOrderType(): OrderType = mOrder.value?.orderType ?: OrderType.Delivery
+
     fun sendOrder(client: Client) {
         if (validateClient(client, getOrderType())) {
             mOrder.value?.also { order ->
@@ -147,9 +152,22 @@ internal class ShopCartViewModel @Inject constructor(
                 order.paymentMethod = mPaymentMethodSelectedMutableLiveData.value
                 viewModelScope.launch(coroutines.getMainDispatcher()) {
                     mButtonSendLoading.value = UIKitEvent(Unit)
-                    val message = sendOrder.invoke(order)
-                    openSuccessOrder(message)
+                    val result = sendOrder.invoke(order)
+                    displayOrder(result)
+
                 }
+            }
+        }
+    }
+
+    private fun displayOrder(result: ResultState<String>) {
+        when (result) {
+            is ResultState.Success -> {
+                openSuccessOrder(result.data)
+            }
+
+            is ResultState.Error -> {
+                _orderError.postValue(result.errorMessage.message)
             }
         }
     }

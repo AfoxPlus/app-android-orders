@@ -1,0 +1,1456 @@
+{
+  "success": true,
+  "payload": [
+    {
+      "id": "64b8a0bf1129590181b0c239",
+      "number": "#000014",
+      "date": "19 Jul 2023, 09:49 PM",
+      "state": "Pendiente",
+      "state_code": "TODO",
+      "restaurant": "Kitchen",
+      "order_type": {
+        "code": "DELI",
+        "title": "Delivery"
+      },
+      "total": "S/ 24.00",
+      "client": {
+        "name": "mandndk",
+        "cel": "656565",
+        "address_reference": "bfjxkf"
+      },
+      "detail": [
+        {
+          "productId": "61a5a68c0c327b1d087ccda7",
+          "title": "Frito de Chancho",
+          "description": "Acompañado con yuca, mote y zarsa",
+          "productType": "",
+          "unitPrice": "S/ 12.00",
+          "quantity": 2,
+          "subTotal": "S/ 24.00",
+          "subDetail": []
+        }
+      ]
+    },
+    {
+      "id": "64ba085c4c5dd4aedd7d9140",
+      "number": "#000015",
+      "date": "20 Jul 2023, 11:23 PM",
+      "state": "Pendiente",
+      "state_code": "TODO",
+      "restaurant": "Kitchen",
+      "order_type": {
+        "code": "SALON",
+        "title": "Mesa",
+        "description": "09"
+      },
+      "total": "S/ 24.50",
+      "client": {
+        "name": "valwntin",
+        "cel": "96699748566",
+        "address_reference": ""
+      },
+      "detail": [
+        {
+          "productId": "61a5a68c0c327b1d087ccdaa",
+          "title": "Pato de corral",
+          "description": "Acompañado con arroz, frejol, papa sancochada y sarza",
+          "productType": "",
+          "unitPrice": "S/ 12.00",
+          "quantity": 1,
+          "subTotal": "S/ 12.00",
+          "subDetail": []
+        },
+        {
+          "productId": "649629a4d56a2a8d2c00a5a8",
+          "title": "Ajiaco de pollo",
+          "description": "Acompañado de arroz y ensalada",
+          "productType": "",
+          "unitPrice": "S/ 12.50",
+          "quantity": 1,
+          "subTotal": "S/ 12.50",
+          "subDetail": []
+        }
+      ]
+    },
+    {
+      "id": "64cae74b9712f68090882c58",
+      "number": "#000026",
+      "date": "02 Aug 2023, 06:31 PM",
+      "state": "Pendiente",
+      "state_code": "TODO",
+      "restaurant": "Kitchen",
+      "order_type": {
+        "code": "SALON",
+        "title": "Mesa",
+        "description": "09"
+      },
+      "total": "S/ 60.00",
+      "client": {
+        "name": "Petter",
+        "cel": "932543566",
+        "address_reference": ""
+      },
+      "detail": [
+        {
+          "productId": "61a5a68c0c327b1d087ccda9",
+          "title": "Cuy Frito",
+          "description": "Acompañado con ajiaco, arroz blanco o arroz de trigo y sarza",
+          "productType": "",
+          "unitPrice": "S/ 20.00",
+          "quantity": 1,
+          "subTotal": "S/ 20.00",
+          "subDetail": []
+        },
+        {
+          "productId": "61a5a68c0c327b1d087ccdb3",
+          "title": "Tallarin con pollo",
+          "description": "Acompañado con frejol, papa sancochada y sarza",
+          "productType": "",
+          "unitPrice": "S/ 10.00",
+          "quantity": 1,
+          "subTotal": "S/ 10.00",
+          "subDetail": [
+            {
+              "productId": "61a5a68c0c327b1d087ccdaf",
+              "title": "Papa a la huancaina",
+              "quantity": 1
+            }
+          ]
+        },
+        {
+          "productId": "61a5a68c0c327b1d087ccdb1",
+          "title": "Cabrito",
+          "description": "Acompañado con frejol, papa sancochada y sarza",
+          "productType": "",
+          "unitPrice": "S/ 10.00",
+          "quantity": 3,
+          "subTotal": "S/ 30.00",
+          "subDetail": [
+            {
+              "productId": "61a5a68c0c327b1d087ccdaf",
+              "title": "Papa a la huancaina",
+              "quantity": 1
+            },
+            {
+              "productId": "61a5a68c0c327b1d087ccdae",
+              "title": "Ceviche",
+              "quantity": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "64cb3f68cff4b22ddc7f9592",
+      "number": "#000030",
+      "date": "03 Aug 2023, 12:47 AM",
+      "state": "Pendiente",
+      "state_code": "TODO",
+      "restaurant": "Kitchen",
+      "order_type": {
+        "code": "SALON",
+        "title": "Mesa",
+        "description": "09"
+      },
+      "total": "S/ 139.90",
+      "client": {
+        "name": "lelel",
+        "cel": "9669784566",
+        "address_reference": ""
+      },
+      "detail": [
+        {
+          "productId": "61a5a68c0c327b1d087ccdaa",
+          "title": "Pato de corral",
+          "description": "Acompañado con arroz, frejol, papa sancochada y sarza",
+          "productType": "",
+          "unitPrice": "S/ 12.00",
+          "quantity": 2,
+          "subTotal": "S/ 24.00",
+          "subDetail": []
+        },
+        {
+          "productId": "61a5a68c0c327b1d087ccda8",
+          "title": "Caldo de cabeza",
+          "description": "Acompañado con yuca o mote",
+          "productType": "",
+          "unitPrice": "S/ 12.00",
+          "quantity": 1,
+          "subTotal": "S/ 12.00",
+          "subDetail": []
+        },
+        {
+          "productId": "649bb005781d164428265604",
+          "title": "Ajiaco de pollo v2",
+          "description": "Acompañado de arroz y ensalada modificada",
+          "productType": "",
+          "unitPrice": "S/ 12.50",
+          "quantity": 1,
+          "subTotal": "S/ 12.50",
+          "subDetail": []
+        },
+        {
+          "productId": "64c093dff74c6e6d70d68900",
+          "title": "Huevo revuelto",
+          "description": "Acompañado de su rica tortilla",
+          "productType": "",
+          "unitPrice": "S/ 35.80",
+          "quantity": 1,
+          "subTotal": "S/ 35.80",
+          "subDetail": []
+        },
+        {
+          "productId": "61a5a68c0c327b1d087ccdb0",
+          "title": "Arroz con pollo",
+          "description": "Acompañado con frejol, papa sancochada y sarza",
+          "productType": "",
+          "unitPrice": "S/ 10.00",
+          "quantity": 1,
+          "subTotal": "S/ 10.00",
+          "subDetail": [
+            {
+              "productId": "61a5a68c0c327b1d087ccdaf",
+              "title": "Papa a la huancaina",
+              "quantity": 1
+            }
+          ]
+        },
+        {
+          "productId": "61a5a68c0c327b1d087ccdb1",
+          "title": "Cabrito",
+          "description": "Acompañado con frejol, papa sancochada y sarza",
+          "productType": "",
+          "unitPrice": "S/ 10.00",
+          "quantity": 1,
+          "subTotal": "S/ 10.00",
+          "subDetail": [
+            {
+              "productId": "61a5a68c0c327b1d087ccdae",
+              "title": "Ceviche",
+              "quantity": 1
+            }
+          ]
+        },
+        {
+          "productId": "6496275da80f6194db9c7412",
+          "title": "Pollo a la braza",
+          "description": "Rico pollo a la braza",
+          "productType": "",
+          "unitPrice": "S/ 17.80",
+          "quantity": 2,
+          "subTotal": "S/ 35.60",
+          "subDetail": [
+            {
+              "productId": "61a5a68c0c327b1d087ccdae",
+              "title": "Ceviche",
+              "quantity": 1
+            },
+            {
+              "productId": "61a5a68c0c327b1d087ccdaf",
+              "title": "Papa a la huancaina",
+              "quantity": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "64cc4cd46b0567f36a00ed14",
+      "number": "#000031",
+      "date": "03 Aug 2023, 07:56 PM",
+      "state": "Pendiente",
+      "state_code": "TODO",
+      "restaurant": "Kitchen",
+      "order_type": {
+        "code": "SALON",
+        "title": "Mesa",
+        "description": "09"
+      },
+      "total": "S/ 113.80",
+      "client": {
+        "name": "nalia",
+        "cel": "966978456",
+        "address_reference": ""
+      },
+      "detail": [
+        {
+          "productId": "61a5a68c0c327b1d087ccdaa",
+          "title": "Pato de corral",
+          "description": "Acompañado con arroz, frejol, papa sancochada y sarza",
+          "productType": "",
+          "unitPrice": "S/ 12.00",
+          "quantity": 2,
+          "subTotal": "S/ 24.00",
+          "subDetail": []
+        },
+        {
+          "productId": "61a5a68c0c327b1d087ccda7",
+          "title": "Frito de Chancho",
+          "description": "Acompañado con yuca, mote y zarsa",
+          "productType": "",
+          "unitPrice": "S/ 12.00",
+          "quantity": 1,
+          "subTotal": "S/ 12.00",
+          "subDetail": []
+        },
+        {
+          "productId": "61a5a68c0c327b1d087ccda8",
+          "title": "Caldo de cabeza",
+          "description": "Acompañado con yuca o mote",
+          "productType": "",
+          "unitPrice": "S/ 12.00",
+          "quantity": 1,
+          "subTotal": "S/ 12.00",
+          "subDetail": []
+        },
+        {
+          "productId": "64aca93afce28afe0cfe0545",
+          "title": "Huevo revuelto",
+          "description": "Acompañado de su rica tortilla",
+          "productType": "",
+          "unitPrice": "S/ 35.80",
+          "quantity": 1,
+          "subTotal": "S/ 35.80",
+          "subDetail": []
+        },
+        {
+          "productId": "61a5a68c0c327b1d087ccdb3",
+          "title": "Tallarin con pollo",
+          "description": "Acompañado con frejol, papa sancochada y sarza",
+          "productType": "",
+          "unitPrice": "S/ 10.00",
+          "quantity": 3,
+          "subTotal": "S/ 30.00",
+          "subDetail": [
+            {
+              "productId": "61a5a68c0c327b1d087ccdaf",
+              "title": "Papa a la huancaina",
+              "quantity": 1
+            },
+            {
+              "productId": "61a5a68c0c327b1d087ccdae",
+              "title": "Ceviche",
+              "quantity": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "64d17eba0db1d030e4785882",
+      "number": "#000034",
+      "date": "07 Aug 2023, 06:31 PM",
+      "state": "Pendiente",
+      "state_code": "TODO",
+      "restaurant": "Kitchen",
+      "order_type": {
+        "code": "SALON",
+        "title": "Mesa",
+        "description": "09"
+      },
+      "total": "S/ 24.50",
+      "client": {
+        "name": "agags",
+        "cel": "9669978456",
+        "address_reference": ""
+      },
+      "detail": [
+        {
+          "productId": "61a5a68c0c327b1d087ccda7",
+          "title": "Frito de Chancho",
+          "description": "Acompañado con yuca, mote y zarsa",
+          "productType": "",
+          "unitPrice": "S/ 12.00",
+          "quantity": 1,
+          "subTotal": "S/ 12.00",
+          "subDetail": []
+        },
+        {
+          "productId": "649629a4d56a2a8d2c00a5a8",
+          "title": "Ajiaco de pollo",
+          "description": "Acompañado de arroz y ensalada",
+          "productType": "",
+          "unitPrice": "S/ 12.50",
+          "quantity": 1,
+          "subTotal": "S/ 12.50",
+          "subDetail": []
+        }
+      ]
+    },
+    {
+      "id": "64d19be9081ae52ed7318512",
+      "number": "#000035",
+      "date": "07 Aug 2023, 08:35 PM",
+      "state": "Pendiente",
+      "state_code": "TODO",
+      "restaurant": "Kitchen",
+      "order_type": {
+        "code": "SALON",
+        "title": "Mesa",
+        "description": "09"
+      },
+      "total": "S/ 24.00",
+      "client": {
+        "name": "aaa",
+        "cel": "96697845",
+        "address_reference": ""
+      },
+      "detail": [
+        {
+          "productId": "61a5a68c0c327b1d087ccdaa",
+          "title": "Pato de corral",
+          "description": "Acompañado con arroz, frejol, papa sancochada y sarza",
+          "productType": "",
+          "unitPrice": "S/ 12.00",
+          "quantity": 2,
+          "subTotal": "S/ 24.00",
+          "subDetail": []
+        }
+      ]
+    },
+    {
+      "id": "64d19bf9081ae52ed731851a",
+      "number": "#000036",
+      "date": "07 Aug 2023, 08:35 PM",
+      "state": "Pendiente",
+      "state_code": "TODO",
+      "restaurant": "Kitchen",
+      "order_type": {
+        "code": "SALON",
+        "title": "Mesa",
+        "description": "09"
+      },
+      "total": "S/ 12.00",
+      "client": {
+        "name": "nakskd",
+        "cel": "966986455",
+        "address_reference": ""
+      },
+      "detail": [
+        {
+          "productId": "61a5a68c0c327b1d087ccdaa",
+          "title": "Pato de corral",
+          "description": "Acompañado con arroz, frejol, papa sancochada y sarza",
+          "productType": "",
+          "unitPrice": "S/ 12.00",
+          "quantity": 1,
+          "subTotal": "S/ 12.00",
+          "subDetail": []
+        }
+      ]
+    },
+    {
+      "id": "64d19c1c081ae52ed7318522",
+      "number": "#000037",
+      "date": "07 Aug 2023, 08:36 PM",
+      "state": "Pendiente",
+      "state_code": "TODO",
+      "restaurant": "Kitchen",
+      "order_type": {
+        "code": "SALON",
+        "title": "Mesa",
+        "description": "09"
+      },
+      "total": "S/ 25.00",
+      "client": {
+        "name": "jdjd",
+        "cel": "689894",
+        "address_reference": ""
+      },
+      "detail": [
+        {
+          "productId": "649629a4d56a2a8d2c00a5a8",
+          "title": "Ajiaco de pollo",
+          "description": "Acompañado de arroz y ensalada",
+          "productType": "",
+          "unitPrice": "S/ 12.50",
+          "quantity": 2,
+          "subTotal": "S/ 25.00",
+          "subDetail": []
+        }
+      ]
+    },
+    {
+      "id": "64d19c29081ae52ed731852a",
+      "number": "#000038",
+      "date": "07 Aug 2023, 08:36 PM",
+      "state": "Pendiente",
+      "state_code": "TODO",
+      "restaurant": "Kitchen",
+      "order_type": {
+        "code": "SALON",
+        "title": "Mesa",
+        "description": "09"
+      },
+      "total": "S/ 12.00",
+      "client": {
+        "name": "ydjd",
+        "cel": "986894",
+        "address_reference": ""
+      },
+      "detail": [
+        {
+          "productId": "61a5a68c0c327b1d087ccdaa",
+          "title": "Pato de corral",
+          "description": "Acompañado con arroz, frejol, papa sancochada y sarza",
+          "productType": "",
+          "unitPrice": "S/ 12.00",
+          "quantity": 1,
+          "subTotal": "S/ 12.00",
+          "subDetail": []
+        }
+      ]
+    },
+    {
+      "id": "64d19dbaab3247917505ffd7",
+      "number": "#000039",
+      "date": "07 Aug 2023, 08:43 PM",
+      "state": "Pendiente",
+      "state_code": "TODO",
+      "restaurant": "Kitchen",
+      "order_type": {
+        "code": "SALON",
+        "title": "Mesa",
+        "description": "09"
+      },
+      "total": "S/ 526.20",
+      "client": {
+        "name": "marifo",
+        "cel": "9865956498",
+        "address_reference": ""
+      },
+      "detail": [
+        {
+          "productId": "61a5a68c0c327b1d087ccdaa",
+          "title": "Pato de corral",
+          "description": "Acompañado con arroz, frejol, papa sancochada y sarza",
+          "productType": "",
+          "unitPrice": "S/ 12.00",
+          "quantity": 5,
+          "subTotal": "S/ 60.00",
+          "subDetail": []
+        },
+        {
+          "productId": "61a5a68c0c327b1d087ccda7",
+          "title": "Frito de Chancho",
+          "description": "Acompañado con yuca, mote y zarsa",
+          "productType": "",
+          "unitPrice": "S/ 12.00",
+          "quantity": 1,
+          "subTotal": "S/ 12.00",
+          "subDetail": []
+        },
+        {
+          "productId": "61a5a68c0c327b1d087ccdab",
+          "title": "Jarra de Maracuya",
+          "description": "Delicioso jugo de maracuya con hielo",
+          "productType": "",
+          "unitPrice": "S/ 15.00",
+          "quantity": 1,
+          "subTotal": "S/ 15.00",
+          "subDetail": []
+        },
+        {
+          "productId": "61a5a68c0c327b1d087ccda8",
+          "title": "Caldo de cabeza",
+          "description": "Acompañado con yuca o mote",
+          "productType": "",
+          "unitPrice": "S/ 12.00",
+          "quantity": 1,
+          "subTotal": "S/ 12.00",
+          "subDetail": []
+        },
+        {
+          "productId": "61a5a68c0c327b1d087ccda9",
+          "title": "Cuy Frito",
+          "description": "Acompañado con ajiaco, arroz blanco o arroz de trigo y sarza",
+          "productType": "",
+          "unitPrice": "S/ 20.00",
+          "quantity": 1,
+          "subTotal": "S/ 20.00",
+          "subDetail": []
+        },
+        {
+          "productId": "649629a4d56a2a8d2c00a5a8",
+          "title": "Ajiaco de pollo",
+          "description": "Acompañado de arroz y ensalada",
+          "productType": "",
+          "unitPrice": "S/ 12.50",
+          "quantity": 1,
+          "subTotal": "S/ 12.50",
+          "subDetail": []
+        },
+        {
+          "productId": "6499215b191a204c25d32516",
+          "title": "Huevo revuelto",
+          "description": "Acompañado de su rica tortilla",
+          "productType": "",
+          "unitPrice": "S/ 35.80",
+          "quantity": 1,
+          "subTotal": "S/ 35.80",
+          "subDetail": []
+        },
+        {
+          "productId": "649bb005781d164428265604",
+          "title": "Ajiaco de pollo v2",
+          "description": "Acompañado de arroz y ensalada modificada",
+          "productType": "",
+          "unitPrice": "S/ 12.50",
+          "quantity": 1,
+          "subTotal": "S/ 12.50",
+          "subDetail": []
+        },
+        {
+          "productId": "64aca86650b5325bbea4c0b4",
+          "title": "Huevo revuelto 2",
+          "description": "Acompañado de su rica tortilla",
+          "productType": "",
+          "unitPrice": "S/ 35.80",
+          "quantity": 4,
+          "subTotal": "S/ 143.20",
+          "subDetail": []
+        },
+        {
+          "productId": "64aca93afce28afe0cfe0545",
+          "title": "Huevo revuelto",
+          "description": "Acompañado de su rica tortilla",
+          "productType": "",
+          "unitPrice": "S/ 35.80",
+          "quantity": 1,
+          "subTotal": "S/ 35.80",
+          "subDetail": []
+        },
+        {
+          "productId": "64c093dff74c6e6d70d68900",
+          "title": "Huevo revuelto",
+          "description": "Acompañado de su rica tortilla",
+          "productType": "",
+          "unitPrice": "S/ 35.80",
+          "quantity": 1,
+          "subTotal": "S/ 35.80",
+          "subDetail": []
+        },
+        {
+          "productId": "64cd5f6b9634c96e1e574dd9",
+          "title": "Huevo revuelto",
+          "description": "Acompañado de su rica tortilla v2",
+          "productType": "",
+          "unitPrice": "S/ 35.80",
+          "quantity": 2,
+          "subTotal": "S/ 71.60",
+          "subDetail": []
+        },
+        {
+          "productId": "64cedb84015349e2890e1645",
+          "title": "Inka Cola",
+          "description": "Gaseosa gacificada",
+          "productType": "",
+          "unitPrice": "S/ 7.50",
+          "quantity": 2,
+          "subTotal": "S/ 15.00",
+          "subDetail": []
+        },
+        {
+          "productId": "64cede715a22e67da3e4e1ac",
+          "title": "Inka Cola",
+          "description": "Gaseosa gacificada",
+          "productType": "",
+          "unitPrice": "S/ 7.50",
+          "quantity": 2,
+          "subTotal": "S/ 15.00",
+          "subDetail": []
+        },
+        {
+          "productId": "64cee1f7aad71df3a608be1e",
+          "title": "Inka Cola",
+          "description": "Gaseosa gacificada",
+          "productType": "",
+          "unitPrice": "S/ 7.50",
+          "quantity": 2,
+          "subTotal": "S/ 15.00",
+          "subDetail": []
+        },
+        {
+          "productId": "64ceeec69ecd9884bc74ebab",
+          "title": "Inka Cola",
+          "description": "Gaseosa gacificada",
+          "productType": "",
+          "unitPrice": "S/ 7.50",
+          "quantity": 2,
+          "subTotal": "S/ 15.00",
+          "subDetail": []
+        }
+      ]
+    },
+    {
+      "id": "64d1a41cdbd8db6e1d2839c2",
+      "number": "#000040",
+      "date": "07 Aug 2023, 09:10 PM",
+      "state": "Pendiente",
+      "state_code": "TODO",
+      "restaurant": "Kitchen",
+      "order_type": {
+        "code": "SALON",
+        "title": "Mesa",
+        "description": "09"
+      },
+      "total": "S/ 36.00",
+      "client": {
+        "name": "fgh",
+        "cel": "96958",
+        "address_reference": ""
+      },
+      "detail": [
+        {
+          "productId": "61a5a68c0c327b1d087ccdaa",
+          "title": "Pato de corral",
+          "description": "Acompañado con arroz, frejol, papa sancochada y sarza",
+          "productType": "",
+          "unitPrice": "S/ 12.00",
+          "quantity": 1,
+          "subTotal": "S/ 12.00",
+          "subDetail": []
+        },
+        {
+          "productId": "61a5a68c0c327b1d087ccda7",
+          "title": "Frito de Chancho",
+          "description": "Acompañado con yuca, mote y zarsa",
+          "productType": "",
+          "unitPrice": "S/ 12.00",
+          "quantity": 2,
+          "subTotal": "S/ 24.00",
+          "subDetail": []
+        }
+      ]
+    },
+    {
+      "id": "64d1a4b7dbd8db6e1d2839cb",
+      "number": "#000041",
+      "date": "07 Aug 2023, 09:13 PM",
+      "state": "Pendiente",
+      "state_code": "TODO",
+      "restaurant": "Kitchen",
+      "order_type": {
+        "code": "SALON",
+        "title": "Mesa",
+        "description": "09"
+      },
+      "total": "S/ 12.00",
+      "client": {
+        "name": "gu",
+        "cel": "966974",
+        "address_reference": ""
+      },
+      "detail": [
+        {
+          "productId": "61a5a68c0c327b1d087ccdaa",
+          "title": "Pato de corral",
+          "description": "Acompañado con arroz, frejol, papa sancochada y sarza",
+          "productType": "",
+          "unitPrice": "S/ 12.00",
+          "quantity": 1,
+          "subTotal": "S/ 12.00",
+          "subDetail": []
+        }
+      ]
+    },
+    {
+      "id": "64d1a84e1d16c63a055e88d4",
+      "number": "#000042",
+      "date": "07 Aug 2023, 09:28 PM",
+      "state": "Pendiente",
+      "state_code": "TODO",
+      "restaurant": "Kitchen",
+      "order_type": {
+        "code": "SALON",
+        "title": "Mesa",
+        "description": "09"
+      },
+      "total": "S/ 24.50",
+      "client": {
+        "name": "ch",
+        "cel": "96669688",
+        "address_reference": ""
+      },
+      "detail": [
+        {
+          "productId": "61a5a68c0c327b1d087ccdaa",
+          "title": "Pato de corral",
+          "description": "Acompañado con arroz, frejol, papa sancochada y sarza",
+          "productType": "",
+          "unitPrice": "S/ 12.00",
+          "quantity": 1,
+          "subTotal": "S/ 12.00",
+          "subDetail": []
+        },
+        {
+          "productId": "649629a4d56a2a8d2c00a5a8",
+          "title": "Ajiaco de pollo",
+          "description": "Acompañado de arroz y ensalada",
+          "productType": "",
+          "unitPrice": "S/ 12.50",
+          "quantity": 1,
+          "subTotal": "S/ 12.50",
+          "subDetail": []
+        }
+      ]
+    },
+    {
+      "id": "64d1a9041d16c63a055e88dd",
+      "number": "#000043",
+      "date": "07 Aug 2023, 09:31 PM",
+      "state": "Pendiente",
+      "state_code": "TODO",
+      "restaurant": "Kitchen",
+      "order_type": {
+        "code": "SALON",
+        "title": "Mesa",
+        "description": "09"
+      },
+      "total": "S/ 24.00",
+      "client": {
+        "name": "ghj",
+        "cel": "9669685",
+        "address_reference": ""
+      },
+      "detail": [
+        {
+          "productId": "61a5a68c0c327b1d087ccdaa",
+          "title": "Pato de corral",
+          "description": "Acompañado con arroz, frejol, papa sancochada y sarza",
+          "productType": "",
+          "unitPrice": "S/ 12.00",
+          "quantity": 1,
+          "subTotal": "S/ 12.00",
+          "subDetail": []
+        },
+        {
+          "productId": "61a5a68c0c327b1d087ccda8",
+          "title": "Caldo de cabeza",
+          "description": "Acompañado con yuca o mote",
+          "productType": "",
+          "unitPrice": "S/ 12.00",
+          "quantity": 1,
+          "subTotal": "S/ 12.00",
+          "subDetail": []
+        }
+      ]
+    },
+    {
+      "id": "64d1ab7a45c4194be2a03a21",
+      "number": "#000044",
+      "date": "07 Aug 2023, 09:42 PM",
+      "state": "Pendiente",
+      "state_code": "TODO",
+      "restaurant": "Kitchen",
+      "order_type": {
+        "code": "SALON",
+        "title": "Mesa",
+        "description": "09"
+      },
+      "total": "S/ 12.00",
+      "client": {
+        "name": "vbj",
+        "cel": "886",
+        "address_reference": ""
+      },
+      "detail": [
+        {
+          "productId": "61a5a68c0c327b1d087ccdaa",
+          "title": "Pato de corral",
+          "description": "Acompañado con arroz, frejol, papa sancochada y sarza",
+          "productType": "",
+          "unitPrice": "S/ 12.00",
+          "quantity": 1,
+          "subTotal": "S/ 12.00",
+          "subDetail": []
+        }
+      ]
+    },
+    {
+      "id": "64d1ac71b384566595f1da10",
+      "number": "#000045",
+      "date": "07 Aug 2023, 09:46 PM",
+      "state": "Pendiente",
+      "state_code": "TODO",
+      "restaurant": "Kitchen",
+      "order_type": {
+        "code": "SALON",
+        "title": "Mesa",
+        "description": "09"
+      },
+      "total": "S/ 12.00",
+      "client": {
+        "name": "hkk",
+        "cel": "9669856",
+        "address_reference": ""
+      },
+      "detail": [
+        {
+          "productId": "61a5a68c0c327b1d087ccdaa",
+          "title": "Pato de corral",
+          "description": "Acompañado con arroz, frejol, papa sancochada y sarza",
+          "productType": "",
+          "unitPrice": "S/ 12.00",
+          "quantity": 1,
+          "subTotal": "S/ 12.00",
+          "subDetail": []
+        }
+      ]
+    },
+    {
+      "id": "64d1ac88b384566595f1da18",
+      "number": "#000046",
+      "date": "07 Aug 2023, 09:46 PM",
+      "state": "Pendiente",
+      "state_code": "TODO",
+      "restaurant": "Kitchen",
+      "order_type": {
+        "code": "SALON",
+        "title": "Mesa",
+        "description": "09"
+      },
+      "total": "S/ 24.00",
+      "client": {
+        "name": "ghjjnjjk",
+        "cel": "969866",
+        "address_reference": ""
+      },
+      "detail": [
+        {
+          "productId": "61a5a68c0c327b1d087ccdaa",
+          "title": "Pato de corral",
+          "description": "Acompañado con arroz, frejol, papa sancochada y sarza",
+          "productType": "",
+          "unitPrice": "S/ 12.00",
+          "quantity": 1,
+          "subTotal": "S/ 12.00",
+          "subDetail": []
+        },
+        {
+          "productId": "61a5a68c0c327b1d087ccda8",
+          "title": "Caldo de cabeza",
+          "description": "Acompañado con yuca o mote",
+          "productType": "",
+          "unitPrice": "S/ 12.00",
+          "quantity": 1,
+          "subTotal": "S/ 12.00",
+          "subDetail": []
+        }
+      ]
+    },
+    {
+      "id": "64d1ac98b384566595f1da21",
+      "number": "#000047",
+      "date": "07 Aug 2023, 09:46 PM",
+      "state": "Pendiente",
+      "state_code": "TODO",
+      "restaurant": "Kitchen",
+      "order_type": {
+        "code": "SALON",
+        "title": "Mesa",
+        "description": "09"
+      },
+      "total": "S/ 35.80",
+      "client": {
+        "name": "vjk",
+        "cel": "96699856",
+        "address_reference": ""
+      },
+      "detail": [
+        {
+          "productId": "64aca93afce28afe0cfe0545",
+          "title": "Huevo revuelto",
+          "description": "Acompañado de su rica tortilla",
+          "productType": "",
+          "unitPrice": "S/ 35.80",
+          "quantity": 1,
+          "subTotal": "S/ 35.80",
+          "subDetail": []
+        }
+      ]
+    },
+    {
+      "id": "64d1acf4b384566595f1da29",
+      "number": "#000048",
+      "date": "07 Aug 2023, 09:48 PM",
+      "state": "Pendiente",
+      "state_code": "TODO",
+      "restaurant": "Kitchen",
+      "order_type": {
+        "code": "SALON",
+        "title": "Mesa",
+        "description": "09"
+      },
+      "total": "S/ 24.00",
+      "client": {
+        "name": "jkk",
+        "cel": "965866",
+        "address_reference": ""
+      },
+      "detail": [
+        {
+          "productId": "61a5a68c0c327b1d087ccdaa",
+          "title": "Pato de corral",
+          "description": "Acompañado con arroz, frejol, papa sancochada y sarza",
+          "productType": "",
+          "unitPrice": "S/ 12.00",
+          "quantity": 1,
+          "subTotal": "S/ 12.00",
+          "subDetail": []
+        },
+        {
+          "productId": "61a5a68c0c327b1d087ccda8",
+          "title": "Caldo de cabeza",
+          "description": "Acompañado con yuca o mote",
+          "productType": "",
+          "unitPrice": "S/ 12.00",
+          "quantity": 1,
+          "subTotal": "S/ 12.00",
+          "subDetail": []
+        }
+      ]
+    },
+    {
+      "id": "64d1ade7b384566595f1da32",
+      "number": "#000049",
+      "date": "07 Aug 2023, 09:52 PM",
+      "state": "Pendiente",
+      "state_code": "TODO",
+      "restaurant": "Kitchen",
+      "order_type": {
+        "code": "SALON",
+        "title": "Mesa",
+        "description": "09"
+      },
+      "total": "S/ 24.00",
+      "client": {
+        "name": "hjj",
+        "cel": "9666",
+        "address_reference": ""
+      },
+      "detail": [
+        {
+          "productId": "61a5a68c0c327b1d087ccdaa",
+          "title": "Pato de corral",
+          "description": "Acompañado con arroz, frejol, papa sancochada y sarza",
+          "productType": "",
+          "unitPrice": "S/ 12.00",
+          "quantity": 1,
+          "subTotal": "S/ 12.00",
+          "subDetail": []
+        },
+        {
+          "productId": "61a5a68c0c327b1d087ccda8",
+          "title": "Caldo de cabeza",
+          "description": "Acompañado con yuca o mote",
+          "productType": "",
+          "unitPrice": "S/ 12.00",
+          "quantity": 1,
+          "subTotal": "S/ 12.00",
+          "subDetail": []
+        }
+      ]
+    },
+    {
+      "id": "64d1ae21b384566595f1da3b",
+      "number": "#000050",
+      "date": "07 Aug 2023, 09:53 PM",
+      "state": "Pendiente",
+      "state_code": "TODO",
+      "restaurant": "Kitchen",
+      "order_type": {
+        "code": "SALON",
+        "title": "Mesa",
+        "description": "09"
+      },
+      "total": "S/ 12.00",
+      "client": {
+        "name": "vhh",
+        "cel": "9696585",
+        "address_reference": ""
+      },
+      "detail": [
+        {
+          "productId": "61a5a68c0c327b1d087ccdaa",
+          "title": "Pato de corral",
+          "description": "Acompañado con arroz, frejol, papa sancochada y sarza",
+          "productType": "",
+          "unitPrice": "S/ 12.00",
+          "quantity": 1,
+          "subTotal": "S/ 12.00",
+          "subDetail": []
+        }
+      ]
+    },
+    {
+      "id": "64d1b30e3d2e1a0a2e47425e",
+      "number": "#000051",
+      "date": "07 Aug 2023, 10:14 PM",
+      "state": "Pendiente",
+      "state_code": "TODO",
+      "restaurant": "Kitchen",
+      "order_type": {
+        "code": "DELI",
+        "title": "Delivery"
+      },
+      "total": "S/ 97.00",
+      "client": {
+        "name": "nkjh",
+        "cel": "69569893",
+        "address_reference": "bkkhgu"
+      },
+      "detail": [
+        {
+          "productId": "61a5a68c0c327b1d087ccdaa",
+          "title": "Pato de corral",
+          "description": "Acompañado con arroz, frejol, papa sancochada y sarza",
+          "productType": "",
+          "unitPrice": "S/ 12.00",
+          "quantity": 6,
+          "subTotal": "S/ 72.00",
+          "subDetail": []
+        },
+        {
+          "productId": "649629a4d56a2a8d2c00a5a8",
+          "title": "Ajiaco de pollo",
+          "description": "Acompañado de arroz y ensalada",
+          "productType": "",
+          "unitPrice": "S/ 12.50",
+          "quantity": 2,
+          "subTotal": "S/ 25.00",
+          "subDetail": []
+        }
+      ]
+    },
+    {
+      "id": "64d92bad0827f14a0b8f25c6",
+      "number": "#000065",
+      "date": "13 Aug 2023, 02:14 PM",
+      "state": "Pendiente",
+      "state_code": "TODO",
+      "restaurant": "Kitchen",
+      "order_type": {
+        "code": "SALON",
+        "title": "Mesa",
+        "description": "09"
+      },
+      "total": "S/ 49.80",
+      "client": {
+        "name": "pa lo",
+        "cel": "8689565946",
+        "address_reference": ""
+      },
+      "detail": [
+        {
+          "productId": "61a5a68c0c327b1d087ccdaa",
+          "title": "Pato de corral",
+          "description": "Acompañado con arroz, frejol, papa sancochada y sarza",
+          "productType": "",
+          "unitPrice": "S/ 12.00",
+          "quantity": 1,
+          "subTotal": "S/ 12.00",
+          "subDetail": []
+        },
+        {
+          "productId": "61a5a68c0c327b1d087ccdb3",
+          "title": "Tallarin con pollo",
+          "description": "Acompañado con frejol, papa sancochada y sarza",
+          "productType": "",
+          "unitPrice": "S/ 10.00",
+          "quantity": 1,
+          "subTotal": "S/ 10.00",
+          "subDetail": []
+        },
+        {
+          "productId": "61a5a68c0c327b1d087ccdb1",
+          "title": "Cabrito",
+          "description": "Acompañado con frejol, papa sancochada y sarza",
+          "productType": "",
+          "unitPrice": "S/ 10.00",
+          "quantity": 1,
+          "subTotal": "S/ 10.00",
+          "subDetail": []
+        },
+        {
+          "productId": "6496275da80f6194db9c7412",
+          "title": "Pollo a la braza",
+          "description": "Rico pollo a la braza",
+          "productType": "",
+          "unitPrice": "S/ 17.80",
+          "quantity": 1,
+          "subTotal": "S/ 17.80",
+          "subDetail": []
+        }
+      ]
+    },
+    {
+      "id": "64e0ec14510f4019e5a82cc2",
+      "number": "#000067",
+      "date": "19 Aug 2023, 11:21 AM",
+      "state": "Pendiente",
+      "state_code": "TODO",
+      "restaurant": "Kitchen",
+      "order_type": {
+        "code": "SALON",
+        "title": "Mesa",
+        "description": "09"
+      },
+      "total": "S/ 30.00",
+      "client": {
+        "name": "vale",
+        "cel": "966978455",
+        "address_reference": ""
+      },
+      "detail": [
+        {
+          "productId": "61a5a68c0c327b1d087ccdb3",
+          "title": "Tallarin con pollo",
+          "description": "Acompañado con frejol, papa sancochada y sarza",
+          "productType": "Menu",
+          "unitPrice": "S/ 10.00",
+          "quantity": 3,
+          "subTotal": "S/ 30.00",
+          "subDetail": [
+            {
+              "productId": "61a5a68c0c327b1d087ccdaf",
+              "title": "Papa a la huancaina",
+              "quantity": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "64e0f3ba7ecd8e04430e4539",
+      "number": "#000068",
+      "date": "19 Aug 2023, 11:54 AM",
+      "state": "Pendiente",
+      "state_code": "TODO",
+      "restaurant": "Kitchen",
+      "payment_method": "Yape",
+      "order_type": {
+        "code": "SALON",
+        "title": "Mesa",
+        "description": "09"
+      },
+      "total": "S/ 12.00",
+      "client": {
+        "name": "Petter",
+        "cel": "928823222",
+        "address_reference": ""
+      },
+      "detail": [
+        {
+          "productId": "61a5a68c0c327b1d087ccda7",
+          "title": "Frito de Chancho",
+          "description": "Acompañado con yuca, mote y zarsa",
+          "productType": "",
+          "unitPrice": "S/ 12.00",
+          "quantity": 1,
+          "subTotal": "S/ 12.00",
+          "subDetail": []
+        }
+      ]
+    },
+    {
+      "id": "64e0f6d20a15df55c191a426",
+      "number": "#000069",
+      "date": "19 Aug 2023, 12:07 PM",
+      "state": "Pendiente",
+      "state_code": "TODO",
+      "restaurant": "Kitchen",
+      "payment_method": "Plin",
+      "order_type": {
+        "code": "SALON",
+        "title": "Mesa",
+        "description": "09"
+      },
+      "total": "S/ 36.00",
+      "client": {
+        "name": "Petter",
+        "cel": "932534599",
+        "address_reference": ""
+      },
+      "detail": [
+        {
+          "productId": "61a5a68c0c327b1d087ccda7",
+          "title": "Frito de Chancho",
+          "description": "Acompañado con yuca, mote y zarsa",
+          "productType": "",
+          "unitPrice": "S/ 12.00",
+          "quantity": 3,
+          "subTotal": "S/ 36.00",
+          "subDetail": []
+        }
+      ]
+    },
+    {
+      "id": "64e0f7a40a15df55c191a42e",
+      "number": "#000070",
+      "date": "19 Aug 2023, 12:11 PM",
+      "state": "Pendiente",
+      "state_code": "TODO",
+      "restaurant": "Kitchen",
+      "payment_method": "Yape",
+      "order_type": {
+        "code": "SALON",
+        "title": "Mesa",
+        "description": "09"
+      },
+      "total": "S/ 24.00",
+      "client": {
+        "name": "petter",
+        "cel": "932534599",
+        "address_reference": ""
+      },
+      "detail": [
+        {
+          "productId": "61a5a68c0c327b1d087ccda7",
+          "title": "Frito de Chancho",
+          "description": "Acompañado con yuca, mote y zarsa",
+          "productType": "",
+          "unitPrice": "S/ 12.00",
+          "quantity": 1,
+          "subTotal": "S/ 12.00",
+          "subDetail": []
+        },
+        {
+          "productId": "61a5a68c0c327b1d087ccda8",
+          "title": "Caldo de cabeza",
+          "description": "Acompañado con yuca o mote",
+          "productType": "",
+          "unitPrice": "S/ 12.00",
+          "quantity": 1,
+          "subTotal": "S/ 12.00",
+          "subDetail": []
+        }
+      ]
+    },
+    {
+      "id": "64e11c295f0f81284fdd0d3c",
+      "number": "#000074",
+      "date": "19 Aug 2023, 02:46 PM",
+      "state": "Pendiente",
+      "state_code": "TODO",
+      "restaurant": "Kitchen",
+      "payment_method": "Plin",
+      "order_type": {
+        "code": "SALON",
+        "title": "Mesa",
+        "description": "09"
+      },
+      "total": "S/ 44.00",
+      "client": {
+        "name": "petter plin",
+        "cel": "932534599",
+        "address_reference": ""
+      },
+      "detail": [
+        {
+          "productId": "61a5a68c0c327b1d087ccda7",
+          "title": "Frito de Chancho",
+          "description": "Acompañado con yuca, mote y zarsa",
+          "productType": "",
+          "unitPrice": "S/ 12.00",
+          "quantity": 1,
+          "subTotal": "S/ 12.00",
+          "subDetail": []
+        },
+        {
+          "productId": "61a5a68c0c327b1d087ccdaa",
+          "title": "Pato de corral",
+          "description": "Acompañado con arroz, frejol, papa sancochada y sarza",
+          "productType": "",
+          "unitPrice": "S/ 12.00",
+          "quantity": 1,
+          "subTotal": "S/ 12.00",
+          "subDetail": []
+        },
+        {
+          "productId": "61a5a68c0c327b1d087ccdb3",
+          "title": "Tallarin con pollo",
+          "description": "Acompañado con frejol, papa sancochada y sarza",
+          "productType": "Menu",
+          "unitPrice": "S/ 10.00",
+          "quantity": 2,
+          "subTotal": "S/ 20.00",
+          "subDetail": [
+            {
+              "productId": "61a5a68c0c327b1d087ccdaf",
+              "title": "Papa a la huancaina",
+              "quantity": 1
+            },
+            {
+              "productId": "61a5a68c0c327b1d087ccdae",
+              "title": "Ceviche",
+              "quantity": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "64e79793cc3a64999c8fc303",
+      "number": "#000079",
+      "date": "24 Aug 2023, 12:46 PM",
+      "state": "Pendiente",
+      "state_code": "TODO",
+      "restaurant": "Kitchen",
+      "payment_method": "Efectivo",
+      "order_type": {
+        "code": "DELI",
+        "title": "Delivery"
+      },
+      "total": "S/ 169.10",
+      "client": {
+        "name": "valentin",
+        "cel": "966998566",
+        "address_reference": ""
+      },
+      "detail": [
+        {
+          "productId": "61a5a68c0c327b1d087ccdab",
+          "title": "Jarra de Maracuya",
+          "description": "Delicioso jugo de maracuya con hielo",
+          "productType": "",
+          "unitPrice": "S/ 15.00",
+          "quantity": 4,
+          "subTotal": "S/ 60.00",
+          "subDetail": []
+        },
+        {
+          "productId": "64aca93afce28afe0cfe0545",
+          "title": "Huevo revuelto",
+          "description": "Acompañado de su rica tortilla",
+          "productType": "",
+          "unitPrice": "S/ 35.80",
+          "quantity": 2,
+          "subTotal": "S/ 71.60",
+          "subDetail": []
+        },
+        {
+          "productId": "649629a4d56a2a8d2c00a5a8",
+          "title": "Ajiaco de pollo",
+          "description": "Acompañado de arroz y ensalada",
+          "productType": "",
+          "unitPrice": "S/ 12.50",
+          "quantity": 1,
+          "subTotal": "S/ 12.50",
+          "subDetail": []
+        },
+        {
+          "productId": "649bb005781d164428265604",
+          "title": "Ajiaco de pollo v2",
+          "description": "Acompañado de arroz y ensalada modificada",
+          "productType": "",
+          "unitPrice": "S/ 12.50",
+          "quantity": 2,
+          "subTotal": "S/ 25.00",
+          "subDetail": []
+        }
+      ]
+    }
+  ],
+  "message": "Get status"
+}
