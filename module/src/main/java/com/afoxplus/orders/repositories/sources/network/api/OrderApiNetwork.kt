@@ -5,6 +5,7 @@ import com.afoxplus.network.annotations.ServiceClient
 import com.afoxplus.network.api.UrlProvider
 import com.afoxplus.network.response.BaseResponse
 import com.afoxplus.orders.repositories.sources.network.api.request.OrderRequest
+import com.afoxplus.orders.repositories.sources.network.api.response.OrderBaseResponse
 import com.afoxplus.orders.repositories.sources.network.api.response.OrderResponse
 import com.afoxplus.orders.repositories.sources.network.api.response.OrderStatusResponse
 import retrofit2.Response
@@ -27,7 +28,7 @@ internal interface OrderApiNetwork {
     suspend fun sendOrder(
         @HeaderMap headers: Map<String, String>,
         @Body orderRequest: OrderRequest
-    ): Response<BaseResponse<OrderResponse>>
+    ): Response<OrderBaseResponse<OrderResponse>>
 
     @GET("$PATH_ORDERS/$PATH_STATUS")
     @EndpointInfo(type = UrlProvider.Type.API_ORDERS)

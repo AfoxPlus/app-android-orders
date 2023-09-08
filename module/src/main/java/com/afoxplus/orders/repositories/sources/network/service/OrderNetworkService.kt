@@ -17,8 +17,8 @@ internal class OrderNetworkService @Inject constructor(
     override suspend fun sendOrder(order: Order): String {
         val orderRequest = OrderRequest.getOrderRequest(order)
         val headerMap = mapOf(API_HEADERS_CURRENCY_ID to appProperties.getCurrencyID())
-        orderApiNetwork.sendOrder(headerMap, orderRequest)
-        return "¡Pedido enviado correctamente!"
+        val result = orderApiNetwork.sendOrder(headerMap, orderRequest)
+        return result.body()?.message?.value ?: "¡Pedido enviado correctamente!"
     }
 
     override suspend fun getOrderStatus(): List<OrderStatus> {
