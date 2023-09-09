@@ -4,6 +4,7 @@ import androidx.activity.viewModels
 import com.afoxplus.orders.R
 import com.afoxplus.orders.databinding.ActivityOrdersPreviewBinding
 import com.afoxplus.orders.delivery.flow.OrderFlow
+import com.afoxplus.orders.delivery.models.SendOrderStatusUIModel
 import com.afoxplus.orders.delivery.viewmodels.ShopCartViewModel
 import com.afoxplus.orders.delivery.views.fragments.ShopCartFragment
 import com.afoxplus.orders.delivery.views.fragments.AdditionalOrderInfoFragment
@@ -11,6 +12,7 @@ import com.afoxplus.uikit.activities.UIKitBaseActivity
 import com.afoxplus.uikit.activities.extensions.addFragmentToActivity
 import com.afoxplus.uikit.bus.UIKitEventObserver
 import com.afoxplus.uikit.fragments.UIKitBaseFragment
+import com.afoxplus.uikit.modal.UIKitModal
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -48,9 +50,9 @@ class OrderPreviewActivity : UIKitBaseActivity() {
     }
 
     override fun observerViewModel() {
-        shopCartViewModel.buttonSendLoading.observe(this) {
-            binding.buttonSendOrder.isEnabled = false
-        }
+        shopCartViewModel.buttonSendLoading.observe(this, UIKitEventObserver {
+            binding.buttonSendOrder.isEnabled = it
+        })
 
         shopCartViewModel.nameButtonSendOrderLiveData.observe(this) {
             binding.buttonSendOrder.text = it
@@ -69,13 +71,36 @@ class OrderPreviewActivity : UIKitBaseActivity() {
         }
 
         shopCartViewModel.eventOpenSuccessOrder.observe(this) {
-            finish()
-            orderFlow.goToOrderSuccessActivity(this)
+            handleSendOrderResponse(it)
         }
 
         shopCartViewModel.goToAddCardProductEvent.observe(this, UIKitEventObserver { product ->
             orderFlow.goToAddProductToOrderActivity(this, product)
         })
+    }
+
+    private fun handleSendOrderResponse(result: SendOrderStatusUIModel) {
+        when (result) {
+            is SendOrderStatusUIModel.Success -> {
+                finish()
+                orderFlow.goToOrderSuccessActivity(this, result.message)
+            }
+
+            is SendOrderStatusUIModel.Error -> {
+                displayErrorModal(result.title, result.message)
+            }
+        }
+    }
+
+    private fun displayErrorModal(title: String, message: String) {
+        UIKitModal.Builder(supportFragmentManager)
+            .title(title)
+            .message(message)
+            .positiveButton(getString(R.string.order_appetizers_modal_action)) {
+                shopCartViewModel.changeButtonSendEnable(true)
+                it.dismiss()
+            }
+            .show()
     }
 
     private fun changeFragment(fragment: UIKitBaseFragment) {

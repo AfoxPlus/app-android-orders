@@ -13,6 +13,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
+const val ORDER_SUCCESS_MESSAGE = "ORDER_SUCCESS_MESSAGE"
+
 @AndroidEntryPoint
 class OrderSuccessActivity : UIKitBaseActivity() {
     private val viewModel: OrderSuccessViewModel by viewModels()

@@ -5,10 +5,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.afoxplus.orders.delivery.models.SendOrderStatusUIModel
 import com.afoxplus.orders.entities.Client
 import com.afoxplus.orders.entities.Order
 import com.afoxplus.orders.entities.OrderDetail
 import com.afoxplus.orders.entities.OrderType
+import com.afoxplus.orders.repositories.exceptions.ApiErrorException
 import com.afoxplus.orders.usecases.GetRestaurantPaymentsUseCase
 import com.afoxplus.orders.usecases.actions.AddOrUpdateProductToCurrentOrder
 import com.afoxplus.orders.usecases.actions.DeleteProductToCurrentOrder
@@ -17,6 +19,7 @@ import com.afoxplus.orders.usecases.actions.GetRestaurantName
 import com.afoxplus.orders.usecases.actions.SendOrder
 import com.afoxplus.products.entities.Product
 import com.afoxplus.uikit.bus.UIKitEvent
+import com.afoxplus.uikit.common.ResultState
 import com.afoxplus.uikit.di.UIKitCoroutineDispatcher
 import com.afoxplus.uikit.objects.vendor.PaymentMethod
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -58,11 +61,11 @@ internal class ShopCartViewModel @Inject constructor(
     private val mErrorClientPhoneNumberMutableLiveData: MutableLiveData<String> by lazy { MutableLiveData<String>() }
     val errorClientPhoneNumberLiveData: LiveData<String> get() = mErrorClientPhoneNumberMutableLiveData
 
-    private val mEventSuccessOrder: MutableLiveData<UIKitEvent<String>> by lazy { MutableLiveData<UIKitEvent<String>>() }
-    val eventOpenSuccessOrder: LiveData<UIKitEvent<String>> get() = mEventSuccessOrder
+    private val mEventSuccessOrder: MutableLiveData<SendOrderStatusUIModel> by lazy { MutableLiveData<SendOrderStatusUIModel>() }
+    val eventOpenSuccessOrder: LiveData<SendOrderStatusUIModel> get() = mEventSuccessOrder
 
-    private val mButtonSendLoading: MutableLiveData<UIKitEvent<Unit>> by lazy { MutableLiveData() }
-    val buttonSendLoading: LiveData<UIKitEvent<Unit>> get() = mButtonSendLoading
+    private val mButtonSendLoading: MutableLiveData<UIKitEvent<Boolean>> by lazy { MutableLiveData() }
+    val buttonSendLoading: LiveData<UIKitEvent<Boolean>> get() = mButtonSendLoading
     private val mGoToAddCardProductEvent: MutableLiveData<UIKitEvent<Product>> by lazy { MutableLiveData<UIKitEvent<Product>>() }
     val goToAddCardProductEvent: LiveData<UIKitEvent<Product>> get() = mGoToAddCardProductEvent
 
@@ -146,9 +149,33 @@ internal class ShopCartViewModel @Inject constructor(
                 order.client = client
                 order.paymentMethod = mPaymentMethodSelectedMutableLiveData.value
                 viewModelScope.launch(coroutines.getMainDispatcher()) {
-                    mButtonSendLoading.value = UIKitEvent(Unit)
-                    val message = sendOrder.invoke(order)
-                    openSuccessOrder(message)
+                    changeButtonSendEnable(false)
+                    val result = sendOrder.invoke(order)
+                    handleOrderResult(result)
+                }
+            }
+        }
+    }
+
+    fun changeButtonSendEnable(isEnable: Boolean) {
+        mButtonSendLoading.value = UIKitEvent(isEnable)
+    }
+
+    private fun handleOrderResult(result: ResultState<String>) {
+        when (result) {
+            is ResultState.Success -> {
+                mEventSuccessOrder.postValue(SendOrderStatusUIModel.Success(result.data))
+            }
+
+            is ResultState.Error -> {
+                if (result.exception is ApiErrorException) {
+                    val errorException = result.exception as ApiErrorException
+                    mEventSuccessOrder.postValue(
+                        SendOrderStatusUIModel.Error(
+                            title = errorException.title,
+                            message = errorException.errorMessage
+                        )
+                    )
                 }
             }
         }
@@ -157,10 +184,6 @@ internal class ShopCartViewModel @Inject constructor(
     fun restaurantName(): String = getRestaurantName()
 
     fun fetchPaymentMethods(): List<PaymentMethod> = paymentMethods
-
-    private fun openSuccessOrder(message: String) {
-        mEventSuccessOrder.postValue(UIKitEvent(message))
-    }
 
     private fun validateClient(client: Client, orderType: OrderType?): Boolean {
         when (orderType) {
