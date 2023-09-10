@@ -2,4 +2,7 @@ package com.afoxplus.orders.repositories.exceptions
 
 import java.io.IOException
 
-class ApiErrorException(val title: String, val errorMessage: String) : IOException()
+internal class ApiErrorException(val contentMessage: ExceptionMessage) : IOException()
+internal class OrderBusinessException(val contentMessage: ExceptionMessage) : IOException()
+
+internal data class ExceptionMessage(val value: String, val info: String)

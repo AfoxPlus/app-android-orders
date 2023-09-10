@@ -48,4 +48,6 @@
     <string name="order_modal_lost_products_message">Vas a perder los productos que agregaste a tu pedido.</string>
     <string name="order_modal_affirmative_action">Sí, salir</string>
     <string name="order_modal_negative_action">No, continuar pedido</string>
+    <string name="order_modal_send_cancel">Cancelar</string>
+    <string name="order_modal_send_retry">Reintentar</string>
 </resources>

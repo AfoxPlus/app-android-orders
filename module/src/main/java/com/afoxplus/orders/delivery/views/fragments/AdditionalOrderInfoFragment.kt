@@ -35,9 +35,7 @@ class AdditionalOrderInfoFragment : UIKitBaseFragment(), ItemPaymentMethodListen
         super.observerViewModel()
         cartProductsViewModel.eventValidateTableOrder.observe(
             viewLifecycleOwner,
-            UIKitEventObserver {
-                cartProductsViewModel.sendOrder(getClientInfo())
-            })
+            UIKitEventObserver { handleSetupOrderAndSend() })
 
         cartProductsViewModel.errorClientNameLiveData.observe(viewLifecycleOwner) {
             binding.clientName.error = it
@@ -60,6 +58,11 @@ class AdditionalOrderInfoFragment : UIKitBaseFragment(), ItemPaymentMethodListen
         binding.paymentMethodButton.setOnClickListener {
             displayPaymentMethods()
         }
+    }
+
+    private fun handleSetupOrderAndSend() {
+        cartProductsViewModel.setClientToOrder(getClientInfo())
+        cartProductsViewModel.sendOrder()
     }
 
     private fun displayPaymentMethods() {

@@ -8,12 +8,15 @@ import com.afoxplus.orders.delivery.models.SendOrderStatusUIModel
 import com.afoxplus.orders.delivery.viewmodels.ShopCartViewModel
 import com.afoxplus.orders.delivery.views.fragments.ShopCartFragment
 import com.afoxplus.orders.delivery.views.fragments.AdditionalOrderInfoFragment
+import com.afoxplus.orders.repositories.exceptions.ApiErrorException
+import com.afoxplus.orders.repositories.exceptions.OrderBusinessException
 import com.afoxplus.uikit.activities.UIKitBaseActivity
 import com.afoxplus.uikit.activities.extensions.addFragmentToActivity
 import com.afoxplus.uikit.bus.UIKitEventObserver
 import com.afoxplus.uikit.fragments.UIKitBaseFragment
 import com.afoxplus.uikit.modal.UIKitModal
 import dagger.hilt.android.AndroidEntryPoint
+import java.lang.Exception
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -87,20 +90,39 @@ class OrderPreviewActivity : UIKitBaseActivity() {
             }
 
             is SendOrderStatusUIModel.Error -> {
-                displayErrorModal(result.title, result.message)
+                displayErrorModal(result.exception)
             }
         }
     }
 
-    private fun displayErrorModal(title: String, message: String) {
-        UIKitModal.Builder(supportFragmentManager)
-            .title(title)
-            .message(message)
-            .positiveButton(getString(R.string.order_appetizers_modal_action)) {
-                shopCartViewModel.changeButtonSendEnable(true)
-                it.dismiss()
+    private fun displayErrorModal(exception: Exception) {
+        when (exception) {
+            is ApiErrorException -> {
+                UIKitModal.Builder(supportFragmentManager)
+                    .title(exception.contentMessage.value)
+                    .message(exception.contentMessage.info)
+                    .positiveButton(getString(R.string.order_modal_send_retry)) {
+                        shopCartViewModel.retrySendOrder()
+                        it.dismiss()
+                    }
+                    .negativeButton(getString(R.string.order_modal_send_cancel)) {
+                        it.dismiss()
+                    }
+                    .show()
             }
-            .show()
+
+            is OrderBusinessException -> {
+                UIKitModal.Builder(supportFragmentManager)
+                    .title(exception.contentMessage.value)
+                    .message(exception.contentMessage.info)
+                    .positiveButton(getString(R.string.order_appetizers_modal_action)) {
+                        shopCartViewModel.changeButtonSendEnable(true)
+                        it.dismiss()
+                    }
+                    .show()
+            }
+        }
+
     }
 
     private fun changeFragment(fragment: UIKitBaseFragment) {

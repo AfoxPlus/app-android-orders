@@ -19,7 +19,7 @@ internal interface OrderApiNetwork {
 
     companion object {
         const val PATH_ORDERS = "orders"
-        const val PATH_SEND = "sends"
+        const val PATH_SEND = "send"
         const val PATH_STATUS = "status"
     }
 
