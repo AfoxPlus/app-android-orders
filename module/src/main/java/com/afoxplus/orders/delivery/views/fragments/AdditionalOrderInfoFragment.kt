@@ -62,7 +62,6 @@ class AdditionalOrderInfoFragment : UIKitBaseFragment(), ItemPaymentMethodListen
 
     private fun handleSetupOrderAndSend() {
         cartProductsViewModel.setClientToOrder(getClientInfo())
-        cartProductsViewModel.sendOrder()
     }
 
     private fun displayPaymentMethods() {

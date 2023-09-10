@@ -178,12 +178,13 @@ internal class ShopCartViewModel @Inject constructor(
         )
     }
 
-    fun setClientToOrder(client: Client) {
+    fun setClientToOrder(client: Client) = viewModelScope.launch(coroutines.getMainDispatcher()) {
         if (validateClient(client, getOrderType())) {
             mOrder.value?.also { order ->
                 order.client = client
                 order.paymentMethod = mPaymentMethodSelectedMutableLiveData.value
             }
+            sendOrder()
         }
     }
 
