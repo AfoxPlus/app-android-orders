@@ -51,8 +51,8 @@ internal class OrderNetworkService @Inject constructor(
         return ResultState.Error(
             ApiErrorException(
                 contentMessage = ExceptionMessage(
-                    value = "Hubo un problema al enviar el pedido",
-                    info = "Ha ocurrido un problema al enviar el pedido, intentalo nuevamente"
+                    value = "No se ha podido enviar el pedido",
+                    info = "¿Quieres intentarlo nuevamente?"
                 )
             )
         )
