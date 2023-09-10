@@ -10,7 +10,6 @@ import com.afoxplus.orders.entities.Client
 import com.afoxplus.orders.entities.Order
 import com.afoxplus.orders.entities.OrderDetail
 import com.afoxplus.orders.entities.OrderType
-import com.afoxplus.orders.repositories.exceptions.ApiErrorException
 import com.afoxplus.orders.repositories.exceptions.ExceptionMessage
 import com.afoxplus.orders.repositories.exceptions.OrderBusinessException
 import com.afoxplus.orders.usecases.GetRestaurantPaymentsUseCase
@@ -25,6 +24,7 @@ import com.afoxplus.uikit.common.ResultState
 import com.afoxplus.uikit.di.UIKitCoroutineDispatcher
 import com.afoxplus.uikit.objects.vendor.PaymentMethod
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -148,7 +148,7 @@ internal class ShopCartViewModel @Inject constructor(
 
     private fun getOrderType(): OrderType = mOrder.value?.orderType ?: OrderType.Delivery
 
-    fun sendOrder() = viewModelScope.launch(coroutines.getMainDispatcher()) {
+    private fun sendOrder() = viewModelScope.launch(coroutines.getMainDispatcher()) {
         mOrder.value?.let { order ->
             changeButtonSendEnable(false)
             val result = sendOrder.invoke(order)
@@ -159,6 +159,7 @@ internal class ShopCartViewModel @Inject constructor(
     fun retrySendOrder() = viewModelScope.launch(coroutines.getMainDispatcher()) {
         mRetrySize.value?.let { retrySize ->
             mRetrySize.value = retrySize.plus(1)
+            delay(RETRY_DELAY)
             if (retrySize <= LIMIT_RETRY) {
                 sendOrder()
             } else handleBusinessExceptionRetry()
@@ -243,6 +244,7 @@ internal class ShopCartViewModel @Inject constructor(
     }
 
     companion object {
-        private const val LIMIT_RETRY = 4
+        private const val LIMIT_RETRY = 3
+        private const val RETRY_DELAY = 2000L
     }
 }
