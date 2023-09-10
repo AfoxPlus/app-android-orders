@@ -9,8 +9,11 @@ import com.afoxplus.orders.repositories.exceptions.OrderBusinessException
 import com.afoxplus.orders.repositories.sources.network.OrderNetworkDataSource
 import com.afoxplus.orders.repositories.sources.network.api.OrderApiNetwork
 import com.afoxplus.orders.repositories.sources.network.api.request.OrderRequest
+import com.afoxplus.orders.repositories.sources.network.api.response.OrderBaseResponse
+import com.afoxplus.orders.repositories.sources.network.api.response.OrderResponse
 import com.afoxplus.orders.repositories.sources.network.api.response.toEntity
 import com.afoxplus.uikit.common.ResultState
+import retrofit2.Response
 import java.io.IOException
 import javax.inject.Inject
 
@@ -20,40 +23,38 @@ internal class OrderNetworkService @Inject constructor(
 ) : OrderNetworkDataSource {
 
     override suspend fun sendOrder(order: Order): ResultState<String> {
-        try {
+        return try {
             val orderRequest = OrderRequest.getOrderRequest(order)
             val headerMap = mapOf(API_HEADERS_CURRENCY_ID to appProperties.getCurrencyID())
             val result = orderApiNetwork.sendOrder(headerMap, orderRequest)
             if (result.isSuccessful) {
-                return if (result.body()?.success == true) {
+                if (result.body()?.success == true) {
                     ResultState.Success(
                         result.body()?.message?.value ?: "¡Pedido enviado correctamente!"
                     )
-                } else {
-                    ResultState.Error(
-                        OrderBusinessException(
-                            contentMessage = ExceptionMessage(
-                                value = result.body()?.message?.value
-                                    ?: "Hubo un problema al enviar el pedido",
-                                info = result.body()?.message?.info
-                                    ?: "Ha ocurrido un problema al enviar el pedido, intentalo nuevamente"
-                            )
-                        )
-                    )
-                }
-            } else return handleError()
+                } else ResultState.Error(orderBusinessException(result))
+            } else ResultState.Error(getApiErrorException())
         } catch (exception: IOException) {
-            return handleError()
+            ResultState.Error(getApiErrorException())
         }
     }
 
-    private fun handleError(): ResultState<String> {
-        return ResultState.Error(
-            ApiErrorException(
+    private fun orderBusinessException(result: Response<OrderBaseResponse<OrderResponse>>): Exception {
+        return result.body()?.message?.let { message ->
+            OrderBusinessException(
                 contentMessage = ExceptionMessage(
-                    value = "No se ha podido enviar el pedido",
-                    info = "¿Quieres intentarlo nuevamente?"
+                    value = message.value,
+                    info = message.info ?: ""
                 )
+            )
+        } ?: getApiErrorException()
+    }
+
+    private fun getApiErrorException(): ApiErrorException {
+        return ApiErrorException(
+            contentMessage = ExceptionMessage(
+                value = "No se ha podido enviar el pedido",
+                info = "¿Quieres intentarlo nuevamente?"
             )
         )
     }
