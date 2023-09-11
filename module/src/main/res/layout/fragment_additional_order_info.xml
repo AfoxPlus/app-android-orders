@@ -168,7 +168,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp16"
                 android:hint="@string/orders_table_client_cellphone"
-                android:imeOptions="actionNext"
+                android:imeOptions="actionDone"
                 android:inputType="number"
                 app:errorIconDrawable="@null"
                 app:layout_constraintEnd_toEndOf="parent"

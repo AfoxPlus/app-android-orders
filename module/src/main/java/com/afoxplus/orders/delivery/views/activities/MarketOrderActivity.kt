@@ -3,6 +3,7 @@ package com.afoxplus.orders.delivery.views.activities
 import android.app.Activity
 import android.content.Intent
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
@@ -65,6 +66,13 @@ class MarketOrderActivity : UIKitBaseActivity() {
         binding.buttonViewOrder.setOnClickListener {
             marketOrderViewModel.onClickViewOrder()
         }
+
+        onBackPressedDispatcher.addCallback(this,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    marketOrderViewModel.onBackPressed()
+                }
+            })
     }
 
     override fun observerViewModel() {
@@ -87,8 +95,7 @@ class MarketOrderActivity : UIKitBaseActivity() {
                     }
 
                     is MarketOrderViewModel.MarketOrderEvent.OnBackPressed -> {
-                        //TODO: Improve this
-                        onBackPressed()
+                        finish()
                     }
                 }
             }

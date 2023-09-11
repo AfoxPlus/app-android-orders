@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import com.afoxplus.orders.databinding.FragmentOrderSentSuccessfullyBinding
 import com.afoxplus.orders.delivery.viewmodels.OrderSuccessViewModel
+import com.afoxplus.orders.delivery.views.activities.ORDER_SUCCESS_MESSAGE
 import com.afoxplus.uikit.fragments.UIKitBaseFragment
 
 class OrderSentSuccessfullyFragment : UIKitBaseFragment() {
@@ -21,6 +22,7 @@ class OrderSentSuccessfullyFragment : UIKitBaseFragment() {
     override fun getMainView(inflater: LayoutInflater, container: ViewGroup?): View {
         binding = FragmentOrderSentSuccessfullyBinding.inflate(inflater)
         binding.lifecycleOwner = viewLifecycleOwner
+        binding.title.text = activity?.intent?.getStringExtra(ORDER_SUCCESS_MESSAGE)
         return binding.root
     }
 
