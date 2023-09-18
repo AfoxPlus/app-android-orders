@@ -9,15 +9,15 @@ import com.afoxplus.orders.delivery.models.AppetizerStateModel
 import com.afoxplus.orders.delivery.models.ButtonStateModel
 import com.afoxplus.orders.delivery.views.events.AddedProductToCurrentOrderSuccessfullyEvent
 import com.afoxplus.orders.delivery.views.extensions.getAmountFormat
-import com.afoxplus.orders.entities.OrderAppetizerDetail
-import com.afoxplus.orders.entities.OrderDetail
-import com.afoxplus.orders.usecases.actions.AddOrUpdateAppetizerToCurrentOrder
-import com.afoxplus.orders.usecases.actions.AddOrUpdateProductToCurrentOrder
-import com.afoxplus.orders.usecases.actions.CalculateSubTotalByProduct
-import com.afoxplus.orders.usecases.actions.ClearAppetizersOrder
-import com.afoxplus.orders.usecases.actions.DeleteProductToCurrentOrder
-import com.afoxplus.orders.usecases.actions.FindProductInOrder
-import com.afoxplus.orders.usecases.actions.MatchAppetizersByOrder
+import com.afoxplus.orders.domain.entities.OrderAppetizerDetail
+import com.afoxplus.orders.domain.entities.OrderDetail
+import com.afoxplus.orders.domain.usecases.AddOrUpdateAppetizerToCurrentOrderUseCase
+import com.afoxplus.orders.domain.usecases.AddOrUpdateProductToCurrentOrderUseCase
+import com.afoxplus.orders.domain.usecases.CalculateSubTotalByProductUseCase
+import com.afoxplus.orders.domain.usecases.ClearAppetizersOrderUseCase
+import com.afoxplus.orders.domain.usecases.DeleteProductToCurrentOrderUseCase
+import com.afoxplus.orders.domain.usecases.FindProductInOrderUseCase
+import com.afoxplus.orders.domain.usecases.MatchAppetizersByOrderUseCase
 import com.afoxplus.products.entities.Product
 import com.afoxplus.products.usecases.actions.FetchAppetizerByCurrentRestaurant
 import com.afoxplus.uikit.bus.UIKitEvent
@@ -31,14 +31,14 @@ import javax.inject.Inject
 @HiltViewModel
 internal class AddProductToOrderViewModel @Inject constructor(
     private val eventBusWrapper: UIKitEventBusWrapper,
-    private val findProductInOrder: FindProductInOrder,
-    private val calculateSubTotalByProduct: CalculateSubTotalByProduct,
-    private val addOrUpdateProductToCurrentOrder: AddOrUpdateProductToCurrentOrder,
+    private val findProductInOrder: FindProductInOrderUseCase,
+    private val calculateSubTotalByProduct: CalculateSubTotalByProductUseCase,
+    private val addOrUpdateProductToCurrentOrder: AddOrUpdateProductToCurrentOrderUseCase,
     private val fetchAppetizerByCurrentRestaurant: FetchAppetizerByCurrentRestaurant,
-    private val matchAppetizersByOrder: MatchAppetizersByOrder,
-    private val addOrUpdateAppetizerToCurrentOrder: AddOrUpdateAppetizerToCurrentOrder,
-    private val deleteProductToCurrentOrder: DeleteProductToCurrentOrder,
-    private val clearAppetizersOrder: ClearAppetizersOrder,
+    private val matchAppetizersByOrder: MatchAppetizersByOrderUseCase,
+    private val addOrUpdateAppetizerToCurrentOrder: AddOrUpdateAppetizerToCurrentOrderUseCase,
+    private val deleteProductToCurrentOrder: DeleteProductToCurrentOrderUseCase,
+    private val clearAppetizersOrder: ClearAppetizersOrderUseCase,
     private val coroutines: UIKitCoroutineDispatcher
 ) : ViewModel() {
 

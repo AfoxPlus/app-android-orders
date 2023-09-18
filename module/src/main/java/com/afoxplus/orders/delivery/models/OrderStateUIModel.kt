@@ -1,6 +1,6 @@
 package com.afoxplus.orders.delivery.models
 
-import com.afoxplus.orders.entities.OrderStatus
+import com.afoxplus.orders.domain.entities.OrderStatus
 
 sealed class OrderStateUIModel() {
     object Loading : OrderStateUIModel()

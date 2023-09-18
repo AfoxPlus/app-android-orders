@@ -3,14 +3,13 @@ package com.afoxplus.orders.delivery.flow
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.os.Message
 import com.afoxplus.orders.delivery.views.activities.AddProductToOrderActivity
 import com.afoxplus.orders.delivery.views.activities.OrderPreviewActivity
 import com.afoxplus.orders.delivery.views.activities.MarketOrderActivity
 import com.afoxplus.orders.delivery.views.activities.ORDER_SUCCESS_MESSAGE
 import com.afoxplus.orders.delivery.views.activities.OrderSuccessActivity
 import com.afoxplus.orders.delivery.views.fragments.OrderStatusFragment
-import com.afoxplus.orders.entities.Order
+import com.afoxplus.orders.domain.entities.Order
 import com.afoxplus.products.entities.Product
 import com.afoxplus.uikit.fragments.UIKitBaseFragment
 import javax.inject.Inject

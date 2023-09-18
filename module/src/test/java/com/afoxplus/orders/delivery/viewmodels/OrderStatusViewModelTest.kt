@@ -2,11 +2,11 @@ package com.afoxplus.orders.delivery.viewmodels
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.afoxplus.orders.delivery.models.OrderStateUIModel
-import com.afoxplus.orders.usecases.OrderStatusUseCase
-import com.afoxplus.orders.utils.TestCoroutineRule
-import com.afoxplus.orders.utils.UIKitCoroutinesDispatcherTest
-import com.afoxplus.orders.utils.fakeOrderStatus
-import com.afoxplus.orders.utils.getOrAwaitValue
+import com.afoxplus.orders.domain.usecases.OrderStatusUseCase
+import com.afoxplus.orders.cross.TestCoroutineRule
+import com.afoxplus.orders.cross.UIKitCoroutinesDispatcherTest
+import com.afoxplus.orders.cross.fakeOrderStatus
+import com.afoxplus.orders.cross.getOrAwaitValue
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -43,7 +43,7 @@ class OrderStatusViewModelTest {
         testCoroutineRule.runBlockingTest {
             //GIVEN
             val mockData = arrayListOf(fakeOrderStatus)
-            whenever(mockUseCase.getStatusOrders()).doReturn(mockData)
+            whenever(mockUseCase.invoke()).doReturn(mockData)
 
             //WHEN
             sutViewModel.fetchStateOrders()
@@ -52,7 +52,7 @@ class OrderStatusViewModelTest {
             //THEN
             assert(data is OrderStateUIModel.Success)
             assertEquals(1, (data as OrderStateUIModel.Success).orders.size)
-            verify(mockUseCase).getStatusOrders()
+            verify(mockUseCase).invoke()
         }
 
     }
@@ -61,7 +61,7 @@ class OrderStatusViewModelTest {
     fun `GIVEN emptylist WHEN fetchStateOrders THEN return Success`() {
         testCoroutineRule.runBlockingTest {
             //GIVEN
-            whenever(mockUseCase.getStatusOrders()).doReturn(emptyList())
+            whenever(mockUseCase.invoke()).doReturn(emptyList())
 
             //WHEN
             sutViewModel.fetchStateOrders()
@@ -69,7 +69,7 @@ class OrderStatusViewModelTest {
 
             //THEN
             assert(result is OrderStateUIModel.Success)
-            verify(mockUseCase).getStatusOrders()
+            verify(mockUseCase).invoke()
         }
     }
 
@@ -79,7 +79,7 @@ class OrderStatusViewModelTest {
         testCoroutineRule.runBlockingTest {
             //GIVEN
             val exception = Exception("ApiException")
-            whenever(mockUseCase.getStatusOrders()).doAnswer { throw exception }
+            whenever(mockUseCase.invoke()).doAnswer { throw exception }
 
             //WHEN
             sutViewModel.fetchStateOrders()
@@ -88,7 +88,7 @@ class OrderStatusViewModelTest {
             //THEN
             assert(result is OrderStateUIModel.Error)
             assertEquals(exception, (result as OrderStateUIModel.Error).error)
-            verify(mockUseCase).getStatusOrders()
+            verify(mockUseCase).invoke()
         }
     }
 

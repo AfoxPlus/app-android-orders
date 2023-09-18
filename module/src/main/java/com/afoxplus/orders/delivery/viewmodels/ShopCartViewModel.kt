@@ -6,18 +6,18 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.afoxplus.orders.delivery.models.SendOrderStatusUIModel
-import com.afoxplus.orders.entities.Client
-import com.afoxplus.orders.entities.Order
-import com.afoxplus.orders.entities.OrderDetail
-import com.afoxplus.orders.entities.OrderType
-import com.afoxplus.orders.repositories.exceptions.ExceptionMessage
-import com.afoxplus.orders.repositories.exceptions.OrderBusinessException
-import com.afoxplus.orders.usecases.GetRestaurantPaymentsUseCase
-import com.afoxplus.orders.usecases.actions.AddOrUpdateProductToCurrentOrder
-import com.afoxplus.orders.usecases.actions.DeleteProductToCurrentOrder
-import com.afoxplus.orders.usecases.actions.GetCurrentOrder
-import com.afoxplus.orders.usecases.actions.GetRestaurantName
-import com.afoxplus.orders.usecases.actions.SendOrder
+import com.afoxplus.orders.domain.entities.Client
+import com.afoxplus.orders.domain.entities.Order
+import com.afoxplus.orders.domain.entities.OrderDetail
+import com.afoxplus.orders.domain.entities.OrderType
+import com.afoxplus.orders.cross.exceptions.ExceptionMessage
+import com.afoxplus.orders.cross.exceptions.OrderBusinessException
+import com.afoxplus.orders.domain.usecases.AddOrUpdateProductToCurrentOrderUseCase
+import com.afoxplus.orders.domain.usecases.DeleteProductToCurrentOrderUseCase
+import com.afoxplus.orders.domain.usecases.GetCurrentOrderUseCase
+import com.afoxplus.orders.domain.usecases.GetRestaurantNameUseCase
+import com.afoxplus.orders.domain.usecases.GetRestaurantPaymentsUseCase
+import com.afoxplus.orders.domain.usecases.SendOrderUseCase
 import com.afoxplus.products.entities.Product
 import com.afoxplus.uikit.bus.UIKitEvent
 import com.afoxplus.uikit.common.ResultState
@@ -30,11 +30,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class ShopCartViewModel @Inject constructor(
-    private val addOrUpdateProductToCurrentOrder: AddOrUpdateProductToCurrentOrder,
-    private val getCurrentOrder: GetCurrentOrder,
-    private val deleteProductToCurrentOrder: DeleteProductToCurrentOrder,
-    private val sendOrder: SendOrder,
-    private val getRestaurantName: GetRestaurantName,
+    private val addOrUpdateProductToCurrentOrder: AddOrUpdateProductToCurrentOrderUseCase,
+    private val getCurrentOrder: GetCurrentOrderUseCase,
+    private val deleteProductToCurrentOrder: DeleteProductToCurrentOrderUseCase,
+    private val sendOrder: SendOrderUseCase,
+    private val getRestaurantName: GetRestaurantNameUseCase,
     private val getRestaurantPaymentsUseCase: GetRestaurantPaymentsUseCase,
     private val coroutines: UIKitCoroutineDispatcher
 ) : ViewModel() {

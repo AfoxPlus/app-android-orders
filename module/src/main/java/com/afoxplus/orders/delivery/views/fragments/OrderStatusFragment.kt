@@ -11,7 +11,7 @@ import com.afoxplus.orders.delivery.viewmodels.OrderStatusViewModel
 import com.afoxplus.orders.delivery.views.activities.OrderStatusDetailActivity
 import com.afoxplus.orders.delivery.views.adapters.ItemOrderStatusAdapter
 import com.afoxplus.orders.delivery.views.adapters.listeners.ItemClickListener
-import com.afoxplus.orders.entities.OrderStatus
+import com.afoxplus.orders.domain.entities.OrderStatus
 import com.afoxplus.uikit.fragments.UIKitBaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.math.abs

@@ -4,10 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.afoxplus.orders.entities.Order
-import com.afoxplus.orders.usecases.actions.ClearCurrentOrder
-import com.afoxplus.orders.usecases.actions.GetCurrentOrder
-import com.afoxplus.orders.usecases.actions.GetRestaurantName
+import com.afoxplus.orders.domain.entities.Order
+import com.afoxplus.orders.domain.usecases.ClearCurrentOrderUseCase
+import com.afoxplus.orders.domain.usecases.GetCurrentOrderUseCase
+import com.afoxplus.orders.domain.usecases.GetRestaurantNameUseCase
 import com.afoxplus.uikit.bus.UIKitEventBusWrapper
 import com.afoxplus.uikit.di.UIKitCoroutineDispatcher
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,9 +19,9 @@ import javax.inject.Inject
 @HiltViewModel
 internal class MarketOrderViewModel @Inject constructor(
     private val eventBusListener: UIKitEventBusWrapper,
-    private val clearCurrentOrder: ClearCurrentOrder,
-    private val getCurrentOrder: GetCurrentOrder,
-    private val getRestaurantName: GetRestaurantName,
+    private val clearCurrentOrder: ClearCurrentOrderUseCase,
+    private val getCurrentOrder: GetCurrentOrderUseCase,
+    private val getRestaurantName: GetRestaurantNameUseCase,
     private val coroutines: UIKitCoroutineDispatcher
 ) : ViewModel() {
 

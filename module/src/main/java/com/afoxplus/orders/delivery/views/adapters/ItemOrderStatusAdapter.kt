@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.afoxplus.orders.R
 import com.afoxplus.orders.databinding.ItemOrderStatusBinding
-import com.afoxplus.orders.entities.OrderStatus
+import com.afoxplus.orders.domain.entities.OrderStatus
 
 class ItemOrderStatusAdapter(
     private val onClick: (OrderStatus) -> Unit
