@@ -15,16 +15,16 @@ import com.afoxplus.orders.domain.usecases.AddOrUpdateAppetizerToCurrentOrderUse
 import com.afoxplus.orders.domain.usecases.AddOrUpdateProductToCurrentOrderUseCase
 import com.afoxplus.orders.domain.usecases.CalculateSubTotalByProductUseCase
 import com.afoxplus.orders.domain.usecases.ClearAppetizersOrderUseCase
-import com.afoxplus.orders.domain.usecases.DeleteProductToCurrentOrderUseCase
 import com.afoxplus.orders.domain.usecases.FindProductInOrderUseCase
 import com.afoxplus.orders.domain.usecases.MatchAppetizersByOrderUseCase
 import com.afoxplus.products.entities.Product
 import com.afoxplus.products.usecases.actions.FetchAppetizerByCurrentRestaurant
-import com.afoxplus.uikit.bus.UIKitEvent
 import com.afoxplus.uikit.bus.UIKitEventBusWrapper
 import com.afoxplus.uikit.customview.quantitybutton.ButtonEnableType
 import com.afoxplus.uikit.di.UIKitCoroutineDispatcher
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -37,7 +37,6 @@ internal class AddProductToOrderViewModel @Inject constructor(
     private val fetchAppetizerByCurrentRestaurant: FetchAppetizerByCurrentRestaurant,
     private val matchAppetizersByOrder: MatchAppetizersByOrderUseCase,
     private val addOrUpdateAppetizerToCurrentOrder: AddOrUpdateAppetizerToCurrentOrderUseCase,
-    private val deleteProductToCurrentOrder: DeleteProductToCurrentOrderUseCase,
     private val clearAppetizersOrder: ClearAppetizersOrderUseCase,
     private val coroutines: UIKitCoroutineDispatcher
 ) : ViewModel() {
@@ -70,8 +69,8 @@ internal class AddProductToOrderViewModel @Inject constructor(
 
     private var appetizers: List<Product> = arrayListOf()
 
-    private val mEventProductAddedToCardSuccess: MutableLiveData<UIKitEvent<Unit>> by lazy { MutableLiveData<UIKitEvent<Unit>>() }
-    val eventProductAddedToCardSuccess: LiveData<UIKitEvent<Unit>> get() = mEventProductAddedToCardSuccess
+    private val mEvents: MutableSharedFlow<Events> by lazy { MutableSharedFlow() }
+    val events = mEvents.asSharedFlow()
 
     fun startWithProduct(product: Product) = viewModelScope.launch(coroutines.getMainDispatcher()) {
         mProduct.postValue(product)
@@ -98,7 +97,6 @@ internal class AddProductToOrderViewModel @Inject constructor(
             product.value?.let { product ->
                 val appetizerClear = quantity < quantityChanged
                 quantityChanged = quantity
-                addOrUpdateProductToCurrentOrder(quantityChanged, product)
                 val subTotal = calculateSubTotalByProduct(quantity, product)
                 setupStateButtonSubTotal(
                     subTotal.getAmountFormat(), isQuantityEnabled(quantityChanged)
@@ -143,7 +141,7 @@ internal class AddProductToOrderViewModel @Inject constructor(
         viewModelScope.launch(coroutines.getMainDispatcher()) {
             mProduct.value?.let { product ->
                 addOrUpdateProductToCurrentOrder(quantityChanged, product)
-                mEventProductAddedToCardSuccess.postValue(UIKitEvent(Unit))
+                mEvents.emit(Events.CloseScreen)
                 eventBusWrapper.send(AddedProductToCurrentOrderSuccessfullyEvent)
             }
         }
@@ -227,20 +225,20 @@ internal class AddProductToOrderViewModel @Inject constructor(
         return Pair(ButtonEnableType.ALL, true)
     }
 
-    fun validateBackAction() {
+    fun onBackAction() {
         viewModelScope.launch(coroutines.getMainDispatcher()) {
-            if (mStateScreen.value == StateScreen.Add) {
-                product.value?.let {
-                    deleteProductToCurrentOrder(it)
-                }
-            }
-            mEventProductAddedToCardSuccess.postValue(UIKitEvent(Unit))
-            eventBusWrapper.send(AddedProductToCurrentOrderSuccessfullyEvent)
+            //Added tracking
+            mEvents.emit(Events.CloseScreen)
         }
     }
 
     sealed interface StateScreen {
         object Add : StateScreen
         object Update : StateScreen
+    }
+
+    sealed interface Events {
+        object CloseScreen : Events
+
     }
 }

@@ -31,8 +31,8 @@ class AddProductToCartFragment : UIKitBaseFragment(), ItemAppetizerListener {
     }
 
     override fun setUpView() {
-        binding.quantityButtonQuantity.onValueChangeListener = {
-            addProductToOrderViewModel.calculateSubTotalByProduct(it)
+        binding.quantityButtonQuantity.onValueChangeListener = { quantity ->
+            addProductToOrderViewModel.calculateSubTotalByProduct(quantity)
         }
         binding.recyclerProductAppetizer.adapter = adapter
         binding.quantityButtonQuantity.deleteIcon = R.drawable.ic_minus
