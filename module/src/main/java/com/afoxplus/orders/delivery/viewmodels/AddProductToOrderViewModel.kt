@@ -9,36 +9,35 @@ import com.afoxplus.orders.delivery.models.AppetizerStateModel
 import com.afoxplus.orders.delivery.models.ButtonStateModel
 import com.afoxplus.orders.delivery.views.events.AddedProductToCurrentOrderSuccessfullyEvent
 import com.afoxplus.orders.delivery.views.extensions.getAmountFormat
-import com.afoxplus.orders.entities.OrderAppetizerDetail
-import com.afoxplus.orders.entities.OrderDetail
-import com.afoxplus.orders.usecases.actions.AddOrUpdateAppetizerToCurrentOrder
-import com.afoxplus.orders.usecases.actions.AddOrUpdateProductToCurrentOrder
-import com.afoxplus.orders.usecases.actions.CalculateSubTotalByProduct
-import com.afoxplus.orders.usecases.actions.ClearAppetizersOrder
-import com.afoxplus.orders.usecases.actions.DeleteProductToCurrentOrder
-import com.afoxplus.orders.usecases.actions.FindProductInOrder
-import com.afoxplus.orders.usecases.actions.MatchAppetizersByOrder
+import com.afoxplus.orders.domain.entities.OrderAppetizerDetail
+import com.afoxplus.orders.domain.entities.OrderDetail
+import com.afoxplus.orders.domain.usecases.AddOrUpdateAppetizerToCurrentOrderUseCase
+import com.afoxplus.orders.domain.usecases.AddOrUpdateProductToCurrentOrderUseCase
+import com.afoxplus.orders.domain.usecases.CalculateSubTotalByProductUseCase
+import com.afoxplus.orders.domain.usecases.ClearAppetizersOrderUseCase
+import com.afoxplus.orders.domain.usecases.FindProductInOrderUseCase
+import com.afoxplus.orders.domain.usecases.MatchAppetizersByOrderUseCase
 import com.afoxplus.products.entities.Product
 import com.afoxplus.products.usecases.actions.FetchAppetizerByCurrentRestaurant
-import com.afoxplus.uikit.bus.UIKitEvent
 import com.afoxplus.uikit.bus.UIKitEventBusWrapper
 import com.afoxplus.uikit.customview.quantitybutton.ButtonEnableType
 import com.afoxplus.uikit.di.UIKitCoroutineDispatcher
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 internal class AddProductToOrderViewModel @Inject constructor(
     private val eventBusWrapper: UIKitEventBusWrapper,
-    private val findProductInOrder: FindProductInOrder,
-    private val calculateSubTotalByProduct: CalculateSubTotalByProduct,
-    private val addOrUpdateProductToCurrentOrder: AddOrUpdateProductToCurrentOrder,
+    private val findProductInOrder: FindProductInOrderUseCase,
+    private val calculateSubTotalByProduct: CalculateSubTotalByProductUseCase,
+    private val addOrUpdateProductToCurrentOrder: AddOrUpdateProductToCurrentOrderUseCase,
     private val fetchAppetizerByCurrentRestaurant: FetchAppetizerByCurrentRestaurant,
-    private val matchAppetizersByOrder: MatchAppetizersByOrder,
-    private val addOrUpdateAppetizerToCurrentOrder: AddOrUpdateAppetizerToCurrentOrder,
-    private val deleteProductToCurrentOrder: DeleteProductToCurrentOrder,
-    private val clearAppetizersOrder: ClearAppetizersOrder,
+    private val matchAppetizersByOrder: MatchAppetizersByOrderUseCase,
+    private val addOrUpdateAppetizerToCurrentOrder: AddOrUpdateAppetizerToCurrentOrderUseCase,
+    private val clearAppetizersOrder: ClearAppetizersOrderUseCase,
     private val coroutines: UIKitCoroutineDispatcher
 ) : ViewModel() {
 
@@ -70,8 +69,8 @@ internal class AddProductToOrderViewModel @Inject constructor(
 
     private var appetizers: List<Product> = arrayListOf()
 
-    private val mEventProductAddedToCardSuccess: MutableLiveData<UIKitEvent<Unit>> by lazy { MutableLiveData<UIKitEvent<Unit>>() }
-    val eventProductAddedToCardSuccess: LiveData<UIKitEvent<Unit>> get() = mEventProductAddedToCardSuccess
+    private val mEvents: MutableSharedFlow<Events> by lazy { MutableSharedFlow() }
+    val events = mEvents.asSharedFlow()
 
     fun startWithProduct(product: Product) = viewModelScope.launch(coroutines.getMainDispatcher()) {
         mProduct.postValue(product)
@@ -98,7 +97,6 @@ internal class AddProductToOrderViewModel @Inject constructor(
             product.value?.let { product ->
                 val appetizerClear = quantity < quantityChanged
                 quantityChanged = quantity
-                addOrUpdateProductToCurrentOrder(quantityChanged, product)
                 val subTotal = calculateSubTotalByProduct(quantity, product)
                 setupStateButtonSubTotal(
                     subTotal.getAmountFormat(), isQuantityEnabled(quantityChanged)
@@ -143,7 +141,7 @@ internal class AddProductToOrderViewModel @Inject constructor(
         viewModelScope.launch(coroutines.getMainDispatcher()) {
             mProduct.value?.let { product ->
                 addOrUpdateProductToCurrentOrder(quantityChanged, product)
-                mEventProductAddedToCardSuccess.postValue(UIKitEvent(Unit))
+                mEvents.emit(Events.CloseScreen)
                 eventBusWrapper.send(AddedProductToCurrentOrderSuccessfullyEvent)
             }
         }
@@ -227,20 +225,20 @@ internal class AddProductToOrderViewModel @Inject constructor(
         return Pair(ButtonEnableType.ALL, true)
     }
 
-    fun validateBackAction() {
+    fun onBackAction() {
         viewModelScope.launch(coroutines.getMainDispatcher()) {
-            if (mStateScreen.value == StateScreen.Add) {
-                product.value?.let {
-                    deleteProductToCurrentOrder(it)
-                }
-            }
-            mEventProductAddedToCardSuccess.postValue(UIKitEvent(Unit))
-            eventBusWrapper.send(AddedProductToCurrentOrderSuccessfullyEvent)
+            //Added tracking
+            mEvents.emit(Events.CloseScreen)
         }
     }
 
     sealed interface StateScreen {
         object Add : StateScreen
         object Update : StateScreen
+    }
+
+    sealed interface Events {
+        object CloseScreen : Events
+
     }
 }

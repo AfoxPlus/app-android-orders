@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.afoxplus.orders.delivery.views.adapters.listeners.ItemCartProductListener
 import com.afoxplus.orders.delivery.views.adapters.viewholders.ItemCartProductViewHolder
-import com.afoxplus.orders.entities.OrderDetail
+import com.afoxplus.orders.domain.entities.OrderDetail
 
 internal class ItemCartProductAdapter(private val itemCartProductListener: ItemCartProductListener) :
     ListAdapter<OrderDetail, ItemCartProductViewHolder>(ItemCartProductUtilCallback()) {

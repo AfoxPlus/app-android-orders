@@ -8,8 +8,8 @@ import com.afoxplus.orders.databinding.FragmentOrdersShopCartBinding
 import com.afoxplus.orders.delivery.viewmodels.ShopCartViewModel
 import com.afoxplus.orders.delivery.views.adapters.ItemCartProductAdapter
 import com.afoxplus.orders.delivery.views.adapters.listeners.ItemCartProductListener
-import com.afoxplus.orders.entities.Order
-import com.afoxplus.orders.entities.OrderDetail
+import com.afoxplus.orders.domain.entities.Order
+import com.afoxplus.orders.domain.entities.OrderDetail
 import com.afoxplus.uikit.fragments.UIKitBaseFragment
 
 class ShopCartFragment : UIKitBaseFragment(), ItemCartProductListener {

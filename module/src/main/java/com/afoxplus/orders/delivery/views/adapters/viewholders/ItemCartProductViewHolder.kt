@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.afoxplus.orders.databinding.ItemOrdersCartProductBinding
 import com.afoxplus.orders.delivery.views.adapters.listeners.ItemCartProductListener
-import com.afoxplus.orders.entities.OrderDetail
+import com.afoxplus.orders.domain.entities.OrderDetail
 import com.afoxplus.uikit.customview.quantitybutton.ButtonType
 
 internal class ItemCartProductViewHolder private constructor(

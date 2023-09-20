@@ -1,8 +1,9 @@
 package com.afoxplus.orders.usecases
 
-import com.afoxplus.orders.entities.OrderStatus
-import com.afoxplus.orders.usecases.repositories.OrderStatusRepository
-import com.afoxplus.orders.utils.TestCoroutineRule
+import com.afoxplus.orders.domain.entities.OrderStatus
+import com.afoxplus.orders.domain.repositories.OrderStatusRepository
+import com.afoxplus.orders.domain.usecases.OrderStatusUseCase
+import com.afoxplus.orders.cross.TestCoroutineRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Assert
 import org.junit.Rule
@@ -30,7 +31,7 @@ class OrderStatusUseCaseTest {
             whenever(mockRepository.getOrderStatus()).doReturn(mockResponse)
 
             //WHEN
-            val result = sutUseCase.getStatusOrders()
+            val result = sutUseCase.invoke()
 
             //THEN
             verify(mockRepository).getOrderStatus()

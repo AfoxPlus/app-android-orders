@@ -8,8 +8,8 @@ import com.afoxplus.orders.delivery.models.SendOrderStatusUIModel
 import com.afoxplus.orders.delivery.viewmodels.ShopCartViewModel
 import com.afoxplus.orders.delivery.views.fragments.ShopCartFragment
 import com.afoxplus.orders.delivery.views.fragments.AdditionalOrderInfoFragment
-import com.afoxplus.orders.repositories.exceptions.ApiErrorException
-import com.afoxplus.orders.repositories.exceptions.OrderBusinessException
+import com.afoxplus.orders.cross.exceptions.ApiErrorException
+import com.afoxplus.orders.cross.exceptions.OrderBusinessException
 import com.afoxplus.uikit.activities.UIKitBaseActivity
 import com.afoxplus.uikit.activities.extensions.addFragmentToActivity
 import com.afoxplus.uikit.bus.UIKitEventObserver
@@ -106,6 +106,7 @@ class OrderPreviewActivity : UIKitBaseActivity() {
                         it.dismiss()
                     }
                     .negativeButton(getString(R.string.order_modal_send_cancel)) {
+                        shopCartViewModel.changeButtonSendEnable(true)
                         it.dismiss()
                     }
                     .show()

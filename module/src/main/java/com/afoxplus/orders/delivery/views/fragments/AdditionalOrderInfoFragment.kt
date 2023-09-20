@@ -9,8 +9,8 @@ import com.afoxplus.orders.databinding.FragmentAdditionalOrderInfoBinding
 import com.afoxplus.orders.delivery.viewmodels.ShopCartViewModel
 import com.afoxplus.orders.delivery.views.adapters.listeners.ItemPaymentMethodListener
 import com.afoxplus.orders.delivery.views.modal.PaymentMethodModalBottomSheet
-import com.afoxplus.orders.entities.Client
-import com.afoxplus.orders.entities.OrderType
+import com.afoxplus.orders.domain.entities.Client
+import com.afoxplus.orders.domain.entities.OrderType
 import com.afoxplus.uikit.bus.UIKitEventObserver
 import com.afoxplus.uikit.fragments.UIKitBaseFragment
 import com.afoxplus.uikit.objects.vendor.PaymentMethod

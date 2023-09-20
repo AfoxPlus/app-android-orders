@@ -1,7 +1,7 @@
 package com.afoxplus.orders.di
 
-import com.afoxplus.orders.repositories.sources.local.OrderLocalDataSource
-import com.afoxplus.orders.repositories.sources.local.cache.OrderLocalCache
+import com.afoxplus.orders.data.sources.local.OrderLocalDataSource
+import com.afoxplus.orders.data.sources.local.cache.OrderLocalCache
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
