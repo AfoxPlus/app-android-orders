@@ -1,8 +1,9 @@
 package com.afoxplus.orders.repositories
 
-import com.afoxplus.orders.entities.OrderStatus
-import com.afoxplus.orders.repositories.sources.network.OrderNetworkDataSource
-import com.afoxplus.orders.utils.TestCoroutineRule
+import com.afoxplus.orders.data.repositories.OrderStatusRepositorySource
+import com.afoxplus.orders.domain.entities.OrderStatus
+import com.afoxplus.orders.data.sources.network.OrderNetworkDataSource
+import com.afoxplus.orders.cross.TestCoroutineRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Assert
 import org.junit.Before

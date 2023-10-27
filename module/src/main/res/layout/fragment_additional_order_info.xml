@@ -63,15 +63,75 @@
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/paymentMethod"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dp16"
+        android:layout_marginHorizontal="@dimen/dp16"
+        android:layout_marginVertical="@dimen/dp12"
         app:cardBackgroundColor="@color/light_01"
         app:cardCornerRadius="@dimen/dp12"
         app:cardElevation="@dimen/dp2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/orderType">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingHorizontal="@dimen/dp16"
+            android:paddingVertical="@dimen/dp12">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/paymentMethodTitle"
+                style="@style/Paragraph01_Bold"
+                android:layout_width="@dimen/borderWidth0"
+                android:layout_height="wrap_content"
+                android:text="@string/orders_payment_method_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Método de pago:" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/paymentMethodLabel"
+                style="@style/Paragraph02"
+                android:layout_width="@dimen/borderWidth0"
+                android:layout_height="wrap_content"
+                android:text="Efectivo"
+                android:textColor="@color/dark_03"
+                app:layout_constraintEnd_toStartOf="@+id/paymentMethodButton"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/paymentMethodTitle"
+                tools:text="Efectivo" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/paymentMethodButton"
+                style="@style/Paragraph01"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp4"
+                android:text="@string/orders_payment_method_button"
+                android:textColor="@color/dark_01"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dp16"
+        android:layout_marginVertical="@dimen/dp12"
+        app:cardBackgroundColor="@color/light_01"
+        app:cardCornerRadius="@dimen/dp12"
+        app:cardElevation="@dimen/dp2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/paymentMethod">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -108,7 +168,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp16"
                 android:hint="@string/orders_table_client_cellphone"
-                android:imeOptions="actionNext"
+                android:imeOptions="actionDone"
                 android:inputType="number"
                 app:errorIconDrawable="@null"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -132,4 +192,16 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
+
+    <com.afoxplus.uikit.customview.alerts.UIKitAlertView
+        android:id="@+id/orderIfoAlertNote"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp16"
+        android:layout_marginEnd="@dimen/dp16"
+        android:layout_marginBottom="@dimen/dp16"
+        app:alert_color="@color/blue_01"
+        app:alert_message="@string/order_status_note_message"
+        app:alert_title="@string/order_status_note_title"
+        app:layout_constraintBottom_toBottomOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

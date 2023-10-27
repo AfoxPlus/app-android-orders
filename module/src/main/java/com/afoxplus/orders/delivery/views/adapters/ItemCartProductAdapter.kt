@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.afoxplus.orders.delivery.views.adapters.listeners.ItemCartProductListener
 import com.afoxplus.orders.delivery.views.adapters.viewholders.ItemCartProductViewHolder
-import com.afoxplus.orders.entities.OrderDetail
+import com.afoxplus.orders.domain.entities.OrderDetail
 
 internal class ItemCartProductAdapter(private val itemCartProductListener: ItemCartProductListener) :
     ListAdapter<OrderDetail, ItemCartProductViewHolder>(ItemCartProductUtilCallback()) {
@@ -15,13 +15,12 @@ internal class ItemCartProductAdapter(private val itemCartProductListener: ItemC
 
     override fun onBindViewHolder(holder: ItemCartProductViewHolder, position: Int) =
         holder.bind(getItem(position))
-
+    
     class ItemCartProductUtilCallback : DiffUtil.ItemCallback<OrderDetail>() {
         override fun areItemsTheSame(oldItem: OrderDetail, newItem: OrderDetail): Boolean =
             oldItem.product.code == newItem.product.code
 
         override fun areContentsTheSame(oldItem: OrderDetail, newItem: OrderDetail): Boolean =
-            oldItem.product == newItem.product
-
+            oldItem == newItem
     }
 }

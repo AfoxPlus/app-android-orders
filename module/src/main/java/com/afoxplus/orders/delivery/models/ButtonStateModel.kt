@@ -25,5 +25,11 @@ internal data class ButtonStateModel(
             )
         }
 
+        fun getDeleteButtonState(): ButtonStateModel {
+            return ButtonStateModel(
+                title = R.string.orders_market_delete_product,
+                enabled = true
+            )
+        }
     }
 }

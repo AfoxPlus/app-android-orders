@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data class="FragmentOrderSentSuccessfullyBinding" />
 
@@ -16,11 +17,11 @@
             android:layout_marginBottom="@dimen/dp30"
             android:gravity="center"
             android:paddingTop="@dimen/dp46"
-            android:text="@string/orders_success_order"
             android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/orders_success_order" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="wrap_content"
@@ -35,7 +36,7 @@
             android:id="@+id/buttonViewOrder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dp16"
+            android:layout_marginHorizontal="@dimen/dp16"
             android:backgroundTint="@color/orange_01"
             android:padding="@dimen/dp16"
             android:text="@string/orders_market_button_new_order"
@@ -43,10 +44,28 @@
             android:textAppearance="@style/UIKit.TextAppearance.Button"
             android:textColor="@color/light_01"
             app:cornerRadius="@dimen/dp16"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/buttonGoToHome"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonGoToHome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dp16"
+            android:layout_marginBottom="@dimen/dp12"
+            android:backgroundTint="@android:color/white"
+            android:padding="@dimen/dp16"
+            android:text="@string/order_market_button_go_to_home"
+            android:textAllCaps="false"
+            android:textAppearance="@style/UIKit.TextAppearance.Button"
+            android:textColor="@color/orange_01"
+            app:cornerRadius="@dimen/dp16"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:strokeColor="@color/orange_01"
+            app:strokeWidth="2dp" />
 
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

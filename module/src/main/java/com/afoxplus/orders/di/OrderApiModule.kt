@@ -1,7 +1,7 @@
 package com.afoxplus.orders.di
 
 import com.afoxplus.network.api.RetrofitGenerator
-import com.afoxplus.orders.repositories.sources.network.api.OrderApiNetwork
+import com.afoxplus.orders.data.sources.network.api.OrderApiNetwork
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

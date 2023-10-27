@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import com.afoxplus.orders.R
 import com.afoxplus.orders.databinding.ActivityOrderStatusDetailBinding
 import com.afoxplus.orders.delivery.views.adapters.ItemDetailStatusProductAdapter
-import com.afoxplus.orders.entities.OrderStatus
+import com.afoxplus.orders.domain.entities.OrderStatus
 import com.afoxplus.uikit.activities.UIKitBaseActivity
 
 import com.afoxplus.uikit.extensions.parcelable
@@ -49,6 +49,7 @@ class OrderStatusDetailActivity : UIKitBaseActivity() {
             ctosTypeStatusOrder.configType(orderStatus.orderType.code)
             ctosTypeStatusOrder.title = orderStatus.orderType.title
             ctosTypeStatusOrder.description = orderStatus.orderType.description
+            tvPaymentMethod.text = orderStatus.paymentMethod
             tvStatus.text = orderStatus.state
             appBar.setNavigationOnClickListener { finish() }
         }

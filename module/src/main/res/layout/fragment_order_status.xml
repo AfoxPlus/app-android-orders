@@ -3,17 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".delivery.views.fragments.OrderStatusFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
+    <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/rvOrderStatus"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:clipChildren="false"
         android:clipToPadding="false"
         android:orientation="horizontal"
-        android:paddingStart="5dp"
-        android:paddingEnd="5dp"
+        android:paddingStart="@dimen/dp14"
+        android:paddingEnd="@dimen/dp14"
         android:scrollbars="none"
         android:visibility="gone"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -21,7 +22,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:reverseLayout="false"
         tools:ignore="SpeakableTextPresentCheck"
         tools:itemCount="12"
         tools:listitem="@layout/item_order_status"

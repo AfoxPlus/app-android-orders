@@ -2,9 +2,10 @@ package com.afoxplus.orders.repositories.sources.network.service
 
 import com.afoxplus.network.global.AppProperties
 import com.afoxplus.network.response.BaseResponse
-import com.afoxplus.orders.repositories.sources.network.api.OrderApiNetwork
-import com.afoxplus.orders.repositories.sources.network.api.response.OrderStatusResponse
-import com.afoxplus.orders.utils.TestCoroutineRule
+import com.afoxplus.orders.data.sources.network.api.OrderApiNetwork
+import com.afoxplus.orders.data.sources.network.api.response.OrderStatusResponse
+import com.afoxplus.orders.data.sources.network.service.OrderNetworkService
+import com.afoxplus.orders.cross.TestCoroutineRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Assert
 import org.junit.Before

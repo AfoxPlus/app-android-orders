@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.afoxplus.orders.R
 import com.afoxplus.orders.databinding.ItemOrderStatusProductBinding
 
-import com.afoxplus.orders.entities.DetailStatus
+import com.afoxplus.orders.domain.entities.DetailStatus
 
 class ItemDetailStatusProductAdapter :
     ListAdapter<DetailStatus, ItemDetailStatusProductAdapter.ItemDetailStatusProductViewHolder>(

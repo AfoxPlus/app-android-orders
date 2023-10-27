@@ -1,9 +1,9 @@
 package com.afoxplus.orders.di
 
-import com.afoxplus.orders.repositories.OrderRepositorySource
-import com.afoxplus.orders.repositories.OrderStatusRepositorySource
-import com.afoxplus.orders.usecases.repositories.OrderRepository
-import com.afoxplus.orders.usecases.repositories.OrderStatusRepository
+import com.afoxplus.orders.data.repositories.OrderRepositorySource
+import com.afoxplus.orders.data.repositories.OrderStatusRepositorySource
+import com.afoxplus.orders.domain.repositories.OrderRepository
+import com.afoxplus.orders.domain.repositories.OrderStatusRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

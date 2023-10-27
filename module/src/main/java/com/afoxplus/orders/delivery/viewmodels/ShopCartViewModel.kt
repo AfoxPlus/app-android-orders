@@ -5,28 +5,37 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.afoxplus.orders.entities.Client
-import com.afoxplus.orders.entities.Order
-import com.afoxplus.orders.entities.OrderDetail
-import com.afoxplus.orders.entities.OrderType
-import com.afoxplus.orders.usecases.actions.AddOrUpdateProductToCurrentOrder
-import com.afoxplus.orders.usecases.actions.DeleteProductToCurrentOrder
-import com.afoxplus.orders.usecases.actions.GetCurrentOrder
-import com.afoxplus.orders.usecases.actions.GetRestaurantName
-import com.afoxplus.orders.usecases.actions.SendOrder
+import com.afoxplus.orders.delivery.models.SendOrderStatusUIModel
+import com.afoxplus.orders.domain.entities.Client
+import com.afoxplus.orders.domain.entities.Order
+import com.afoxplus.orders.domain.entities.OrderDetail
+import com.afoxplus.orders.domain.entities.OrderType
+import com.afoxplus.orders.cross.exceptions.ExceptionMessage
+import com.afoxplus.orders.cross.exceptions.OrderBusinessException
+import com.afoxplus.orders.domain.usecases.AddOrUpdateProductToCurrentOrderUseCase
+import com.afoxplus.orders.domain.usecases.DeleteProductToCurrentOrderUseCase
+import com.afoxplus.orders.domain.usecases.GetCurrentOrderUseCase
+import com.afoxplus.orders.domain.usecases.GetRestaurantNameUseCase
+import com.afoxplus.orders.domain.usecases.GetRestaurantPaymentsUseCase
+import com.afoxplus.orders.domain.usecases.SendOrderUseCase
+import com.afoxplus.products.entities.Product
 import com.afoxplus.uikit.bus.UIKitEvent
+import com.afoxplus.uikit.common.ResultState
 import com.afoxplus.uikit.di.UIKitCoroutineDispatcher
+import com.afoxplus.uikit.objects.vendor.PaymentMethod
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 internal class ShopCartViewModel @Inject constructor(
-    private val addOrUpdateProductToCurrentOrder: AddOrUpdateProductToCurrentOrder,
-    private val getCurrentOrder: GetCurrentOrder,
-    private val deleteProductToCurrentOrder: DeleteProductToCurrentOrder,
-    private val sendOrder: SendOrder,
-    private val getRestaurantName: GetRestaurantName,
+    private val addOrUpdateProductToCurrentOrder: AddOrUpdateProductToCurrentOrderUseCase,
+    private val getCurrentOrder: GetCurrentOrderUseCase,
+    private val deleteProductToCurrentOrder: DeleteProductToCurrentOrderUseCase,
+    private val sendOrder: SendOrderUseCase,
+    private val getRestaurantName: GetRestaurantNameUseCase,
+    private val getRestaurantPaymentsUseCase: GetRestaurantPaymentsUseCase,
     private val coroutines: UIKitCoroutineDispatcher
 ) : ViewModel() {
 
@@ -54,14 +63,33 @@ internal class ShopCartViewModel @Inject constructor(
     private val mErrorClientPhoneNumberMutableLiveData: MutableLiveData<String> by lazy { MutableLiveData<String>() }
     val errorClientPhoneNumberLiveData: LiveData<String> get() = mErrorClientPhoneNumberMutableLiveData
 
-    private val mEventSuccessOrder: MutableLiveData<UIKitEvent<String>> by lazy { MutableLiveData<UIKitEvent<String>>() }
-    val eventOpenSuccessOrder: LiveData<UIKitEvent<String>> get() = mEventSuccessOrder
+    private val mEventSuccessOrder: MutableLiveData<SendOrderStatusUIModel> by lazy { MutableLiveData<SendOrderStatusUIModel>() }
+    val eventOpenSuccessOrder: LiveData<SendOrderStatusUIModel> get() = mEventSuccessOrder
 
-    private val mButtonSendLoading: MutableLiveData<UIKitEvent<Unit>> by lazy { MutableLiveData() }
-    val buttonSendLoading: LiveData<UIKitEvent<Unit>> get() = mButtonSendLoading
+    private val mButtonSendLoading: MutableLiveData<UIKitEvent<Boolean>> by lazy { MutableLiveData() }
+    val buttonSendLoading: LiveData<UIKitEvent<Boolean>> get() = mButtonSendLoading
+    private val mGoToAddCardProductEvent: MutableLiveData<UIKitEvent<Product>> by lazy { MutableLiveData<UIKitEvent<Product>>() }
+    val goToAddCardProductEvent: LiveData<UIKitEvent<Product>> get() = mGoToAddCardProductEvent
+
+    private var paymentMethods: MutableList<PaymentMethod> = mutableListOf()
+
+    private val mPaymentMethodSelectedMutableLiveData: MutableLiveData<PaymentMethod> by lazy { MutableLiveData<PaymentMethod>() }
+    val paymentMethodSelectedLiveData: LiveData<PaymentMethod> get() = mPaymentMethodSelectedMutableLiveData
+
+    private val mRetrySize: MutableLiveData<Int> by lazy { MutableLiveData<Int>(0) }
 
     init {
         loadCurrentOrder()
+        loadPaymentMethods()
+    }
+
+    private fun loadPaymentMethods() {
+        viewModelScope.launch(coroutines.getMainDispatcher()) {
+            paymentMethods = getRestaurantPaymentsUseCase.invoke().toMutableList()
+            if (paymentMethods.isNotEmpty()) {
+                mPaymentMethodSelectedMutableLiveData.postValue(paymentMethods.first { it.isSelected })
+            }
+        }
     }
 
     private fun loadCurrentOrder() {
@@ -85,13 +113,19 @@ internal class ShopCartViewModel @Inject constructor(
 
     fun deleteItem(orderDetail: OrderDetail) {
         viewModelScope.launch(coroutines.getMainDispatcher()) {
-            deleteProductToCurrentOrder.invoke(orderDetail.product)
+            deleteProductToCurrentOrder(orderDetail.product)
         }
     }
 
     fun updateQuantity(orderDetail: OrderDetail, quantity: Int) {
         viewModelScope.launch(coroutines.getMainDispatcher()) {
-            addOrUpdateProductToCurrentOrder.invoke(quantity, orderDetail.product)
+            addOrUpdateProductToCurrentOrder(quantity, orderDetail.product)
+        }
+    }
+
+    fun editMenuDish(orderDetail: OrderDetail) {
+        viewModelScope.launch(coroutines.getMainDispatcher()) {
+            mGoToAddCardProductEvent.postValue(UIKitEvent(orderDetail.product))
         }
     }
 
@@ -113,23 +147,67 @@ internal class ShopCartViewModel @Inject constructor(
     }
 
     private fun getOrderType(): OrderType = mOrder.value?.orderType ?: OrderType.Delivery
-    fun sendOrder(client: Client) {
+
+    private fun sendOrder() = viewModelScope.launch(coroutines.getMainDispatcher()) {
+        mOrder.value?.let { order ->
+            changeButtonSendEnable(false)
+            val result = sendOrder.invoke(order)
+            handleOrderResult(result)
+        }
+    }
+
+    fun retrySendOrder() = viewModelScope.launch(coroutines.getMainDispatcher()) {
+        mRetrySize.value?.let { retrySize ->
+            mRetrySize.value = retrySize.plus(1)
+            delay(RETRY_DELAY)
+            if (retrySize <= LIMIT_RETRY) {
+                sendOrder()
+            } else handleBusinessExceptionRetry()
+        }
+    }
+
+    private fun handleBusinessExceptionRetry() {
+        mEventSuccessOrder.postValue(
+            SendOrderStatusUIModel.Error(
+                OrderBusinessException(
+                    contentMessage = ExceptionMessage(
+                        value = "Hubo un problema al enviar el pedido",
+                        info = "Ha ocurrido un problema al enviar el pedido, intentalo nuevamente"
+                    )
+                )
+            )
+        )
+    }
+
+    fun setClientToOrder(client: Client) = viewModelScope.launch(coroutines.getMainDispatcher()) {
         if (validateClient(client, getOrderType())) {
             mOrder.value?.also { order ->
                 order.client = client
-                viewModelScope.launch(coroutines.getMainDispatcher()) {
-                    mButtonSendLoading.value = UIKitEvent(Unit)
-                    val message = sendOrder.invoke(order)
-                    openSuccessOrder(message)
-                }
+                order.paymentMethod = mPaymentMethodSelectedMutableLiveData.value
+            }
+            sendOrder()
+        }
+    }
+
+    fun changeButtonSendEnable(isEnable: Boolean) {
+        mButtonSendLoading.value = UIKitEvent(isEnable)
+    }
+
+    private fun handleOrderResult(result: ResultState<String>) {
+        when (result) {
+            is ResultState.Success -> {
+                mEventSuccessOrder.postValue(SendOrderStatusUIModel.Success(result.data))
+            }
+
+            is ResultState.Error -> {
+                mEventSuccessOrder.postValue(SendOrderStatusUIModel.Error(result.exception))
             }
         }
     }
 
     fun restaurantName(): String = getRestaurantName()
-    private fun openSuccessOrder(message: String) {
-        mEventSuccessOrder.postValue(UIKitEvent(message))
-    }
+
+    fun fetchPaymentMethods(): List<PaymentMethod> = paymentMethods
 
     private fun validateClient(client: Client, orderType: OrderType?): Boolean {
         when (orderType) {
@@ -156,5 +234,17 @@ internal class ShopCartViewModel @Inject constructor(
             }
         }
         return true
+    }
+
+    fun selectPaymentMethod(paymentMethod: PaymentMethod) {
+        mPaymentMethodSelectedMutableLiveData.postValue(paymentMethod)
+        paymentMethods.forEach {
+            it.isSelected = paymentMethod.id == it.id
+        }
+    }
+
+    companion object {
+        private const val LIMIT_RETRY = 3
+        private const val RETRY_DELAY = 2000L
     }
 }

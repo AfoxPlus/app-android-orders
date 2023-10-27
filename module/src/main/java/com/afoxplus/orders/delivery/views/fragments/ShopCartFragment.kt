@@ -8,8 +8,8 @@ import com.afoxplus.orders.databinding.FragmentOrdersShopCartBinding
 import com.afoxplus.orders.delivery.viewmodels.ShopCartViewModel
 import com.afoxplus.orders.delivery.views.adapters.ItemCartProductAdapter
 import com.afoxplus.orders.delivery.views.adapters.listeners.ItemCartProductListener
-import com.afoxplus.orders.entities.Order
-import com.afoxplus.orders.entities.OrderDetail
+import com.afoxplus.orders.domain.entities.Order
+import com.afoxplus.orders.domain.entities.OrderDetail
 import com.afoxplus.uikit.fragments.UIKitBaseFragment
 
 class ShopCartFragment : UIKitBaseFragment(), ItemCartProductListener {
@@ -33,14 +33,18 @@ class ShopCartFragment : UIKitBaseFragment(), ItemCartProductListener {
 
     override fun observerViewModel() {
         cartProductsViewModel.order.observe(viewLifecycleOwner) { order ->
-            adapter.submitList(order?.getOrderDetails())
+            val newListO: MutableList<OrderDetail> = mutableListOf()
+            order.getOrderDetails().map {
+                newListO.add(OrderDetail(it.product, it.quantity, it.saleOrderItemStrategy))
+            }
+            adapter.submitList(newListO)
             displayOrder(order)
         }
-
     }
 
     private fun displayOrder(order: Order) {
         binding.subTotalOrder.text = order.getTotalWithFormat()
+        binding.shopOrderSummaryQuantityValue.text = order.getTotalQuantity().toString()
     }
 
     override fun deleteItem(orderDetail: OrderDetail) {
@@ -49,5 +53,9 @@ class ShopCartFragment : UIKitBaseFragment(), ItemCartProductListener {
 
     override fun updateQuantity(orderDetail: OrderDetail, quantity: Int) {
         cartProductsViewModel.updateQuantity(orderDetail, quantity)
+    }
+
+    override fun editProduct(orderDetail: OrderDetail) {
+        cartProductsViewModel.editMenuDish(orderDetail)
     }
 }

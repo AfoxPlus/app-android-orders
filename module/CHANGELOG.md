@@ -1,5 +1,9 @@
 # app-android-orders Changelog
 
+## Version 6.0.0
+## Added
+- Se modifico el dependencies.
+
 ## Version 3.0.12
 ### Added
 - Se modifico recycler para modo horizontal.

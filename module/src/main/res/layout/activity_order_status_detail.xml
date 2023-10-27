@@ -128,6 +128,29 @@
                         app:layout_constraintTop_toBottomOf="@id/tvStatusTotal"
                         tools:text="S/ 50.30" />
 
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvPaymentMethodTitle"
+                        style="@style/Paragraph01"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/order_payment_method_title"
+                        android:textColor="@color/dark_02"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tvStatusAmount" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvPaymentMethod"
+                        style="@style/Paragraph01"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:textAllCaps="false"
+                        android:textColor="@color/dark_05"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tvPaymentMethodTitle"
+                        tools:text="Efectivo" />
+
                     <View
                         android:id="@+id/vStatusLine"
                         android:layout_width="0dp"
@@ -136,7 +159,7 @@
                         android:background="@drawable/dotted_line_horizontal"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tvStatusAmount" />
+                        app:layout_constraintTop_toBottomOf="@id/tvPaymentMethod" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvStatus"

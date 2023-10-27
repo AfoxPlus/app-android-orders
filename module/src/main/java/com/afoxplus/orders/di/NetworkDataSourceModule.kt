@@ -1,7 +1,7 @@
 package com.afoxplus.orders.di
 
-import com.afoxplus.orders.repositories.sources.network.OrderNetworkDataSource
-import com.afoxplus.orders.repositories.sources.network.service.OrderNetworkService
+import com.afoxplus.orders.data.sources.network.OrderNetworkDataSource
+import com.afoxplus.orders.data.sources.network.service.OrderNetworkService
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

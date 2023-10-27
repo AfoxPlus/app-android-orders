@@ -1,6 +1,8 @@
 package com.afoxplus.orders.delivery.views.activities
 
+import androidx.activity.addCallback
 import androidx.activity.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.afoxplus.orders.R
 import com.afoxplus.orders.databinding.ActivityAddProductToOrderBinding
 import com.afoxplus.orders.delivery.viewmodels.AddProductToOrderViewModel
@@ -8,8 +10,10 @@ import com.afoxplus.orders.delivery.views.fragments.AddProductToCartFragment
 import com.afoxplus.products.entities.Product
 import com.afoxplus.uikit.activities.UIKitBaseActivity
 import com.afoxplus.uikit.activities.extensions.addFragmentToActivity
-import com.afoxplus.uikit.bus.UIKitEventObserver
+import com.afoxplus.uikit.extensions.parcelable
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class AddProductToOrderActivity : UIKitBaseActivity() {
@@ -26,7 +30,7 @@ class AddProductToOrderActivity : UIKitBaseActivity() {
     override fun setUpView() {
         getIntentData()
         binding.viewModel = addProductToOrderViewModel
-        binding.marketOrderToolBar.setNavigationOnClickListener { onBackPressed() }
+        binding.marketOrderToolBar.setNavigationOnClickListener { onBackPressedDispatcher.onBackPressed() }
         addFragmentToActivity(
             supportFragmentManager,
             AddProductToCartFragment.getInstance(),
@@ -34,12 +38,19 @@ class AddProductToOrderActivity : UIKitBaseActivity() {
         )
         setInitialButtonText()
         binding.buttonViewOrder.setOnClickListener { addProductToOrderViewModel.addOrUpdateToCurrentOrder() }
+        onBackPressedDispatcher.addCallback {
+            this@AddProductToOrderActivity.addProductToOrderViewModel.onBackAction()
+        }
     }
 
     override fun observerViewModel() {
-        addProductToOrderViewModel.eventProductAddedToCardSuccess.observe(this, UIKitEventObserver {
-            finish()
-        })
+        lifecycleScope.launch {
+            addProductToOrderViewModel.events.collectLatest { events ->
+                when (events) {
+                    is AddProductToOrderViewModel.Events.CloseScreen -> finish()
+                }
+            }
+        }
 
         addProductToOrderViewModel.buttonSubTotalState.observe(this) { model ->
             binding.buttonViewOrder.isEnabled = model.enabled
@@ -52,7 +63,7 @@ class AddProductToOrderActivity : UIKitBaseActivity() {
     }
 
     private fun getIntentData() {
-        intent.getParcelableExtra<Product>(Product::class.java.name)?.let { product ->
+        intent.parcelable<Product>(Product::class.java.name)?.let { product ->
             addProductToOrderViewModel.startWithProduct(product)
         }
     }
