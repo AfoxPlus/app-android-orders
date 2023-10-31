@@ -15,6 +15,7 @@ import com.afoxplus.orders.domain.usecases.AddOrUpdateAppetizerToCurrentOrderUse
 import com.afoxplus.orders.domain.usecases.AddOrUpdateProductToCurrentOrderUseCase
 import com.afoxplus.orders.domain.usecases.CalculateSubTotalByProductUseCase
 import com.afoxplus.orders.domain.usecases.ClearAppetizersOrderUseCase
+import com.afoxplus.orders.domain.usecases.DeleteProductToCurrentOrderUseCase
 import com.afoxplus.orders.domain.usecases.FindProductInOrderUseCase
 import com.afoxplus.orders.domain.usecases.MatchAppetizersByOrderUseCase
 import com.afoxplus.products.entities.Product
@@ -34,6 +35,7 @@ internal class AddProductToOrderViewModel @Inject constructor(
     private val findProductInOrder: FindProductInOrderUseCase,
     private val calculateSubTotalByProduct: CalculateSubTotalByProductUseCase,
     private val addOrUpdateProductToCurrentOrder: AddOrUpdateProductToCurrentOrderUseCase,
+    private val deleteProductToCurrentOrder: DeleteProductToCurrentOrderUseCase,
     private val fetchAppetizerByCurrentRestaurant: FetchAppetizerByCurrentRestaurant,
     private val matchAppetizersByOrder: MatchAppetizersByOrderUseCase,
     private val addOrUpdateAppetizerToCurrentOrder: AddOrUpdateAppetizerToCurrentOrderUseCase,
@@ -97,6 +99,7 @@ internal class AddProductToOrderViewModel @Inject constructor(
             product.value?.let { product ->
                 val appetizerClear = quantity < quantityChanged
                 quantityChanged = quantity
+                addOrUpdateProductToCurrentOrder(quantityChanged, product)
                 val subTotal = calculateSubTotalByProduct(quantity, product)
                 setupStateButtonSubTotal(
                     subTotal.getAmountFormat(), isQuantityEnabled(quantityChanged)
@@ -228,6 +231,11 @@ internal class AddProductToOrderViewModel @Inject constructor(
     fun onBackAction() {
         viewModelScope.launch(coroutines.getMainDispatcher()) {
             //Added tracking
+            if (mStateScreen.value == StateScreen.Add) {
+                product.value?.let {
+                    deleteProductToCurrentOrder(it)
+                }
+            }
             mEvents.emit(Events.CloseScreen)
         }
     }
