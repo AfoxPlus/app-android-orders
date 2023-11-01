@@ -6,6 +6,7 @@ import com.afoxplus.orders.domain.entities.OrderAppetizerDetail
 import com.afoxplus.orders.domain.entities.OrderDetail
 import com.afoxplus.orders.data.sources.local.OrderLocalDataSource
 import com.afoxplus.products.entities.Product
+import com.afoxplus.uikit.objects.vendor.Vendor
 import com.afoxplus.uikit.objects.vendor.VendorShared
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -27,8 +28,8 @@ internal class OrderLocalCache @Inject constructor(
     }
 
     override suspend fun addOrUpdateProductToCurrentOrder(quantity: Int, product: Product) {
-        order?.addUpdateOrDeleteProductWithQuantity(product, quantity)
-            ?: newOrder().addUpdateOrDeleteProductWithQuantity(product, quantity)
+        val order = order ?: newOrder()
+        order.addUpdateOrDeleteProductWithQuantity(product, quantity)
         orderStateFlow.emit(order)
     }
 
@@ -37,7 +38,11 @@ internal class OrderLocalCache @Inject constructor(
     }
 
     override fun findProductInOrder(product: Product): OrderDetail? {
-        return order?.getOrderDetails()?.find { item -> item.product.code == product.code }
+        return order?.run {
+            getOrderDetails().find { item ->
+                item.product.code == product.code
+            }
+        }
     }
 
     override suspend fun getCurrentOrder(): SharedFlow<Order?> {
@@ -55,21 +60,24 @@ internal class OrderLocalCache @Inject constructor(
         appetizer: Product,
         product: Product
     ) {
-        val product = findProductInOrder(product)
-        product?.addAppetizerWithQuantity(appetizer, quantity)
+        val orderDetail = findProductInOrder(product)
+        orderDetail?.addAppetizerWithQuantity(appetizer, quantity)
     }
 
     override suspend fun fetchAppetizersByProduct(product: Product): List<OrderAppetizerDetail> {
-        return findProductInOrder(product)?.appetizers?.toList() ?: arrayListOf()
+        val orderDetail = findProductInOrder(product) ?: return arrayListOf()
+        return orderDetail.appetizers.toList()
     }
 
     override suspend fun clearAppetizersByProduct(product: Product) {
-        findProductInOrder(product)?.appetizers?.clear()
+        findProductInOrder(product)?.apply {
+            appetizers.clear()
+        }
     }
 
     private fun newOrder(): Order {
         val newOrder = Order(
-            restaurantId = vendorShared.fetch()?.restaurantId ?: "",
+            restaurantId = fetchVendorData().restaurantId,
             orderType = getDeliveryType()
         )
         order = newOrder
@@ -77,11 +85,15 @@ internal class OrderLocalCache @Inject constructor(
     }
 
     private fun getDeliveryType(): OrderType {
-        vendorShared.fetch()?.let {
+        fetchVendorData().let {
             val isOwnDelivery = it.additionalInfo["restaurant_own_delivery"] == true
             return if (isOwnDelivery)
                 OrderType.Delivery
             else OrderType.Local.apply { description = it.tableId }
-        } ?: throw Exception("No found DeliveryType")
+        }
+    }
+
+    private fun fetchVendorData(): Vendor {
+        return vendorShared.fetch() ?: throw Exception("No found DeliveryType")
     }
 }

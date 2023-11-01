@@ -38,7 +38,6 @@ class GetRestaurantNameUseCaseTests {
             )
             whenever(mockVendor.fetch()).doReturn(responseMock)
 
-
             //WHEN
             val result = sutUseCase.invoke()
 
@@ -55,7 +54,6 @@ class GetRestaurantNameUseCaseTests {
             //GIVEN
             val mockRestaurantName = ""
             whenever(mockVendor.fetch()).doReturn(null)
-
 
             //WHEN
             val result = sutUseCase.invoke()

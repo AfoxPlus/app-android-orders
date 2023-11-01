@@ -5,9 +5,8 @@ import javax.inject.Inject
 
 internal class GetRestaurantNameUseCase @Inject constructor(private val vendorShared: VendorShared) {
     operator fun invoke(): String {
-        return vendorShared.fetch()?.let { vendor ->
-            vendor.additionalInfo[PARAM_RESTAURANT_NAME].toString()
-        } ?: ""
+        val vendor = vendorShared.fetch() ?: return ""
+        return vendor.additionalInfo[PARAM_RESTAURANT_NAME].toString()
     }
 
     companion object {

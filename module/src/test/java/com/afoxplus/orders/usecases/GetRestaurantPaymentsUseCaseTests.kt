@@ -77,4 +77,5 @@ class GetRestaurantPaymentsUseCaseTests {
             Assert.assertEquals(result.size, 0)
         }
     }
+
 }
