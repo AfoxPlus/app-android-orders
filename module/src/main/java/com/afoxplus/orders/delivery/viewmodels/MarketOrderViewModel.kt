@@ -35,11 +35,8 @@ internal class MarketOrderViewModel @Inject constructor(
     private val mDisplayOrderModalLiveData: MutableLiveData<Unit> by lazy { MutableLiveData<Unit>() }
     val displayOrderModalLiveData: LiveData<Unit> get() = mDisplayOrderModalLiveData
 
-    init {
-        loadCurrentOrder()
-    }
 
-    private fun loadCurrentOrder() {
+    fun loadCurrentOrder() {
         viewModelScope.launch(coroutines.getMainDispatcher()) {
             getCurrentOrder().collect {
                 if (it != null)
@@ -50,9 +47,11 @@ internal class MarketOrderViewModel @Inject constructor(
 
     fun restaurantName(): String = getRestaurantName()
 
-    fun onClickViewOrder() = viewModelScope.launch(coroutines.getMainDispatcher()) {
-        mOrder.value?.let { order ->
-            mOnMarketOrderEvent.emit(MarketOrderEvent.OnClickViewOrder(order = order))
+    fun onClickViewOrder() {
+        viewModelScope.launch(coroutines.getMainDispatcher()) {
+            mOrder.value?.let { order ->
+                mOnMarketOrderEvent.emit(MarketOrderEvent.OnClickViewOrder(order = order))
+            }
         }
     }
 

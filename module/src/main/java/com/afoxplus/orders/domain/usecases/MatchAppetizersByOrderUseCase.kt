@@ -5,9 +5,9 @@ import com.afoxplus.products.entities.Product
 import javax.inject.Inject
 
 internal class MatchAppetizersByOrderUseCase @Inject constructor(
-    val fetchAppetizerByOrderUseCase: FetchAppetizerByOrderUseCase
+    private val fetchAppetizerByOrderUseCase: FetchAppetizerByOrderUseCase
 ) {
-   suspend operator fun invoke(
+    suspend operator fun invoke(
         appetizers: List<Product>,
         product: Product
     ): List<OrderAppetizerDetail> {

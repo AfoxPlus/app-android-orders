@@ -59,6 +59,7 @@ class MarketOrderActivity : UIKitBaseActivity() {
     }
 
     override fun setUpView() {
+        marketOrderViewModel.loadCurrentOrder()
         binding.marketOrderToolBar.setNavigationOnClickListener { marketOrderViewModel.onBackPressed() }
         setUpMarkerOrderTab()
         binding.marketOrderToolBar.subtitle = marketOrderViewModel.restaurantName()

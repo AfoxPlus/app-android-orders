@@ -11,5 +11,4 @@ internal class OrderStatusUseCase @Inject constructor(
     suspend operator fun invoke(): List<OrderStatus> {
         return repository.getOrderStatus()
     }
-
 }

@@ -6,8 +6,7 @@ import javax.inject.Inject
 
 internal class GetRestaurantPaymentsUseCase @Inject constructor(private val vendorShared: VendorShared) {
    operator fun invoke(): List<PaymentMethod> {
-        return vendorShared.fetch()?.let { vendor ->
-            vendor.paymentMethod
-        } ?: arrayListOf()
+       val vendor = vendorShared.fetch() ?: return arrayListOf()
+        return vendor.paymentMethod
     }
 }

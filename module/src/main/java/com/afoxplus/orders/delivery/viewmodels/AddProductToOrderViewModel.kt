@@ -74,12 +74,14 @@ internal class AddProductToOrderViewModel @Inject constructor(
     private val mEvents: MutableSharedFlow<Events> by lazy { MutableSharedFlow() }
     val events = mEvents.asSharedFlow()
 
-    fun startWithProduct(product: Product) = viewModelScope.launch(coroutines.getMainDispatcher()) {
-        mProduct.postValue(product)
-        findProductInOrder(product)?.let { orderDetail ->
-            setupUpdateScreen(orderDetail)
-        } ?: mQuantity.postValue(null)
-        handleProductType(product)
+    fun startWithProduct(product: Product) {
+        viewModelScope.launch(coroutines.getMainDispatcher()) {
+            mProduct.postValue(product)
+            findProductInOrder(product)?.let { orderDetail ->
+                setupUpdateScreen(orderDetail)
+            } ?: mQuantity.postValue(null)
+            handleProductType(product)
+        }
     }
 
     private fun handleProductType(product: Product) {
@@ -94,7 +96,7 @@ internal class AddProductToOrderViewModel @Inject constructor(
         setOrderAndVerifyQuantity(orderDetail)
     }
 
-    fun calculateSubTotalByProduct(quantity: Int) =
+    fun calculateSubTotalByProduct(quantity: Int) {
         viewModelScope.launch(coroutines.getMainDispatcher()) {
             product.value?.let { product ->
                 val appetizerClear = quantity < quantityChanged
@@ -107,6 +109,7 @@ internal class AddProductToOrderViewModel @Inject constructor(
                 handleAppetizerByProductQuantity(appetizerClear)
             }
         }
+    }
 
     private fun handleAppetizerByProductQuantity(shouldClearAppetizer: Boolean) {
         product.value?.let {
@@ -121,7 +124,7 @@ internal class AddProductToOrderViewModel @Inject constructor(
 
     private fun displayAppetizerModal() {
         if (appetizerAddedQuantity > 0)
-            mAppetizersShowModal.postValue(null)
+            mAppetizersShowModal.postValue(Unit)
     }
 
     private fun clearAppetizers() {
@@ -140,7 +143,7 @@ internal class AddProductToOrderViewModel @Inject constructor(
         setupStateButtonSubTotal(subTotal, enabledButton = true)
     }
 
-    fun addOrUpdateToCurrentOrder() =
+    fun addOrUpdateToCurrentOrder() {
         viewModelScope.launch(coroutines.getMainDispatcher()) {
             mProduct.value?.let { product ->
                 addOrUpdateProductToCurrentOrder(quantityChanged, product)
@@ -148,6 +151,8 @@ internal class AddProductToOrderViewModel @Inject constructor(
                 eventBusWrapper.send(AddedProductToCurrentOrderSuccessfullyEvent)
             }
         }
+    }
+
 
     private fun isQuantityEnabled(quantity: Int): Boolean = quantity > 0
     private fun setupStateButtonSubTotal(subTotal: String, enabledButton: Boolean) {

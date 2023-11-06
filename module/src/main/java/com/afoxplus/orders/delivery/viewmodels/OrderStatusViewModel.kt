@@ -29,5 +29,4 @@ internal class OrderStatusViewModel @Inject constructor(
             _orders.postValue(OrderStateUIModel.Error(e))
         }
     }
-
 }

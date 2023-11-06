@@ -78,7 +78,7 @@ internal class ShopCartViewModel @Inject constructor(
 
     private val mRetrySize: MutableLiveData<Int> by lazy { MutableLiveData<Int>(0) }
 
-    init {
+    fun loadData(){
         loadCurrentOrder()
         loadPaymentMethods()
     }
@@ -135,7 +135,6 @@ internal class ShopCartViewModel @Inject constructor(
             nameButtonSendOrderMutableLiveData.postValue(mOrder.value?.getLabelSendMyOrder())
         } else
             onClickSendOrder()
-
     }
 
     fun handleBackPressed(isTableOrder: Boolean) {
@@ -156,13 +155,15 @@ internal class ShopCartViewModel @Inject constructor(
         }
     }
 
-    fun retrySendOrder() = viewModelScope.launch(coroutines.getMainDispatcher()) {
-        mRetrySize.value?.let { retrySize ->
-            mRetrySize.value = retrySize.plus(1)
-            delay(RETRY_DELAY)
-            if (retrySize <= LIMIT_RETRY) {
-                sendOrder()
-            } else handleBusinessExceptionRetry()
+    fun retrySendOrder(delayTime: Long = RETRY_DELAY) {
+        viewModelScope.launch(coroutines.getMainDispatcher()) {
+            mRetrySize.value?.let { retrySize ->
+                mRetrySize.value = retrySize.plus(1)
+                delay(delayTime)
+                if (retrySize <= LIMIT_RETRY) {
+                    sendOrder()
+                } else handleBusinessExceptionRetry()
+            }
         }
     }
 
@@ -179,13 +180,15 @@ internal class ShopCartViewModel @Inject constructor(
         )
     }
 
-    fun setClientToOrder(client: Client) = viewModelScope.launch(coroutines.getMainDispatcher()) {
-        if (validateClient(client, getOrderType())) {
-            mOrder.value?.also { order ->
-                order.client = client
-                order.paymentMethod = mPaymentMethodSelectedMutableLiveData.value
+    fun setClientToOrder(client: Client) {
+        viewModelScope.launch(coroutines.getMainDispatcher()) {
+            if (validateClient(client, getOrderType())) {
+                mOrder.value?.also { order ->
+                    order.client = client
+                    order.paymentMethod = mPaymentMethodSelectedMutableLiveData.value
+                }
+                sendOrder()
             }
-            sendOrder()
         }
     }
 

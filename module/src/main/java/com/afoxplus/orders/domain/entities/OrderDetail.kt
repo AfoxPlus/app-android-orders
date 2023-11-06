@@ -29,10 +29,6 @@ data class OrderDetail(
         appetizers.add(orderDetail)
     }
 
-    fun addSaleOrderItemStrategy(saleOrderDetailStrategy: SaleOrderItemStrategy?) {
-        this.saleOrderItemStrategy = saleOrderDetailStrategy
-    }
-
     private fun calculateSubTotalWithoutStrategy(): Double {
         return (product.getPriceForSale() * quantity)
     }
@@ -43,6 +39,4 @@ data class OrderDetail(
         else
             saleOrderItemStrategy?.calculateSubTotal(this) ?: 0.00
     }
-
-    fun getQuantityFormat(): String = "$quantity"
 }

@@ -40,6 +40,7 @@ class OrderPreviewActivity : UIKitBaseActivity() {
 
     override fun setUpView() {
         changeFragment(shopCartProductFragment)
+        shopCartViewModel.loadData()
         binding.topAppBar.subtitle = shopCartViewModel.restaurantName()
         binding.topAppBar.title = getString(R.string.orders_market_label_my_order)
         binding.topAppBar.setNavigationOnClickListener {
