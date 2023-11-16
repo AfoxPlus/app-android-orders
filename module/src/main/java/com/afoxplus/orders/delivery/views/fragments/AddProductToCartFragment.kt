@@ -10,6 +10,7 @@ import com.afoxplus.orders.delivery.viewmodels.AddProductToOrderViewModel
 import com.afoxplus.orders.delivery.views.adapters.ItemAppetizerAdapter
 import com.afoxplus.orders.delivery.views.adapters.listeners.ItemAppetizerListener
 import com.afoxplus.products.entities.Product
+import com.afoxplus.uikit.R.drawable
 import com.afoxplus.uikit.fragments.UIKitBaseFragment
 import com.afoxplus.uikit.modal.UIKitModal
 
@@ -35,7 +36,7 @@ class AddProductToCartFragment : UIKitBaseFragment(), ItemAppetizerListener {
             addProductToOrderViewModel.calculateSubTotalByProduct(quantity)
         }
         binding.recyclerProductAppetizer.adapter = adapter
-        binding.quantityButtonQuantity.deleteIcon = R.drawable.ic_minus
+        binding.quantityButtonQuantity.deleteIcon = drawable.ic_minus
     }
 
     override fun observerViewModel() {

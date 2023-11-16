@@ -19,7 +19,7 @@
             android:theme="@style/UIKit.NoActionBar.Light" />
 
         <activity
-            android:name="com.afoxplus.module.delivery.views.activities.DemoConfigStartActivity"
+            android:name="com.afoxplus.demo_config.delivery.views.activities.DemoConfigStartActivity"
             android:exported="true"
             android:theme="@style/UIKit.NoActionBar.Light">
             <intent-filter>
