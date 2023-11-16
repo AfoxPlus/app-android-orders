@@ -83,7 +83,7 @@ class OrderRepositorySourceTests {
         testCoroutineRule.runBlockingTest {
             //GIVEN
             val orderMock: Order = mock()
-            val responseMock: ResultState<String> = mock()
+            val responseMock: ResultState<String> = ResultState.Success("")
             whenever(mockNetworkSource.sendOrder(orderMock)).doReturn(responseMock)
 
             //WHEN

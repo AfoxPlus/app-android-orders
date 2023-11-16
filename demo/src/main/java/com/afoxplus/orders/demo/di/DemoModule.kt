@@ -1,6 +1,6 @@
 package com.afoxplus.orders.demo.di
 
-import com.afoxplus.module.delivery.flow.StartDemoFlow
+import com.afoxplus.demo_config.delivery.flow.StartDemoFlow
 import com.afoxplus.orders.demo.global.OrderStartDemoFlow
 import dagger.Binds
 import dagger.Module
