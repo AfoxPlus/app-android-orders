@@ -11,6 +11,7 @@ import com.afoxplus.orders.delivery.views.adapters.listeners.ItemPaymentMethodLi
 import com.afoxplus.orders.delivery.views.modal.PaymentMethodModalBottomSheet
 import com.afoxplus.orders.domain.entities.Client
 import com.afoxplus.orders.domain.entities.OrderType
+import com.afoxplus.uikit.R.color
 import com.afoxplus.uikit.bus.UIKitEventObserver
 import com.afoxplus.uikit.fragments.UIKitBaseFragment
 import com.afoxplus.uikit.objects.vendor.PaymentMethod
@@ -83,7 +84,7 @@ class AdditionalOrderInfoFragment : UIKitBaseFragment(), ItemPaymentMethodListen
             OrderType.Local -> {
                 binding.chipInfoTitle.text = orderType.toString()
                 binding.chipInfo.backgroundTintList =
-                    resources.getColorStateList(R.color.dark_03, null)
+                    resources.getColorStateList(color.dark_03, null)
                 binding.clientAddressReference.visibility = View.GONE
                 binding.clientPhone.hint =
                     getString(R.string.orders_table_client_cellphone)
@@ -93,7 +94,7 @@ class AdditionalOrderInfoFragment : UIKitBaseFragment(), ItemPaymentMethodListen
             OrderType.Delivery -> {
                 binding.chipInfoTitle.text = orderType.toString()
                 binding.chipInfo.backgroundTintList =
-                    resources.getColorStateList(R.color.red_01, null)
+                    resources.getColorStateList(color.red_01, null)
                 binding.clientPhone.hint =
                     " ${getString(R.string.orders_table_client_cellphone)}*"
                 binding.clientAddressReference.visibility = View.VISIBLE
