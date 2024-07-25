@@ -43,7 +43,6 @@ class MarketOrderViewModelTests {
     private val mockEventBusListener: UIKitEventBusWrapper = mock()
     private val mockClearCurrentOrder: ClearCurrentOrderUseCase = mock()
     private val mockGetCurrentOrder: GetCurrentOrderUseCase = mock()
-    private val mockGetRestaurantName: GetRestaurantNameUseCase = mock()
     private val mockDispatcher: UIKitCoroutineDispatcher by lazy { UIKitCoroutinesDispatcherTest() }
 
     private val sutViewModel: MarketOrderViewModel by lazy {
@@ -51,7 +50,6 @@ class MarketOrderViewModelTests {
             mockEventBusListener,
             mockClearCurrentOrder,
             mockGetCurrentOrder,
-            mockGetRestaurantName,
             mockDispatcher
         )
     }
@@ -90,24 +88,6 @@ class MarketOrderViewModelTests {
             //THEN
             verify(mockGetCurrentOrder).invoke()
             Assert.assertEquals(sutViewModel.order.value, null)
-        }
-    }
-
-    @Test
-    fun `WHEN restaurantName THEN return the restaurant name`() {
-        testCoroutineRule.runBlockingTest {
-            //GIVEN
-            val mockRestaurantName = "Ya listo"
-            whenever(mockGetRestaurantName.invoke()).doReturn(mockRestaurantName)
-
-            //WHEN
-            val result = sutViewModel.restaurantName()
-
-            //THEN
-            verify(mockGetRestaurantName).invoke()
-            Assert.assertNotNull(result)
-            Assert.assertEquals(mockRestaurantName, result)
-
         }
     }
 

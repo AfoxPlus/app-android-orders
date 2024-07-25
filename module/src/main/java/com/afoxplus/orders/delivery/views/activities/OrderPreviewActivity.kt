@@ -1,5 +1,7 @@
 package com.afoxplus.orders.delivery.views.activities
 
+import android.app.Activity
+import android.content.Intent
 import androidx.activity.viewModels
 import com.afoxplus.orders.R
 import com.afoxplus.orders.databinding.ActivityOrdersPreviewBinding
@@ -10,9 +12,11 @@ import com.afoxplus.orders.delivery.views.fragments.ShopCartFragment
 import com.afoxplus.orders.delivery.views.fragments.AdditionalOrderInfoFragment
 import com.afoxplus.orders.cross.exceptions.ApiErrorException
 import com.afoxplus.orders.cross.exceptions.OrderBusinessException
+import com.afoxplus.orders.delivery.models.RestaurantModel
 import com.afoxplus.uikit.activities.UIKitBaseActivity
 import com.afoxplus.uikit.activities.extensions.addFragmentToActivity
 import com.afoxplus.uikit.bus.UIKitEventObserver
+import com.afoxplus.uikit.extensions.parcelable
 import com.afoxplus.uikit.fragments.UIKitBaseFragment
 import com.afoxplus.uikit.modal.UIKitModal
 import dagger.hilt.android.AndroidEntryPoint
@@ -41,7 +45,7 @@ class OrderPreviewActivity : UIKitBaseActivity() {
     override fun setUpView() {
         changeFragment(shopCartProductFragment)
         shopCartViewModel.loadData()
-        binding.topAppBar.subtitle = shopCartViewModel.restaurantName()
+        binding.topAppBar.subtitle = getRestaurantFromIntent()?.name
         binding.topAppBar.title = getString(R.string.orders_market_label_my_order)
         binding.topAppBar.setNavigationOnClickListener {
             shopCartViewModel.handleBackPressed(
@@ -145,5 +149,19 @@ class OrderPreviewActivity : UIKitBaseActivity() {
             add(binding.fragmentContainer.id, fragmentToReplace).commit()
         }
         currentFragment = fragmentToReplace
+    }
+
+    private fun getRestaurantFromIntent(): RestaurantModel? {
+        return intent.parcelable<RestaurantModel>(RESTAURANT_PARAM)
+    }
+
+    companion object {
+        fun newInstance(activity: Activity, restaurant: RestaurantModel): Intent {
+            return Intent(activity, OrderPreviewActivity::class.java).apply {
+                putExtra(RESTAURANT_PARAM, restaurant)
+            }
+        }
+
+        private const val RESTAURANT_PARAM = "RESTAURANT_PARAM"
     }
 }

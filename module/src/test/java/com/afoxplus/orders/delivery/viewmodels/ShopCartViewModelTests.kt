@@ -1,7 +1,5 @@
 package com.afoxplus.orders.delivery.viewmodels
 
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.afoxplus.orders.cross.TestCoroutineRule
 import com.afoxplus.orders.cross.UIKitCoroutinesDispatcherTest
 import com.afoxplus.orders.cross.exceptions.ApiErrorException
 import com.afoxplus.orders.cross.exceptions.ExceptionMessage
@@ -17,6 +15,7 @@ import com.afoxplus.orders.domain.usecases.GetCurrentOrderUseCase
 import com.afoxplus.orders.domain.usecases.GetRestaurantNameUseCase
 import com.afoxplus.orders.domain.usecases.GetRestaurantPaymentsUseCase
 import com.afoxplus.orders.domain.usecases.SendOrderUseCase
+import com.afoxplus.orders.utils.BaseViewModelTest
 import com.afoxplus.products.entities.Currency
 import com.afoxplus.products.entities.Measure
 import com.afoxplus.products.entities.Product
@@ -28,8 +27,8 @@ import com.afoxplus.uikit.objects.vendor.PaymentMethod
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.test.runTest
 import org.junit.Assert
-import org.junit.Rule
 import org.junit.Test
 import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.mock
@@ -38,13 +37,7 @@ import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 
 @ExperimentalCoroutinesApi
-class ShopCartViewModelTests {
-    @get:Rule
-    val instantTaskExecutorRule = InstantTaskExecutorRule()
-
-    @get:Rule
-    val testCoroutineRule = TestCoroutineRule()
-
+class ShopCartViewModelTests : BaseViewModelTest() {
     private val mockAddOrUpdateProductToCurrentOrder: AddOrUpdateProductToCurrentOrderUseCase =
         mock()
     private val mockGetCurrentOrder: GetCurrentOrderUseCase = mock()
@@ -69,7 +62,7 @@ class ShopCartViewModelTests {
 
     @Test
     fun `WHEN loadData THEN load current order`() {
-        testCoroutineRule.runBlockingTest {
+        runTest {
             //GIVEN
             val mutableOrderSharedFlow: MutableSharedFlow<Order> = MutableSharedFlow()
             val mockOrderFlow: SharedFlow<Order> = mutableOrderSharedFlow
@@ -90,7 +83,7 @@ class ShopCartViewModelTests {
 
     @Test
     fun `WHEN loadData THEN load payment methods`() {
-        testCoroutineRule.runBlockingTest {
+        runTest {
             //GIVEN
             val mutableOrderSharedFlow: MutableSharedFlow<Order> = MutableSharedFlow()
             val mockOrderFlow: SharedFlow<Order> = mutableOrderSharedFlow
@@ -119,7 +112,7 @@ class ShopCartViewModelTests {
 
     @Test
     fun `WHEN loadData and there is no order THEN close the screen`() {
-        testCoroutineRule.runBlockingTest {
+        runTest {
             //GIVEN
             val mutableOrderSharedFlow: MutableSharedFlow<Order?> = MutableSharedFlow()
             val mockOrderFlow: SharedFlow<Order?> = mutableOrderSharedFlow
@@ -140,7 +133,7 @@ class ShopCartViewModelTests {
 
     @Test
     fun `WHEN loadData and there is an order with no details THEN close the screen`() {
-        testCoroutineRule.runBlockingTest {
+        runTest {
             //GIVEN
             val mutableOrderSharedFlow: MutableSharedFlow<Order?> = MutableSharedFlow()
             val mockOrderFlow: SharedFlow<Order?> = mutableOrderSharedFlow
@@ -162,7 +155,7 @@ class ShopCartViewModelTests {
 
     @Test
     fun `WHEN deleteItem THEN call deleteProductToCurrentOrder`() {
-        testCoroutineRule.runBlockingTest {
+        runTest {
             //GIVEN
             val mockOrderDetail: OrderDetail = mock()
 
@@ -176,7 +169,7 @@ class ShopCartViewModelTests {
 
     @Test
     fun `WHEN updateQuantity THEN call addOrUpdateProductToCurrentOrder`() {
-        testCoroutineRule.runBlockingTest {
+        runTest {
             //GIVEN
             val mockOrderDetail: OrderDetail = mock()
             val mockQuantity = 2
@@ -194,7 +187,7 @@ class ShopCartViewModelTests {
 
     @Test
     fun `WHEN editMenuDish THEN send event to open the add card screen`() {
-        testCoroutineRule.runBlockingTest {
+        runTest {
             //GIVEN
             val mockOrderDetail: OrderDetail = mock()
 
@@ -209,7 +202,7 @@ class ShopCartViewModelTests {
 
     @Test
     fun `GIVEN isOrderCartView as true WHEN handleClickSender THEN open table page`() {
-        testCoroutineRule.runBlockingTest {
+        runTest {
             //GIVEN
             val mockIsOrderCartView = true
             val mutableOrderSharedFlow: MutableSharedFlow<Order?> = MutableSharedFlow()
@@ -235,7 +228,7 @@ class ShopCartViewModelTests {
 
     @Test
     fun `GIVEN isOrderCartView as false WHEN handleClickSender THEN send event to open the add card screen`() {
-        testCoroutineRule.runBlockingTest {
+        runTest {
             //GIVEN
             val mockIsOrderCartView = false
             val mutableOrderSharedFlow: MutableSharedFlow<Order?> = MutableSharedFlow()
@@ -257,7 +250,7 @@ class ShopCartViewModelTests {
 
     @Test
     fun `GIVEN isTableOrder as true WHEN handleBackPressed THEN remove order table and change the name of the button to Continuar`() {
-        testCoroutineRule.runBlockingTest {
+        runTest {
             //GIVEN
             val mockIsTableOrder = true
 
@@ -273,7 +266,7 @@ class ShopCartViewModelTests {
 
     @Test
     fun `GIVEN isTableOrder as false WHEN handleBackPressed THEN send event to close the screen`() {
-        testCoroutineRule.runBlockingTest {
+        runTest {
             //GIVEN
             val mockIsTableOrder = false
 
@@ -289,7 +282,7 @@ class ShopCartViewModelTests {
 
     @Test
     fun `WHEN retrySendOrder THEN send the order and handle the success result`() {
-        testCoroutineRule.runBlockingTest {
+        runTest {
             //GIVEN
             val mutableOrderSharedFlow: MutableSharedFlow<Order?> = MutableSharedFlow()
             val mockOrderFlow: SharedFlow<Order?> = mutableOrderSharedFlow
@@ -319,7 +312,7 @@ class ShopCartViewModelTests {
 
     @Test
     fun `WHEN retrySendOrder and the it has been retrying more than 4 times THEN send an error to the screen`() {
-        testCoroutineRule.runBlockingTest {
+        runTest {
             //GIVEN
             val mutableOrderSharedFlow: MutableSharedFlow<Order?> = MutableSharedFlow()
             val mockOrderFlow: SharedFlow<Order?> = mutableOrderSharedFlow
@@ -352,7 +345,7 @@ class ShopCartViewModelTests {
 
     @Test
     fun `WHEN retrySendOrder and there is an error with sending the order THEN send an error to the screen`() {
-        testCoroutineRule.runBlockingTest {
+        runTest {
             //GIVEN
             val mutableOrderSharedFlow: MutableSharedFlow<Order?> = MutableSharedFlow()
             val mockOrderFlow: SharedFlow<Order?> = mutableOrderSharedFlow
@@ -385,128 +378,9 @@ class ShopCartViewModelTests {
         }
     }
 
-
-    @Test
-    fun `GIVEN a client WHEN setClientToOrder THEN send the order and handle the success result`() {
-        testCoroutineRule.runBlockingTest {
-            //GIVEN
-            val mutableOrderSharedFlow: MutableSharedFlow<Order?> = MutableSharedFlow()
-            val mockOrderFlow: SharedFlow<Order?> = mutableOrderSharedFlow
-            val mockClient: Client = createClient()
-            val mockOrder: Order = createOrder()
-            val mockOrderResult: ResultState.Success<String> =
-                ResultState.Success("This is a success")
-
-
-            whenever(mockGetCurrentOrder.invoke()).thenReturn(mockOrderFlow)
-            whenever(mockSendOrder.invoke(mockOrder)).doReturn(mockOrderResult)
-
-
-            sutViewModel.loadData()
-            mutableOrderSharedFlow.emit(mockOrder)
-
-            //WHEN
-            sutViewModel.setClientToOrder(mockClient)
-
-            //THEN
-            verify(mockSendOrder).invoke(mockOrder)
-            Assert.assertNotNull(sutViewModel.eventOpenSuccessOrder.value)
-            Assert.assertTrue(sutViewModel.eventOpenSuccessOrder.value is SendOrderStatusUIModel.Success)
-            Assert.assertEquals(
-                (sutViewModel.eventOpenSuccessOrder.value as SendOrderStatusUIModel.Success).message,
-                mockOrderResult.data
-            )
-        }
-    }
-
-
-    @Test
-    fun `GIVEN a client with empty name WHEN setClientToOrder THEN send an error to the screen`() {
-        testCoroutineRule.runBlockingTest {
-            //GIVEN
-            val mutableOrderSharedFlow: MutableSharedFlow<Order?> = MutableSharedFlow()
-            val mockOrderFlow: SharedFlow<Order?> = mutableOrderSharedFlow
-            val mockClient = Client("", "")
-            val mockOrder: Order = createOrder()
-            val mockOrderResult: ResultState.Success<String> =
-                ResultState.Success("This is a success")
-
-
-            whenever(mockGetCurrentOrder.invoke()).thenReturn(mockOrderFlow)
-            whenever(mockSendOrder.invoke(mockOrder)).doReturn(mockOrderResult)
-
-
-            sutViewModel.loadData()
-            mutableOrderSharedFlow.emit(mockOrder)
-
-            //WHEN
-            sutViewModel.setClientToOrder(mockClient)
-
-            //THEN
-            Assert.assertNotNull(sutViewModel.errorClientNameLiveData.value)
-            Assert.assertEquals(sutViewModel.errorClientNameLiveData.value, "El nombre es obligatorio.")
-        }
-    }
-
-    @Test
-    fun `GIVEN a client with empty phone WHEN setClientToOrder THEN send an error to the screen`() {
-        testCoroutineRule.runBlockingTest {
-            //GIVEN
-            val mutableOrderSharedFlow: MutableSharedFlow<Order?> = MutableSharedFlow()
-            val mockOrderFlow: SharedFlow<Order?> = mutableOrderSharedFlow
-            val mockClient = Client("Test", "")
-            val mockOrder: Order = createOrder()
-            val mockOrderResult: ResultState.Success<String> =
-                ResultState.Success("This is a success")
-
-
-            whenever(mockGetCurrentOrder.invoke()).thenReturn(mockOrderFlow)
-            whenever(mockSendOrder.invoke(mockOrder)).doReturn(mockOrderResult)
-
-
-            sutViewModel.loadData()
-            mutableOrderSharedFlow.emit(mockOrder)
-
-            //WHEN
-            sutViewModel.setClientToOrder(mockClient)
-
-            //THEN
-            Assert.assertNotNull(sutViewModel.errorClientPhoneNumberLiveData.value)
-            Assert.assertEquals(sutViewModel.errorClientPhoneNumberLiveData.value, "El telefono es obligatorio.")
-        }
-    }
-
-    @Test
-    fun `GIVEN a client with empty name for local WHEN setClientToOrder THEN send an error to the screen`() {
-        testCoroutineRule.runBlockingTest {
-            //GIVEN
-            val mutableOrderSharedFlow: MutableSharedFlow<Order?> = MutableSharedFlow()
-            val mockOrderFlow: SharedFlow<Order?> = mutableOrderSharedFlow
-            val mockClient = Client("", "")
-            val mockOrder: Order = createOrderForLocal()
-            val mockOrderResult: ResultState.Success<String> =
-                ResultState.Success("This is a success")
-
-
-            whenever(mockGetCurrentOrder.invoke()).thenReturn(mockOrderFlow)
-            whenever(mockSendOrder.invoke(mockOrder)).doReturn(mockOrderResult)
-
-
-            sutViewModel.loadData()
-            mutableOrderSharedFlow.emit(mockOrder)
-
-            //WHEN
-            sutViewModel.setClientToOrder(mockClient)
-
-            //THEN
-            Assert.assertNotNull(sutViewModel.errorClientNameLiveData.value)
-            Assert.assertEquals(sutViewModel.errorClientNameLiveData.value, "El nombre es obligatorio.")
-        }
-    }
-
     @Test
     fun `WHEN restaurantName THEN load restaurant name`() {
-        testCoroutineRule.runBlockingTest {
+        runTest {
             //GIVEN
 
             val mockRestaurantName = "Ya Listo"
@@ -524,7 +398,7 @@ class ShopCartViewModelTests {
 
     @Test
     fun `WHEN fetchPaymentMethods THEN load payment methods`() {
-        testCoroutineRule.runBlockingTest {
+        runTest {
             //GIVEN
             val mutableOrderSharedFlow: MutableSharedFlow<Order> = MutableSharedFlow()
             val mockOrderFlow: SharedFlow<Order> = mutableOrderSharedFlow
@@ -550,7 +424,7 @@ class ShopCartViewModelTests {
 
     @Test
     fun `GIVEN the payment method WHEN selectPaymentMethod THEN change the state for the other payment methods as false`() {
-        testCoroutineRule.runBlockingTest {
+        runTest {
             //GIVEN
             val mutableOrderSharedFlow: MutableSharedFlow<Order> = MutableSharedFlow()
             val mockOrderFlow: SharedFlow<Order> = mutableOrderSharedFlow

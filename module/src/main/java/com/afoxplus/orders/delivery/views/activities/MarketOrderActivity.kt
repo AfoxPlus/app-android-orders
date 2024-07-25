@@ -6,11 +6,14 @@ import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.viewpager2.widget.ViewPager2
 import com.afoxplus.orders.R
 import com.afoxplus.orders.databinding.ActivityOrdersMarketPanelBinding
 import com.afoxplus.orders.delivery.flow.OrderFlow
+import com.afoxplus.orders.delivery.models.RestaurantModel
 import com.afoxplus.orders.delivery.viewmodels.MarketOrderViewModel
 import com.afoxplus.orders.delivery.views.events.GoToHomeEvent
 import com.afoxplus.orders.delivery.views.events.GoToNewOrderEvent
@@ -18,6 +21,7 @@ import com.afoxplus.products.delivery.flow.ProductFlow
 import com.afoxplus.products.delivery.views.events.OnClickProductSaleEvent
 import com.afoxplus.uikit.activities.UIKitBaseActivity
 import com.afoxplus.uikit.adapters.UIKitViewPagerAdapter
+import com.afoxplus.uikit.extensions.parcelable
 import com.afoxplus.uikit.modal.UIKitModal
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
@@ -31,9 +35,13 @@ class MarketOrderActivity : UIKitBaseActivity() {
     private lateinit var binding: ActivityOrdersMarketPanelBinding
 
     companion object {
-        fun newInstance(activity: Activity): Intent {
-            return Intent(activity, MarketOrderActivity::class.java)
+        fun newInstance(activity: Activity, restaurant: RestaurantModel): Intent {
+            return Intent(activity, MarketOrderActivity::class.java).apply {
+                putExtra(RESTAURANT_PARAM, restaurant)
+            }
         }
+
+        private const val RESTAURANT_PARAM = "RESTAURANT_PARAM"
     }
 
     @Inject
@@ -62,7 +70,7 @@ class MarketOrderActivity : UIKitBaseActivity() {
         marketOrderViewModel.loadCurrentOrder()
         binding.marketOrderToolBar.setNavigationOnClickListener { marketOrderViewModel.onBackPressed() }
         setUpMarkerOrderTab()
-        binding.marketOrderToolBar.subtitle = marketOrderViewModel.restaurantName()
+        binding.marketOrderToolBar.subtitle = getRestaurantFromIntent()?.name
         binding.marketOrderToolBar.title = getString(R.string.order_market_restaurant)
         binding.buttonViewOrder.setOnClickListener {
             marketOrderViewModel.onClickViewOrder()
@@ -76,27 +84,51 @@ class MarketOrderActivity : UIKitBaseActivity() {
             })
     }
 
+    private fun getRestaurantFromIntent(): RestaurantModel? {
+        return intent.parcelable<RestaurantModel>(RESTAURANT_PARAM)
+    }
+
     override fun observerViewModel() {
-        lifecycleScope.launchWhenCreated {
-            marketOrderViewModel.onEventBusListener.collectLatest { events ->
-                if (events is OnClickProductSaleEvent) {
-                    orderFlow.goToAddProductToOrderActivity(
-                        this@MarketOrderActivity,
-                        events.product
-                    )
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                marketOrderViewModel.onEventBusListener.collect { events ->
+                    if (events is OnClickProductSaleEvent) {
+                        orderFlow.goToAddProductToOrderActivity(
+                            this@MarketOrderActivity,
+                            events.product
+                        )
+                    }
                 }
             }
         }
 
-        lifecycleScope.launchWhenCreated {
-            marketOrderViewModel.onMarketOrderEvent.collectLatest { events ->
-                when (events) {
-                    is MarketOrderViewModel.MarketOrderEvent.OnClickViewOrder -> {
-                        orderFlow.goToOrderPreviewActivity(this@MarketOrderActivity, events.order)
-                    }
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                marketOrderViewModel.onMarketOrderEvent.collectLatest { events ->
+                    when (events) {
+                        is MarketOrderViewModel.MarketOrderEvent.OnClickViewOrder -> {
+                            orderFlow.goToOrderPreviewActivity(
+                                this@MarketOrderActivity,
+                                events.order
+                            )
+                        }
 
-                    is MarketOrderViewModel.MarketOrderEvent.OnBackPressed -> {
-                        finish()
+                        is MarketOrderViewModel.MarketOrderEvent.OnBackPressed -> {
+                            finish()
+                        }
+                    }
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                marketOrderViewModel.onEventBusListener.collect { events ->
+                    when (events) {
+                        GoToNewOrderEvent ->
+                            binding.buttonViewOrder.visibility = View.GONE
+
+                        GoToHomeEvent -> finish()
                     }
                 }
             }
@@ -131,19 +163,6 @@ class MarketOrderActivity : UIKitBaseActivity() {
             .show()
     }
 
-    override fun onResume() {
-        super.onResume()
-        lifecycleScope.launchWhenResumed {
-            marketOrderViewModel.onEventBusListener.collectLatest { events ->
-                when (events) {
-                    GoToNewOrderEvent ->
-                        binding.buttonViewOrder.visibility = View.GONE
-
-                    GoToHomeEvent -> finish()
-                }
-            }
-        }
-    }
 
     private fun setUpMarkerOrderTab() {
         viewPagerAdapter = UIKitViewPagerAdapter(

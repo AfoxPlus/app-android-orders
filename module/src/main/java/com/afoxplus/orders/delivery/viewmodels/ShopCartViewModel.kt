@@ -34,7 +34,6 @@ internal class ShopCartViewModel @Inject constructor(
     private val getCurrentOrder: GetCurrentOrderUseCase,
     private val deleteProductToCurrentOrder: DeleteProductToCurrentOrderUseCase,
     private val sendOrder: SendOrderUseCase,
-    private val getRestaurantName: GetRestaurantNameUseCase,
     private val getRestaurantPaymentsUseCase: GetRestaurantPaymentsUseCase,
     private val coroutines: UIKitCoroutineDispatcher
 ) : ViewModel() {
@@ -208,8 +207,7 @@ internal class ShopCartViewModel @Inject constructor(
         }
     }
 
-    fun restaurantName(): String = getRestaurantName()
-
+ 
     fun fetchPaymentMethods(): List<PaymentMethod> = paymentMethods
 
     private fun validateClient(client: Client, orderType: OrderType?): Boolean {

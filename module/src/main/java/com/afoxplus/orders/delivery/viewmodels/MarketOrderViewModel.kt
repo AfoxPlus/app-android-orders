@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import com.afoxplus.orders.domain.entities.Order
 import com.afoxplus.orders.domain.usecases.ClearCurrentOrderUseCase
 import com.afoxplus.orders.domain.usecases.GetCurrentOrderUseCase
-import com.afoxplus.orders.domain.usecases.GetRestaurantNameUseCase
 import com.afoxplus.uikit.bus.UIKitEventBusWrapper
 import com.afoxplus.uikit.di.UIKitCoroutineDispatcher
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,10 +20,8 @@ internal class MarketOrderViewModel @Inject constructor(
     private val eventBusListener: UIKitEventBusWrapper,
     private val clearCurrentOrder: ClearCurrentOrderUseCase,
     private val getCurrentOrder: GetCurrentOrderUseCase,
-    private val getRestaurantName: GetRestaurantNameUseCase,
     private val coroutines: UIKitCoroutineDispatcher
 ) : ViewModel() {
-
     val onEventBusListener = eventBusListener.listen()
     private val mOnMarketOrderEvent: MutableSharedFlow<MarketOrderEvent> by lazy { MutableSharedFlow() }
     val onMarketOrderEvent: SharedFlow<MarketOrderEvent> get() = mOnMarketOrderEvent
@@ -35,7 +32,6 @@ internal class MarketOrderViewModel @Inject constructor(
     private val mDisplayOrderModalLiveData: MutableLiveData<Unit> by lazy { MutableLiveData<Unit>() }
     val displayOrderModalLiveData: LiveData<Unit> get() = mDisplayOrderModalLiveData
 
-
     fun loadCurrentOrder() {
         viewModelScope.launch(coroutines.getMainDispatcher()) {
             getCurrentOrder().collect {
@@ -44,8 +40,6 @@ internal class MarketOrderViewModel @Inject constructor(
             }
         }
     }
-
-    fun restaurantName(): String = getRestaurantName()
 
     fun onClickViewOrder() {
         viewModelScope.launch(coroutines.getMainDispatcher()) {
