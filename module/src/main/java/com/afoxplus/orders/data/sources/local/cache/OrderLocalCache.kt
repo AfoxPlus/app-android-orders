@@ -78,18 +78,19 @@ internal class OrderLocalCache @Inject constructor(
     private fun newOrder(): Order {
         val newOrder = Order(
             restaurantId = fetchVendorData().restaurantId,
-            orderType = getDeliveryType()
+            orderType = getOrderTypeOrigin()
         )
         order = newOrder
         return newOrder
     }
 
-    private fun getDeliveryType(): OrderType {
+    private fun getOrderTypeOrigin(): OrderType {
         fetchVendorData().let {
-            val isOwnDelivery = it.additionalInfo["restaurant_own_delivery"] == true
-            return if (isOwnDelivery)
-                OrderType.Delivery
-            else OrderType.Local.apply { description = it.tableId }
+            val orderType = it.additionalInfo["restaurant_order_type"]
+            return when (orderType) {
+                "DELIVERY" -> OrderType.Delivery
+                else -> OrderType.Local.apply { description = it.tableId }
+            }
         }
     }
 
