@@ -224,8 +224,8 @@ class ShopCartViewModelTests {
             sutViewModel.handleClickSender(mockIsOrderCartView)
 
             //THEN
-            Assert.assertNotNull(sutViewModel.eventOpenTableOrder.value)
-            Assert.assertTrue(sutViewModel.eventOpenTableOrder.value is UIKitEvent)
+            Assert.assertNotNull(sutViewModel.evenOpenAdditionalInfo.value)
+            Assert.assertTrue(sutViewModel.evenOpenAdditionalInfo.value is UIKitEvent)
             Assert.assertEquals(
                 sutViewModel.nameButtonSendOrderLiveData.value,
                 mockOrder.getLabelSendMyOrder()

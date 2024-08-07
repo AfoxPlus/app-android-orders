@@ -66,6 +66,10 @@ class Order(
         return "S/ ${String.format("%.2f", calculateTotal())}"
     }
 
+    fun isValidOrderType(): Boolean {
+       return !(orderType ==  OrderType.Local && orderType.description == "-")
+    }
+
     fun getLabelViewMyOrder(): String =
         "(${getTotalQuantity()}) Ver mi pedido ${getTotalWithFormat()}"
 

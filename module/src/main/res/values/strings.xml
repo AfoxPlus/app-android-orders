@@ -50,4 +50,5 @@
     <string name="order_modal_negative_action">No, continuar pedido</string>
     <string name="order_modal_send_cancel">Cancelar</string>
     <string name="order_modal_send_retry">Reintentar</string>
+    <string name="order_scan_prompt">Escanea el código QR de tu mesa</string>
 </resources>

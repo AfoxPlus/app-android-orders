@@ -128,6 +128,8 @@ dependencies {
     implementation(Deps.Arch.loggingInterceptor)
     implementation(Deps.UI.glide)
     kapt(Deps.UI.glideCompiler)
+    implementation(Deps.Arch.zxingAndroid) { isTransitive = false }
+    implementation(Deps.Arch.zxingCore)
 
     // Test
     testImplementation(Deps.Test.jUnit)

@@ -12,6 +12,7 @@ import com.afoxplus.orders.domain.entities.OrderDetail
 import com.afoxplus.orders.domain.entities.OrderType
 import com.afoxplus.orders.cross.exceptions.ExceptionMessage
 import com.afoxplus.orders.cross.exceptions.OrderBusinessException
+import com.afoxplus.orders.delivery.views.extensions.stringToObject
 import com.afoxplus.orders.domain.usecases.AddOrUpdateProductToCurrentOrderUseCase
 import com.afoxplus.orders.domain.usecases.DeleteProductToCurrentOrderUseCase
 import com.afoxplus.orders.domain.usecases.GetCurrentOrderUseCase
@@ -23,6 +24,7 @@ import com.afoxplus.uikit.bus.UIKitEvent
 import com.afoxplus.uikit.common.ResultState
 import com.afoxplus.uikit.di.UIKitCoroutineDispatcher
 import com.afoxplus.uikit.objects.vendor.PaymentMethod
+import com.afoxplus.uikit.objects.vendor.Vendor
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -48,8 +50,11 @@ internal class ShopCartViewModel @Inject constructor(
     private val mEventOnBackSendOrder: MutableLiveData<UIKitEvent<Unit>> by lazy { MutableLiveData<UIKitEvent<Unit>>() }
     val eventOnBackSendOrder: LiveData<UIKitEvent<Unit>> get() = mEventOnBackSendOrder
 
-    private val mEventOpenTableOrder: MutableLiveData<UIKitEvent<Unit>> by lazy { MutableLiveData<UIKitEvent<Unit>>() }
-    val eventOpenTableOrder: LiveData<UIKitEvent<Unit>> get() = mEventOpenTableOrder
+    private val mEventOpenAdditionalInfo: MutableLiveData<UIKitEvent<Unit>> by lazy { MutableLiveData<UIKitEvent<Unit>>() }
+    val evenOpenAdditionalInfo: LiveData<UIKitEvent<Unit>> get() = mEventOpenAdditionalInfo
+
+    private val mEventOpenScan: MutableLiveData<UIKitEvent<Unit>> by lazy { MutableLiveData<UIKitEvent<Unit>>() }
+    val eventOpenScan: LiveData<UIKitEvent<Unit>> get() = mEventOpenScan
 
     private val mEventValidateTableOrder: MutableLiveData<UIKitEvent<Unit>> by lazy { MutableLiveData<UIKitEvent<Unit>>() }
     val eventValidateTableOrder: LiveData<UIKitEvent<Unit>> get() = mEventValidateTableOrder
@@ -78,7 +83,7 @@ internal class ShopCartViewModel @Inject constructor(
 
     private val mRetrySize: MutableLiveData<Int> by lazy { MutableLiveData<Int>(0) }
 
-    fun loadData(){
+    fun loadData() {
         loadCurrentOrder()
         loadPaymentMethods()
     }
@@ -87,7 +92,7 @@ internal class ShopCartViewModel @Inject constructor(
         viewModelScope.launch(coroutines.getMainDispatcher()) {
             paymentMethods = getRestaurantPaymentsUseCase.invoke().toMutableList()
             if (paymentMethods.isNotEmpty()) {
-                mPaymentMethodSelectedMutableLiveData.postValue(paymentMethods.first() )
+                mPaymentMethodSelectedMutableLiveData.postValue(paymentMethods.first())
             }
         }
     }
@@ -129,16 +134,20 @@ internal class ShopCartViewModel @Inject constructor(
         }
     }
 
-    fun handleClickSender(isOrderCartView: Boolean) {
-        if (isOrderCartView) {
-            mEventOpenTableOrder.postValue(UIKitEvent(Unit))
-            nameButtonSendOrderMutableLiveData.postValue(mOrder.value?.getLabelSendMyOrder())
+    fun handleClickSender(isOrderDetailView: Boolean) {
+        if (isOrderDetailView) {
+            if (mOrder.value?.isValidOrderType() == true) {
+                mEventOpenAdditionalInfo.postValue(UIKitEvent(Unit))
+                nameButtonSendOrderMutableLiveData.postValue(mOrder.value?.getLabelSendMyOrder())
+            } else {
+                mEventOpenScan.postValue(UIKitEvent(Unit))
+            }
         } else
             onClickSendOrder()
     }
 
-    fun handleBackPressed(isTableOrder: Boolean) {
-        if (isTableOrder) {
+    fun handleBackPressed(isAdditionalInformation: Boolean) {
+        if (isAdditionalInformation) {
             mEventRemoveTableOrder.postValue(UIKitEvent(Unit))
             nameButtonSendOrderMutableLiveData.postValue("Continuar")
         } else
@@ -243,6 +252,20 @@ internal class ShopCartViewModel @Inject constructor(
         mPaymentMethodSelectedMutableLiveData.postValue(paymentMethod)
         paymentMethods.forEach {
             it.isSelected = paymentMethod.id == it.id
+        }
+    }
+
+    fun setOrderTypeFromScan(data: String) {
+        try {
+            val vendor = stringToObject<Vendor>(data)
+            mOrder.value?.let { order ->
+                if (order.restaurantId == vendor.restaurantId) {
+                    mOrder.value?.orderType?.description = vendor.tableId
+                    handleClickSender(true)
+                }
+            }
+        } catch (ex: Exception) {
+            ex.printStackTrace()
         }
     }
 

@@ -17,14 +17,15 @@ class OrdersApplication : Application() {
         super.onCreate()
         vendorShared.save(
             Vendor(
-                tableId = "09",
+                tableId = "-",
                 restaurantId = "648f94bd704db9741d1d2c04",
                 additionalInfo = mutableMapOf(
                     "restaurant_name" to "Rest. Pepito sazon!",
-                    "restaurant_own_delivery" to false
+                    "restaurant_own_delivery" to false,
+                    "restaurant_order_type" to "DELIVERY"
                 ),
                 paymentMethod = arrayListOf(
-                    PaymentMethod("12", "Efectivo", true),
+                    PaymentMethod("12", "Cúpon de Invitación", true),
                     PaymentMethod("13", "Yape", false),
                     PaymentMethod("14", "Plin", false),
                     PaymentMethod("15", "Credit Card", false)

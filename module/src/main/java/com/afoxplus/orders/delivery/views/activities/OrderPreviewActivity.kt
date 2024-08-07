@@ -15,6 +15,9 @@ import com.afoxplus.uikit.activities.extensions.addFragmentToActivity
 import com.afoxplus.uikit.bus.UIKitEventObserver
 import com.afoxplus.uikit.fragments.UIKitBaseFragment
 import com.afoxplus.uikit.modal.UIKitModal
+import com.journeyapps.barcodescanner.ScanContract
+import com.journeyapps.barcodescanner.ScanIntentResult
+import com.journeyapps.barcodescanner.ScanOptions
 import dagger.hilt.android.AndroidEntryPoint
 import java.lang.Exception
 import javax.inject.Inject
@@ -24,6 +27,14 @@ class OrderPreviewActivity : UIKitBaseActivity() {
 
     private lateinit var binding: ActivityOrdersPreviewBinding
     private val shopCartViewModel: ShopCartViewModel by viewModels()
+
+    private val barcodeLauncher =
+        registerForActivityResult(ScanContract()) { result: ScanIntentResult ->
+            result.contents?.let {
+                analyzeScanResponse(it)
+            }
+        }
+
 
     private val shopCartProductFragment: ShopCartFragment by lazy { ShopCartFragment.getInstance() }
     private val additionalOrderInfoFragment: AdditionalOrderInfoFragment by lazy { AdditionalOrderInfoFragment.getInstance() }
@@ -58,15 +69,19 @@ class OrderPreviewActivity : UIKitBaseActivity() {
             binding.buttonSendOrder.isEnabled = it
         })
 
+        shopCartViewModel.eventOpenScan.observe(this, UIKitEventObserver {
+            openScan()
+        })
+
         shopCartViewModel.nameButtonSendOrderLiveData.observe(this) {
             binding.buttonSendOrder.text = it
         }
 
         shopCartViewModel.eventOnBackSendOrder.observe(this) {
-            this.onBackPressed()
+            onBackPressedDispatcher.onBackPressed()
         }
 
-        shopCartViewModel.eventOpenTableOrder.observe(this) {
+        shopCartViewModel.evenOpenAdditionalInfo.observe(this) {
             changeFragment(additionalOrderInfoFragment)
         }
 
@@ -145,5 +160,22 @@ class OrderPreviewActivity : UIKitBaseActivity() {
             add(binding.fragmentContainer.id, fragmentToReplace).commit()
         }
         currentFragment = fragmentToReplace
+    }
+
+
+    private fun openScan() {
+        val options = ScanOptions().apply {
+            setPrompt(getString(R.string.order_scan_prompt))
+            setCameraId(0)
+            setBeepEnabled(false)
+            setTorchEnabled(false)
+            setBarcodeImageEnabled(false)
+            setOrientationLocked(false)
+        }
+        barcodeLauncher.launch(options)
+    }
+
+    private fun analyzeScanResponse(data: String) {
+        data.isNotEmpty().let { shopCartViewModel.setOrderTypeFromScan(data) }
     }
 }
