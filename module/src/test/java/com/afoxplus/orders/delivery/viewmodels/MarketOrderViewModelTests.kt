@@ -9,7 +9,7 @@ import com.afoxplus.orders.domain.entities.OrderDetail
 import com.afoxplus.orders.domain.entities.OrderType
 import com.afoxplus.orders.domain.usecases.ClearCurrentOrderUseCase
 import com.afoxplus.orders.domain.usecases.GetCurrentOrderUseCase
-import com.afoxplus.orders.domain.usecases.GetRestaurantNameUseCase
+import com.afoxplus.orders.domain.usecases.VendorShareUseCase
 import com.afoxplus.products.entities.Currency
 import com.afoxplus.products.entities.Measure
 import com.afoxplus.products.entities.Product
@@ -17,14 +17,10 @@ import com.afoxplus.products.entities.types.MenuDish
 import com.afoxplus.uikit.bus.UIKitEventBusWrapper
 import com.afoxplus.uikit.di.UIKitCoroutineDispatcher
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 import org.junit.Assert
-import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.kotlin.doReturn
@@ -43,7 +39,7 @@ class MarketOrderViewModelTests {
     private val mockEventBusListener: UIKitEventBusWrapper = mock()
     private val mockClearCurrentOrder: ClearCurrentOrderUseCase = mock()
     private val mockGetCurrentOrder: GetCurrentOrderUseCase = mock()
-    private val mockGetRestaurantName: GetRestaurantNameUseCase = mock()
+    private val mockGetRestaurantName: VendorShareUseCase = mock()
     private val mockDispatcher: UIKitCoroutineDispatcher by lazy { UIKitCoroutinesDispatcherTest() }
 
     private val sutViewModel: MarketOrderViewModel by lazy {
@@ -98,13 +94,13 @@ class MarketOrderViewModelTests {
         testCoroutineRule.runBlockingTest {
             //GIVEN
             val mockRestaurantName = "Ya listo"
-            whenever(mockGetRestaurantName.invoke()).doReturn(mockRestaurantName)
+            whenever(mockGetRestaurantName.getRestaurantName()).doReturn(mockRestaurantName)
 
             //WHEN
             val result = sutViewModel.restaurantName()
 
             //THEN
-            verify(mockGetRestaurantName).invoke()
+            verify(mockGetRestaurantName).getRestaurantName()
             Assert.assertNotNull(result)
             Assert.assertEquals(mockRestaurantName, result)
 

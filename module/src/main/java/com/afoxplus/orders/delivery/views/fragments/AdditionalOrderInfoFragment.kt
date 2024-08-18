@@ -59,6 +59,7 @@ class AdditionalOrderInfoFragment : UIKitBaseFragment(), ItemPaymentMethodListen
         binding.paymentMethodButton.setOnClickListener {
             displayPaymentMethods()
         }
+        cartProductsViewModel.guestName()?.let { binding.clientName.text = it }
     }
 
     private fun handleSetupOrderAndSend() {

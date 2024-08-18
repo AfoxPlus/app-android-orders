@@ -1,7 +1,7 @@
 package com.afoxplus.orders.usecases
 
 import com.afoxplus.orders.cross.TestCoroutineRule
-import com.afoxplus.orders.domain.usecases.GetRestaurantNameUseCase
+import com.afoxplus.orders.domain.usecases.VendorShareUseCase
 import com.afoxplus.uikit.objects.vendor.Vendor
 import com.afoxplus.uikit.objects.vendor.VendorShared
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -14,13 +14,13 @@ import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 
 @ExperimentalCoroutinesApi
-class GetRestaurantNameUseCaseTests {
+class VendorShareUseCaseTests {
     @get:Rule
     val testCoroutineRule = TestCoroutineRule()
 
     private val mockVendor: VendorShared = mock()
-    private val sutUseCase: GetRestaurantNameUseCase by lazy {
-        GetRestaurantNameUseCase(
+    private val sutUseCase: VendorShareUseCase by lazy {
+        VendorShareUseCase(
             mockVendor
         )
     }
@@ -39,7 +39,7 @@ class GetRestaurantNameUseCaseTests {
             whenever(mockVendor.fetch()).doReturn(responseMock)
 
             //WHEN
-            val result = sutUseCase.invoke()
+            val result = sutUseCase.getRestaurantName()
 
             //THEN
             verify(mockVendor).fetch()
@@ -56,7 +56,7 @@ class GetRestaurantNameUseCaseTests {
             whenever(mockVendor.fetch()).doReturn(null)
 
             //WHEN
-            val result = sutUseCase.invoke()
+            val result = sutUseCase.getRestaurantName()
 
             //THEN
             verify(mockVendor).fetch()

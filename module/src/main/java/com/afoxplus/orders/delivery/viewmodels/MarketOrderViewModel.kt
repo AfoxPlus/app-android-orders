@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.afoxplus.orders.domain.entities.Order
 import com.afoxplus.orders.domain.usecases.ClearCurrentOrderUseCase
 import com.afoxplus.orders.domain.usecases.GetCurrentOrderUseCase
-import com.afoxplus.orders.domain.usecases.GetRestaurantNameUseCase
+import com.afoxplus.orders.domain.usecases.VendorShareUseCase
 import com.afoxplus.uikit.bus.UIKitEventBusWrapper
 import com.afoxplus.uikit.di.UIKitCoroutineDispatcher
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,7 +21,7 @@ internal class MarketOrderViewModel @Inject constructor(
     private val eventBusListener: UIKitEventBusWrapper,
     private val clearCurrentOrder: ClearCurrentOrderUseCase,
     private val getCurrentOrder: GetCurrentOrderUseCase,
-    private val getRestaurantName: GetRestaurantNameUseCase,
+    private val vendorShareUseCase: VendorShareUseCase,
     private val coroutines: UIKitCoroutineDispatcher
 ) : ViewModel() {
 
@@ -45,7 +45,7 @@ internal class MarketOrderViewModel @Inject constructor(
         }
     }
 
-    fun restaurantName(): String = getRestaurantName()
+    fun restaurantName(): String = vendorShareUseCase.getRestaurantName()
 
     fun onClickViewOrder() {
         viewModelScope.launch(coroutines.getMainDispatcher()) {
