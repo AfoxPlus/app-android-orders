@@ -18,11 +18,12 @@ class OrdersApplication : Application() {
         vendorShared.save(
             Vendor(
                 tableId = "-",
-                restaurantId = "648f94bd704db9741d1d2c04",
+                restaurantId = "66b924a5b835aa5b0e421289",
                 additionalInfo = mutableMapOf(
                     "restaurant_name" to "Rest. Pepito sazon!",
                     "restaurant_own_delivery" to false,
-                    "restaurant_order_type" to "DELIVERY"
+                    "restaurant_order_type" to "TABLE",
+                    "invitation_guest" to "Invitation guest name"
                 ),
                 paymentMethod = arrayListOf(
                     PaymentMethod("12", "Cúpon de Invitación", true),

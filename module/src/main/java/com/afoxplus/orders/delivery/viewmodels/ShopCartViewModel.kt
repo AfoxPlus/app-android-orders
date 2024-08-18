@@ -12,11 +12,11 @@ import com.afoxplus.orders.domain.entities.OrderDetail
 import com.afoxplus.orders.domain.entities.OrderType
 import com.afoxplus.orders.cross.exceptions.ExceptionMessage
 import com.afoxplus.orders.cross.exceptions.OrderBusinessException
-import com.afoxplus.orders.delivery.views.extensions.stringToObject
+import com.afoxplus.orders.cross.scan.getScanDataModelFromUri
 import com.afoxplus.orders.domain.usecases.AddOrUpdateProductToCurrentOrderUseCase
 import com.afoxplus.orders.domain.usecases.DeleteProductToCurrentOrderUseCase
 import com.afoxplus.orders.domain.usecases.GetCurrentOrderUseCase
-import com.afoxplus.orders.domain.usecases.GetRestaurantNameUseCase
+import com.afoxplus.orders.domain.usecases.VendorShareUseCase
 import com.afoxplus.orders.domain.usecases.GetRestaurantPaymentsUseCase
 import com.afoxplus.orders.domain.usecases.SendOrderUseCase
 import com.afoxplus.products.entities.Product
@@ -24,7 +24,6 @@ import com.afoxplus.uikit.bus.UIKitEvent
 import com.afoxplus.uikit.common.ResultState
 import com.afoxplus.uikit.di.UIKitCoroutineDispatcher
 import com.afoxplus.uikit.objects.vendor.PaymentMethod
-import com.afoxplus.uikit.objects.vendor.Vendor
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -36,7 +35,7 @@ internal class ShopCartViewModel @Inject constructor(
     private val getCurrentOrder: GetCurrentOrderUseCase,
     private val deleteProductToCurrentOrder: DeleteProductToCurrentOrderUseCase,
     private val sendOrder: SendOrderUseCase,
-    private val getRestaurantName: GetRestaurantNameUseCase,
+    private val vendorShareUseCase: VendorShareUseCase,
     private val getRestaurantPaymentsUseCase: GetRestaurantPaymentsUseCase,
     private val coroutines: UIKitCoroutineDispatcher
 ) : ViewModel() {
@@ -217,7 +216,8 @@ internal class ShopCartViewModel @Inject constructor(
         }
     }
 
-    fun restaurantName(): String = getRestaurantName()
+    fun restaurantName(): String = vendorShareUseCase.getRestaurantName()
+    fun guestName(): String? = vendorShareUseCase.getGuestName()
 
     fun fetchPaymentMethods(): List<PaymentMethod> = paymentMethods
 
@@ -257,9 +257,9 @@ internal class ShopCartViewModel @Inject constructor(
 
     fun setOrderTypeFromScan(data: String) {
         try {
-            val vendor = stringToObject<Vendor>(data)
+            val vendor = getScanDataModelFromUri(data)
             mOrder.value?.let { order ->
-                if (order.restaurantId == vendor.restaurantId) {
+                if (order.restaurantId == vendor?.restaurantId) {
                     mOrder.value?.orderType?.description = vendor.tableId
                     handleClickSender(true)
                 }

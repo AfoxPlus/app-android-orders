@@ -14,7 +14,7 @@ import com.afoxplus.orders.domain.entities.OrderType
 import com.afoxplus.orders.domain.usecases.AddOrUpdateProductToCurrentOrderUseCase
 import com.afoxplus.orders.domain.usecases.DeleteProductToCurrentOrderUseCase
 import com.afoxplus.orders.domain.usecases.GetCurrentOrderUseCase
-import com.afoxplus.orders.domain.usecases.GetRestaurantNameUseCase
+import com.afoxplus.orders.domain.usecases.VendorShareUseCase
 import com.afoxplus.orders.domain.usecases.GetRestaurantPaymentsUseCase
 import com.afoxplus.orders.domain.usecases.SendOrderUseCase
 import com.afoxplus.products.entities.Currency
@@ -50,7 +50,7 @@ class ShopCartViewModelTests {
     private val mockGetCurrentOrder: GetCurrentOrderUseCase = mock()
     private val mockDeleteProductToCurrentOrder: DeleteProductToCurrentOrderUseCase = mock()
     private val mockSendOrder: SendOrderUseCase = mock()
-    private val mockGetRestaurantName: GetRestaurantNameUseCase = mock()
+    private val mockGetRestaurantName: VendorShareUseCase = mock()
     private val mockGetRestaurantPaymentsUseCase: GetRestaurantPaymentsUseCase = mock()
     private val mockDispatcher: UIKitCoroutineDispatcher by lazy { UIKitCoroutinesDispatcherTest() }
 
@@ -511,13 +511,13 @@ class ShopCartViewModelTests {
 
             val mockRestaurantName = "Ya Listo"
 
-            whenever(mockGetRestaurantName.invoke()).thenReturn(mockRestaurantName)
+            whenever(mockGetRestaurantName.getRestaurantName()).thenReturn(mockRestaurantName)
 
             //WHEN
             val result = sutViewModel.restaurantName()
 
             //THEN
-            verify(mockGetRestaurantName).invoke()
+            verify(mockGetRestaurantName).getRestaurantName()
             Assert.assertEquals(result, mockRestaurantName)
         }
     }
