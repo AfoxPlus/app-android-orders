@@ -9,12 +9,17 @@ internal class VendorShareUseCase @Inject constructor(private val vendorShared: 
         return vendor.additionalInfo[PARAM_RESTAURANT_NAME].toString()
     }
 
-     fun getGuestName(): String? {
-         return try {
-             vendorShared.fetch()?.let { item -> item.additionalInfo[PARAM_INVITATION_GUEST].toString() }
-         }catch (ex: Exception) {
-             null
-         }
+    fun getGuestName(): String? {
+        return try {
+            vendorShared.fetch()?.let { item ->
+                val result = item.additionalInfo[PARAM_INVITATION_GUEST]
+                if (result != null)
+                    return result.toString()
+                else null
+            }
+        } catch (ex: Exception) {
+            null
+        }
     }
 
     companion object {
