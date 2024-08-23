@@ -24,7 +24,7 @@ internal interface OrderApiNetwork {
     }
 
     @POST("$PATH_ORDERS/$PATH_SEND")
-    @EndpointInfo(type = UrlProvider.Type.API_ORDERS_V1)
+    @EndpointInfo(type = UrlProvider.Type.API_ORDERS_V1, useFCMToken = true)
     suspend fun sendOrder(
         @HeaderMap headers: Map<String, String>,
         @Body orderRequest: OrderRequest
