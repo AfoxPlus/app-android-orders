@@ -187,7 +187,7 @@ class ShopCartViewModelTests {
             //THEN
             verify(mockAddOrUpdateProductToCurrentOrder).invoke(
                 mockQuantity,
-                mockOrderDetail.product
+                mockOrderDetail
             )
         }
     }

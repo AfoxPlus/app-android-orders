@@ -105,10 +105,10 @@ class OrderRepositorySourceTests {
             val quantityMock = 2
 
             //WHEN
-            val result = sutDataSource.addOrUpdateProductToCurrentOrder(quantityMock, productMock)
+            val result = sutDataSource.addOrUpdateProductToCurrentOrder(quantityMock, productMock, "")
 
             //THEN
-            verify(mockLocalSource).addOrUpdateProductToCurrentOrder(quantityMock, productMock)
+            verify(mockLocalSource).addOrUpdateProductToCurrentOrder(quantityMock, productMock, "")
             Assert.assertNotNull(result)
         }
     }

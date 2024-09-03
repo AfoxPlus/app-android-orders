@@ -34,7 +34,7 @@ class AddOrUpdateProductToCurrentOrderUseCaseTests {
             val result = sutUseCase.invoke(quantityMock, productMock)
 
             //THEN
-            verify(mockRepository).addOrUpdateProductToCurrentOrder(quantityMock, productMock)
+            verify(mockRepository).addOrUpdateProductToCurrentOrder(quantityMock, productMock, "")
             Assert.assertNotNull(result)
         }
     }

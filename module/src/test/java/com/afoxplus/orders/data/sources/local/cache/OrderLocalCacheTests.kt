@@ -44,7 +44,7 @@ class OrderLocalCacheTests {
 
             //WHEN
             val result =
-                sutOrderLocalCache.addOrUpdateProductToCurrentOrder(quantityMock, productMock)
+                sutOrderLocalCache.addOrUpdateProductToCurrentOrder(quantityMock, productMock, "")
 
             //THEN
             Assert.assertNotNull(result)
@@ -69,7 +69,7 @@ class OrderLocalCacheTests {
 
             //WHEN
             val result =
-                sutOrderLocalCache.addOrUpdateProductToCurrentOrder(quantityMock, productMock)
+                sutOrderLocalCache.addOrUpdateProductToCurrentOrder(quantityMock, productMock, "")
 
             //THEN
             Assert.assertNotNull(result)
@@ -92,7 +92,7 @@ class OrderLocalCacheTests {
 
             //WHEN
             val result =
-                sutOrderLocalCache.addOrUpdateProductToCurrentOrder(quantityMock, productMock)
+                sutOrderLocalCache.addOrUpdateProductToCurrentOrder(quantityMock, productMock, "")
 
             //THEN
             Assert.assertNotNull(result)
@@ -111,7 +111,7 @@ class OrderLocalCacheTests {
                 whenever(mockVendorShared.fetch()).doReturn(null)
 
                 //WHEN
-                sutOrderLocalCache.addOrUpdateProductToCurrentOrder(quantityMock, productMock)
+                sutOrderLocalCache.addOrUpdateProductToCurrentOrder(quantityMock, productMock, "")
 
             } catch (ex: Exception) {
                 //THEN
@@ -705,6 +705,6 @@ class OrderLocalCacheTests {
     }
 
     private suspend fun createOrder(productMock: Product) {
-        sutOrderLocalCache.addOrUpdateProductToCurrentOrder(2, productMock)
+        sutOrderLocalCache.addOrUpdateProductToCurrentOrder(2, productMock, "")
     }
 }
