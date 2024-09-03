@@ -34,8 +34,8 @@ internal class OrderRepositorySource @Inject constructor(
         return message
     }
 
-    override suspend fun addOrUpdateProductToCurrentOrder(quantity: Int, product: Product) {
-        orderLocalDataSource.addOrUpdateProductToCurrentOrder(quantity, product)
+    override suspend fun addOrUpdateProductToCurrentOrder(quantity: Int, product: Product, notes: String) {
+        orderLocalDataSource.addOrUpdateProductToCurrentOrder(quantity, product, notes)
     }
 
     override fun findProductInCurrentOrder(product: Product): OrderDetail? {

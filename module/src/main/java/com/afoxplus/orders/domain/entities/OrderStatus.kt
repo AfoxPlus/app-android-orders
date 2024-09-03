@@ -37,6 +37,7 @@ data class DetailStatus(
     val title: String,
     val description: String,
     val unitPrice: String,
+    val notes: String,
     val quantity: String,
     val subTotal: String
 ) : Parcelable

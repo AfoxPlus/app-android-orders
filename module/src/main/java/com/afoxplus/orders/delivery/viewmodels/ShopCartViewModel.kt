@@ -123,7 +123,7 @@ internal class ShopCartViewModel @Inject constructor(
 
     fun updateQuantity(orderDetail: OrderDetail, quantity: Int) {
         viewModelScope.launch(coroutines.getMainDispatcher()) {
-            addOrUpdateProductToCurrentOrder(quantity, orderDetail.product)
+            addOrUpdateProductToCurrentOrder(quantity, orderDetail)
         }
     }
 

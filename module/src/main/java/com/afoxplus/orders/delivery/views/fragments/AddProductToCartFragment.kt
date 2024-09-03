@@ -37,11 +37,19 @@ class AddProductToCartFragment : UIKitBaseFragment(), ItemAppetizerListener {
         }
         binding.recyclerProductAppetizer.adapter = adapter
         binding.quantityButtonQuantity.deleteIcon = drawable.ic_minus
+
+        binding.orderAddNote.onTextChangeListener = { notes ->
+            addProductToOrderViewModel.noteChangeListener(notes)
+        }
     }
 
     override fun observerViewModel() {
         addProductToOrderViewModel.quantity.observe(viewLifecycleOwner) {
             binding.quantityButtonQuantity.value = it ?: 0
+        }
+
+        addProductToOrderViewModel.notesProduct.observe(viewLifecycleOwner) {
+            binding.orderAddNote.text = it
         }
 
         addProductToOrderViewModel.appetizerVisibility.observe(viewLifecycleOwner) {

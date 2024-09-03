@@ -19,20 +19,25 @@ class Order(
 
     fun addUpdateOrDeleteProductWithQuantity(
         product: Product,
-        quantity: Int
+        quantity: Int,
+        notes: String
     ) {
         if (quantity > 0)
             orderDetails.find { item -> item.product.code == product.code }
-                ?.run { this.quantity = quantity } ?: addNewProductWithQuantity(product, quantity)
+                ?.run {
+                    this.quantity = quantity
+                    this.notes = notes
+                } ?: addNewProductWithQuantity(product, quantity, notes)
         if (quantity == 0)
             removeItemOrderDetailByProduct(product)
     }
 
     private fun addNewProductWithQuantity(
         product: Product,
-        quantity: Int
+        quantity: Int,
+        notes: String
     ) {
-        val orderDetail = OrderDetail(product, quantity)
+        val orderDetail = OrderDetail(product, quantity, notes)
         orderDetails.add(orderDetail)
     }
 
@@ -67,7 +72,7 @@ class Order(
     }
 
     fun isValidOrderType(): Boolean {
-       return !(orderType ==  OrderType.Local && orderType.description == "-")
+        return !(orderType == OrderType.Local && orderType.description == "-")
     }
 
     fun getLabelViewMyOrder(): String =

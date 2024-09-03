@@ -38,6 +38,7 @@ data class DetailStatusResponse(
     val productId: String,
     val title: String,
     val description: String,
+    val note: String? = "",
     val unitPrice: String,
     val quantity: String,
     val subTotal: String
@@ -81,6 +82,7 @@ fun DetailStatusResponse.toEntity(): DetailStatus {
         description = description,
         unitPrice = unitPrice,
         quantity = quantity,
+        notes = note.toString(),
         subTotal = subTotal
     )
 }

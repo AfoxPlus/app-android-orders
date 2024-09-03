@@ -27,9 +27,9 @@ internal class OrderLocalCache @Inject constructor(
         )
     }
 
-    override suspend fun addOrUpdateProductToCurrentOrder(quantity: Int, product: Product) {
+    override suspend fun addOrUpdateProductToCurrentOrder(quantity: Int, product: Product, notes: String) {
         val order = order ?: newOrder()
-        order.addUpdateOrDeleteProductWithQuantity(product, quantity)
+        order.addUpdateOrDeleteProductWithQuantity(product, quantity, notes)
         orderStateFlow.emit(order)
     }
 

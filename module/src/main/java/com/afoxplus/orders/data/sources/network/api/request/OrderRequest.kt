@@ -56,6 +56,7 @@ internal data class OrderDetailRequest(
     @SerializedName("description") val description: String,
     @SerializedName("unit_price") val unitPrice: Double,
     @SerializedName("quantity") val quantity: Int,
+    @SerializedName("note") val notes: String,
     @SerializedName("sub_total") val subTotal: Double,
     @SerializedName("sub_detail") val appetizers: List<OrderAppetizerRequest>
 ) {
@@ -67,6 +68,7 @@ internal data class OrderDetailRequest(
                 title = orderDetail.product.name,
                 description = orderDetail.product.description,
                 unitPrice = orderDetail.product.getPriceForSale(),
+                notes = orderDetail.notes,
                 quantity = orderDetail.quantity,
                 subTotal = orderDetail.calculateSubTotal(),
                 type = orderDetail.product.productType.code,

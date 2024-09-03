@@ -56,8 +56,9 @@ internal class AddProductToOrderViewModel @Inject constructor(
     }
 
     private val mStateScreen: MutableLiveData<StateScreen> by lazy { MutableLiveData(StateScreen.Add) }
-
     private val mAppetizersShowModal: MutableLiveData<Unit> by lazy { MutableLiveData() }
+    private val mNotesProduct: MutableLiveData<String> by lazy { MutableLiveData<String>() }
+    val notesProduct: LiveData<String> get() = mNotesProduct
 
     val product: LiveData<Product> get() = mProduct
     val appetizersStateModel: LiveData<List<AppetizerStateModel>> get() = mAppetizersStateModel
@@ -67,6 +68,7 @@ internal class AddProductToOrderViewModel @Inject constructor(
     val appetizerVisibility: LiveData<Int> get() = mAppetizerVisibility
 
     private var quantityChanged: Int = 0
+    private var notesChanged: String = ""
     private var appetizerAddedQuantity: Int = 0
 
     private var appetizers: List<Product> = arrayListOf()
@@ -111,6 +113,10 @@ internal class AddProductToOrderViewModel @Inject constructor(
         }
     }
 
+    fun noteChangeListener(notes: String) {
+        notesChanged = notes
+    }
+
     private fun handleAppetizerByProductQuantity(shouldClearAppetizer: Boolean) {
         product.value?.let {
             if (!it.isMenuDishType()) return
@@ -139,14 +145,20 @@ internal class AddProductToOrderViewModel @Inject constructor(
     private fun setOrderAndVerifyQuantity(orderDetail: OrderDetail) {
         val subTotal = orderDetail.calculateSubTotal().getAmountFormat()
         quantityChanged = orderDetail.quantity
+        notesChanged = orderDetail.notes
         mQuantity.postValue(orderDetail.quantity)
+        mNotesProduct.postValue(orderDetail.notes)
         setupStateButtonSubTotal(subTotal, enabledButton = true)
     }
 
     fun addOrUpdateToCurrentOrder() {
         viewModelScope.launch(coroutines.getMainDispatcher()) {
             mProduct.value?.let { product ->
-                addOrUpdateProductToCurrentOrder(quantityChanged, product)
+                addOrUpdateProductToCurrentOrder(
+                    quantityChanged,
+                    product,
+                    notesChanged
+                )
                 mEvents.emit(Events.CloseScreen)
                 eventBusWrapper.send(AddedProductToCurrentOrderSuccessfullyEvent)
             }

@@ -1,6 +1,7 @@
 package com.afoxplus.orders.delivery.views.adapters
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -44,9 +45,16 @@ class ItemDetailStatusProductAdapter :
 
         fun bind(item: DetailStatus) {
             with(binding) {
+                tvProductNoteTitle.visibility = View.GONE
+                tvProductNote.visibility = View.GONE
                 tvProductTitle.text = item.title
                 tvProductDescription.text = item.description
                 tvProductPrice.text = item.unitPrice
+                if (item.notes.isNotEmpty()) {
+                    tvProductNoteTitle.visibility = View.VISIBLE
+                    tvProductNote.visibility = View.VISIBLE
+                    tvProductNote.text = item.notes
+                }
                 tvProductQuantity.text = String.format(
                     itemView.context.getString(R.string.orders_status_product_quantity),
                     item.quantity

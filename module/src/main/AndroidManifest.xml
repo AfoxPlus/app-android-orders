@@ -14,7 +14,8 @@
         <activity
             android:name=".delivery.views.activities.AddProductToOrderActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/UIKit.NoActionBar.Light" />
+            android:theme="@style/UIKit.NoActionBar.Light"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".delivery.views.activities.MarketOrderActivity"
             android:screenOrientation="portrait"

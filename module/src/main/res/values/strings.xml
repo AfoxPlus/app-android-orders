@@ -34,6 +34,8 @@
     <string name="order_status_detail_total">Total:</string>
     <string name="order_status_restaurant">Restaurante:</string>
     <string name="orders_market_appetizer">Entradas</string>
+    <string name="orders_market_notes">Indicaciones para este producto</string>
+    <string name="orders_market_notes_description">El establecimiento tratará de seguir tus indicaciones para este producto.</string>
     <string name="order_appetizers_modal_title">Debes elegir nuevamente tus entradas</string>
     <string name="order_appetizers_modal_message">El total de tus unidades es menor a tus entradas seleccionadas</string>
     <string name="order_appetizers_modal_action">Entendido</string>
@@ -51,4 +53,5 @@
     <string name="order_modal_send_cancel">Cancelar</string>
     <string name="order_modal_send_retry">Reintentar</string>
     <string name="order_scan_prompt">Escanea el código QR de tu mesa</string>
+    <string name="order_detail_notes">Indicaciones</string>
 </resources>

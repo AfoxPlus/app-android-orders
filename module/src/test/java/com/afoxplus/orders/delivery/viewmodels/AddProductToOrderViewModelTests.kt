@@ -569,6 +569,7 @@ class AddProductToOrderViewModelTests {
         return OrderDetail(
             product = mockMenuProduct(),
             quantity = 2,
+            notes = "",
             saleOrderItemStrategy = null,
             appetizers = arrayListOf()
         )
@@ -578,6 +579,7 @@ class AddProductToOrderViewModelTests {
         return OrderDetail(
             product = mockCartaProduct(),
             quantity = 2,
+            notes = "",
             saleOrderItemStrategy = null,
             appetizers = arrayListOf()
         )

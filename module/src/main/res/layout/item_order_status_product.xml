@@ -20,15 +20,46 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvProductDescription"
+        style="@style/Paragraph02"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dp14"
+        android:layout_marginTop="@dimen/dp4"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:scrollHorizontally="true"
+        android:textColor="@color/dark_04"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvProductTitle"
+        tools:text="Refrescante chicha morada 1 litro" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvProductNoteTitle"
+        style="@style/Paragraph01_Bold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dp14"
+        android:layout_marginTop="@dimen/dp4"
+        android:text="@string/order_detail_notes"
+        android:textColor="@color/dark_01"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvProductDescription" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvProductNote"
         style="@style/Paragraph01"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/dp14"
         android:layout_marginTop="@dimen/dp4"
+        android:ellipsize="end"
+        android:maxLines="3"
         android:textColor="@color/dark_04"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvProductTitle"
+        app:layout_constraintTop_toBottomOf="@id/tvProductNoteTitle"
         tools:text="Refrescante chicha morada 1 litro" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -40,7 +71,7 @@
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvProductDescription">
+        app:layout_constraintTop_toBottomOf="@id/tvProductNote">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvProductPrice"

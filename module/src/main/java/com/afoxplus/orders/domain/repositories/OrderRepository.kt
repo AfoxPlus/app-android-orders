@@ -8,7 +8,7 @@ import com.afoxplus.uikit.common.ResultState
 import kotlinx.coroutines.flow.SharedFlow
 
 interface OrderRepository {
-    suspend fun addOrUpdateProductToCurrentOrder(quantity: Int, product: Product)
+    suspend fun addOrUpdateProductToCurrentOrder(quantity: Int, product: Product, notes: String)
     fun findProductInCurrentOrder(product: Product): OrderDetail?
     fun clearCurrentOrder()
     suspend fun getCurrentOrder(): SharedFlow<Order?>

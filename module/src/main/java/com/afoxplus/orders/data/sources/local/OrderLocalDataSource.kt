@@ -7,7 +7,7 @@ import com.afoxplus.products.entities.Product
 import kotlinx.coroutines.flow.SharedFlow
 
 internal interface OrderLocalDataSource {
-    suspend fun addOrUpdateProductToCurrentOrder(quantity: Int, product: Product)
+    suspend fun addOrUpdateProductToCurrentOrder(quantity: Int, product: Product, notes: String)
     fun clearCurrentOrder()
     fun findProductInOrder(product: Product): OrderDetail?
     suspend fun getCurrentOrder(): SharedFlow<Order?>

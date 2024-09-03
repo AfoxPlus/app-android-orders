@@ -9,6 +9,7 @@ import kotlinx.parcelize.Parcelize
 data class OrderDetail(
     val product: Product,
     var quantity: Int,
+    var notes: String = "",
     var saleOrderItemStrategy: SaleOrderItemStrategy? = null,
     var appetizers: MutableList<OrderAppetizerDetail> = arrayListOf()
 ) : Parcelable {
