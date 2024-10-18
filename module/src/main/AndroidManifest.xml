@@ -24,6 +24,10 @@
             android:name=".delivery.views.activities.OrderStatusDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/UIKit.NoActionBar.Light" />
+        <activity
+            android:name=".delivery.views.activities.LandingEstablishmentActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/UIKit.NoActionBar.Light" />
     </application>
 
 </manifest>

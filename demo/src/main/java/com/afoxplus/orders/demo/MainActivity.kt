@@ -28,6 +28,10 @@ class MainActivity : AppCompatActivity() {
         binding.button.setOnClickListener {
             orderFlow.goToMarketOrderActivity(this)
         }
+
+        binding.buttonLandingEstablishment.setOnClickListener {
+            orderFlow.goToLandingEstablishmentActivity(this)
+        }
     }
 
     override fun onResume() {

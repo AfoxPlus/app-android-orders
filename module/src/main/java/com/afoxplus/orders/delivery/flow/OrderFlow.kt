@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import com.afoxplus.orders.delivery.views.activities.AddProductToOrderActivity
+import com.afoxplus.orders.delivery.views.activities.LandingEstablishmentActivity
 import com.afoxplus.orders.delivery.views.activities.OrderPreviewActivity
 import com.afoxplus.orders.delivery.views.activities.MarketOrderActivity
 import com.afoxplus.orders.delivery.views.activities.ORDER_SUCCESS_MESSAGE
@@ -20,6 +21,7 @@ interface OrderFlow {
     fun goToOrderPreviewActivity(activity: Activity, order: Order)
     fun goToOrderSuccessActivity(activity: Activity, message: String)
     fun getStateOrdersFragment(): UIKitBaseFragment
+    fun goToLandingEstablishmentActivity(activity: Activity)
 
     class OrderFlowImpl @Inject constructor() : OrderFlow {
         override fun goToMarketOrderActivity(activity: Activity) {
@@ -50,6 +52,10 @@ interface OrderFlow {
 
         override fun getStateOrdersFragment(): UIKitBaseFragment {
             return OrderStatusFragment()
+        }
+
+        override fun goToLandingEstablishmentActivity(activity: Activity) {
+            activity.startActivity(LandingEstablishmentActivity.newInstance(activity))
         }
 
     }

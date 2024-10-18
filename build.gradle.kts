@@ -6,3 +6,15 @@ plugins {
     id("com.google.dagger.hilt.android") version "2.44.2" apply false
     id("org.jetbrains.kotlin.plugin.parcelize") version "1.7.20" apply false
 }
+
+/*
+allprojects {
+    configurations.all {
+        resolutionStrategy {
+            dependencySubstitution {
+                substitute(module(Deps.UI.uikit)).using(project(":uikit"))
+                substitute(module(Deps.Arch.products)).using(project(":products"))
+            }
+        }
+    }
+}*/
