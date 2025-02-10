@@ -18,7 +18,7 @@ class OrdersApplication : Application() {
         vendorShared.save(
             Vendor(
                 tableId = "-",
-                restaurantId = "648f94bd704db9741d1d2c04",
+                restaurantId = "671885a91cfe6b6e8339ea70",
                 additionalInfo = mutableMapOf(
                     "restaurant_name" to "Rest. Pepito sazon!",
                     "restaurant_own_delivery" to false,

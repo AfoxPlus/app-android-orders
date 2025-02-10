@@ -101,6 +101,7 @@ dependencies {
     implementation(Deps.Jetpack.core)
     implementation(Deps.Jetpack.appcompat)
     implementation(Deps.Jetpack.fragment)
+    implementation(Deps.Jetpack.kotlinReflect)
 
     //Jetpack UI
     implementation(Deps.UI.materialDesign)
