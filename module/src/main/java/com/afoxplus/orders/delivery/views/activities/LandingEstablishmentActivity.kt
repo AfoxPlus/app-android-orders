@@ -4,7 +4,10 @@ import android.app.Activity
 import android.content.Intent
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.consumeWindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.safeGestures
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import com.afoxplus.orders.delivery.viewmodels.LandingEstablishmentViewModel
@@ -28,15 +31,21 @@ class LandingEstablishmentActivity : UIKitBaseActivity() {
     override fun setMainView() {
         setContent {
             UIKitTheme {
-                Scaffold(topBar = {
-                    UIKitTopBar(
-                        title = "Restaurante",
-                        description = landingEstablishmentViewModel.restaurantName(),
-                        onBackAction = {
-                            onBackPressedDispatcher.onBackPressed()
-                        })
-                }) { paddingValues ->
-                    LandingProductScreen(modifier = Modifier.padding(paddingValues))
+                Scaffold(
+                    modifier = Modifier.fillMaxSize(),
+                    topBar = {
+                        UIKitTopBar(
+                            title = "Restaurante",
+                            description = landingEstablishmentViewModel.restaurantName(),
+                            onBackAction = {
+                                onBackPressedDispatcher.onBackPressed()
+                            })
+                    }, contentWindowInsets = WindowInsets.safeGestures
+                ) { paddingValues ->
+                    LandingProductScreen(
+                        modifier = Modifier.consumeWindowInsets(paddingValues),
+                        paddingValues = paddingValues
+                    )
                 }
             }
         }
