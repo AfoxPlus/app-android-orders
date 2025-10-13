@@ -143,9 +143,9 @@ dependencies {
     testImplementation(libs.bundles.unit.test)
 
     // Business Dependencies
-    implementation(project(ModuleDependency.Core.DESIGN_SYSTEM))
-    implementation(project(ModuleDependency.Integration.NETWORK))
-    implementation(project(ModuleDependency.Feature.PRODUCTS))
+    implementation(libs.yalisto.uikit)
+    implementation(libs.yalisto.network)
+    implementation(libs.yalisto.products)
 
 
     //Compose Debug
